@@ -2,7 +2,7 @@
 //  OpenShift sample Node application
 var express = require('express');
 var fs      = require('fs');
-
+var mongodb = require('mongodb');
 
 /**
  *  Define the sample application.
@@ -31,6 +31,13 @@ var SampleApp = function() {
             console.warn('No OPENSHIFT_NODEJS_IP var, using 127.0.0.1');
             self.ipaddress = "127.0.0.1";
         };
+
+
+        self.dbServer = new mongodb.Server(process.env.OPENSHIFT_MONGODB_DB_HOST,parseInt(process.env.OPENSHIFT_MONGODB_DB_PORT));
+        self.db = new mongodb.Db(process.env.OPENSHIFT_APP_NAME, self.dbServer, {auto_reconnect: true});
+        self.dbUser = process.env.OPENSHIFT_MONGODB_DB_USERNAME;
+        self.dbPass = process.env.OPENSHIFT_MONGODB_DB_PASSWORD;
+
     };
 
 
@@ -104,6 +111,13 @@ var SampleApp = function() {
             res.setHeader('Content-Type', 'text/html');
             res.send(self.cache_get('index.html') );
         };
+
+        self.routes['returnAllPaintings'] = function(req, res){
+          self.db.collection('Paintings').find().toArray(function(err, names) {
+            res.header("Content-Type:","application/json");
+            res.end(JSON.stringify(names));
+          });
+        };
     };
 
 
@@ -156,4 +170,3 @@ var SampleApp = function() {
 var zapp = new SampleApp();
 zapp.initialize();
 zapp.start();
-
