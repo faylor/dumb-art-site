@@ -40,12 +40,10 @@ var SampleApp = function() {
             console.warn('No OPENSHIFT_NODEJS_IP var, using 127.0.0.1');
             self.ipaddress = "127.0.0.1";
         };
-
-        self.db = mongojs(process.env.OPENSHIFT_MONGODB_DB_URL, ['nodejs']);
-      //  self.dbServer = new mongodb.Server(process.env.OPENSHIFT_MONGODB_DB_HOST,parseInt(process.env.OPENSHIFT_MONGODB_DB_PORT));
-      //  self.db = new mongodb.Db(process.env.OPENSHIFT_APP_NAME, self.dbServer, {auto_reconnect: true});
-      //  self.dbUser = process.env.OPENSHIFT_MONGODB_DB_USERNAME;
-      //  self.dbPass = process.env.OPENSHIFT_MONGODB_DB_PASSWORD;
+        var dbName = "/nodejs";
+        var connection_string = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +  process.env.OPENSHIFT_MONGODB_DB_PASSWORD + "@" + process.env.OPENSHIFT_MONGODB_DB_HOST + dbName;
+        self.db = mongojs(connection_string, ['Paintings']);
+    
 
     };
 
