@@ -3,7 +3,7 @@
 var express = require('express');
 var fs      = require('fs');
 var mongodb = require('mongodb');
-
+var mongojs = require('mongojs');
 /**
  *  Define the sample application.
  */
@@ -33,11 +33,11 @@ var SampleApp = function() {
         };
 
 
-        self.dbServer = new mongodb.Server(process.env.OPENSHIFT_MONGODB_DB_HOST,parseInt(process.env.OPENSHIFT_MONGODB_DB_PORT));
-        self.db = new mongodb.Db(process.env.OPENSHIFT_APP_NAME, self.dbServer, {auto_reconnect: true});
-        self.dbUser = process.env.OPENSHIFT_MONGODB_DB_USERNAME;
-        self.dbPass = process.env.OPENSHIFT_MONGODB_DB_PASSWORD;
-
+      //  self.dbServer = new mongodb.Server(process.env.OPENSHIFT_MONGODB_DB_HOST,parseInt(process.env.OPENSHIFT_MONGODB_DB_PORT));
+      //  self.db = new mongodb.Db(process.env.OPENSHIFT_APP_NAME, self.dbServer, {auto_reconnect: true});
+      //  self.dbUser = process.env.OPENSHIFT_MONGODB_DB_USERNAME;
+      //  self.dbPass = process.env.OPENSHIFT_MONGODB_DB_PASSWORD;
+        self.mongo_url = process.env.OPENSHIFT_MONGODB_DB_URL;
     };
 
 
@@ -127,7 +127,7 @@ var SampleApp = function() {
      */
     self.initializeServer = function() {
         self.createRoutes();
-        self.app = express.createServer();
+        self.app = express();
 
         //  Add handlers for the app (from the routes).
         for (var r in self.routes) {
@@ -148,16 +148,6 @@ var SampleApp = function() {
         self.initializeServer();
     };
 
-    // Logic to open a database connection. We are going to call this outside of app so it is available to all our functions inside.
-     self.connectDb = function(callback){
-       self.db.open(function(err, db){
-         if(err){ console.log('Database ConnectDB Opening Error:%s',err); };
-         self.db.authenticate(self.dbUser, self.dbPass, {authdb: "admin"}, function(err, res){
-           if(err){   console.log('Database ConnectDB Authenticate Error:%s',err); };
-           callback();
-         });
-       });
-     };
     /**
      *  Start the server (starts up the sample application).
      */
@@ -178,5 +168,4 @@ var SampleApp = function() {
  */
 var zapp = new SampleApp();
 zapp.initialize();
-zapp.connectDb(zapp.start());
-//zapp.start();
+zapp.start();
