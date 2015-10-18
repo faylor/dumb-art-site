@@ -12,7 +12,7 @@ if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD){
   process.env.OPENSHIFT_MONGODB_DB_HOST + '/' +
   process.env.OPENSHIFT_APP_NAME;
 }*/
-var db = mongojs(process.env.OPENSHIFT_MONGODB_DB_URL, ['Paintings']);
+
 /**
  *  Define the sample application.
  */
@@ -41,7 +41,7 @@ var SampleApp = function() {
             self.ipaddress = "127.0.0.1";
         };
 
-
+        self.db = mongojs(process.env.OPENSHIFT_MONGODB_DB_URL, ['Paintings']);
       //  self.dbServer = new mongodb.Server(process.env.OPENSHIFT_MONGODB_DB_HOST,parseInt(process.env.OPENSHIFT_MONGODB_DB_PORT));
       //  self.db = new mongodb.Db(process.env.OPENSHIFT_APP_NAME, self.dbServer, {auto_reconnect: true});
       //  self.dbUser = process.env.OPENSHIFT_MONGODB_DB_USERNAME;
@@ -121,11 +121,11 @@ var SampleApp = function() {
             res.send(self.cache_get('index.html') );
         };
 
-        self.routes['returnAllPaintings'] = function(req, res){
-          db.collection('Paintings').find().toArray(function(err, names) {
-            res.header("Content-Type:","application/json");
-            res.end(JSON.stringify(names));
-          });
+        self.routes['/returnAllPaintings'] = function(req, res){
+            self.db.collection('Paintings').find().toArray(function(err, names) {
+                res.header("Content-Type:","text/json");
+                res.end(JSON.stringify(names));
+            });
         };
     };
 
