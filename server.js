@@ -58,6 +58,7 @@ var SampleApp = function() {
 
         //  Local cache for static content.
         self.zcache['index.html'] = fs.readFileSync('./index.html');
+        self.zcache['gallery.html'] = fs.readFileSync('./gallery.html');
     };
 
 
@@ -109,19 +110,16 @@ var SampleApp = function() {
     self.createRoutes = function() {
         self.routes = { };
 
-        self.routes['/asciimo'] = function(req, res) {
-            var link = "http://i.imgur.com/kmbjB.png";
-            res.send("<html><body><img src='" + link + "'></body></html>");
-        };
-
         self.routes['/'] = function(req, res) {
             res.setHeader('Content-Type', 'text/html');
             res.send(self.cache_get('index.html') );
         };
+
         self.routes['/gallery'] = function(req, res) {
             res.setHeader('Content-Type', 'text/html');
             res.send(self.cache_get('gallery.html') );
         };
+
         self.routes['/returnAllPaintings'] = function(req, res){
             self.db.collection('Paintings').find().toArray(function(err, names) {
                 res.header("Content-Type:","text/json");
