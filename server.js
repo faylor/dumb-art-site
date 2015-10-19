@@ -43,7 +43,7 @@ var SampleApp = function() {
         var dbName = "/nodejs";
         var connection_string = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +  process.env.OPENSHIFT_MONGODB_DB_PASSWORD + "@" + process.env.OPENSHIFT_MONGODB_DB_HOST + dbName;
         self.db = mongojs(connection_string, ['Paintings']);
-    
+
 
     };
 
@@ -118,7 +118,10 @@ var SampleApp = function() {
             res.setHeader('Content-Type', 'text/html');
             res.send(self.cache_get('index.html') );
         };
-
+        self.routes['/gallery'] = function(req, res) {
+            res.setHeader('Content-Type', 'text/html');
+            res.send(self.cache_get('gallery.html') );
+        };
         self.routes['/returnAllPaintings'] = function(req, res){
             self.db.collection('Paintings').find().toArray(function(err, names) {
                 res.header("Content-Type:","text/json");
