@@ -10,30 +10,18 @@
       galleryApp.controller('PaintingsCtrl', function ($scope, $http){
         $http.get('/returnAllPaintings').success(function(data) {
           $scope.paintings = data;
-          $scope.totalItems = data.length;
         });
-        $scope.currentPage = 4;
+        $scope.currentPage = 1;
+        $scope.maxSize = 5;
+        $scope.itemsPerPage = 3;
 
         $scope.setPage = function (pageNo) {
           $scope.currentPage = pageNo;
+          var begin = (($scope.currentPage - 1) * $scope.itemsPerPage);
+          var end = begin + $scope.itemsPerPage;
+
+          $scope.filteredPaintings = $scope.paintings.slice(begin, end);
         };
-
-        $scope.pageChanged = function() {
-          $log.log('Page changed to: ' + $scope.currentPage);
-        };
-
-        $scope.maxSize = 5;
-
-
-        $scope.paintings.$promise.then(function () {
-          $scope.totalItems = $scope.paintings.length;
-          $scope.$watch('currentPage + itemsPerPage', function() {
-            var begin = (($scope.currentPage - 1) * $scope.itemsPerPage),
-              end = begin + $scope.itemsPerPage;
-
-            $scope.filteredPaintings = $scope.paintings.slice(begin, end);
-          });
-        });
 
 
       });
