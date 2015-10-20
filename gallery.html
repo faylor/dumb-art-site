@@ -9,14 +9,13 @@
       var galleryApp = angular.module('galleryApp', ['ui.bootstrap']);
       galleryApp.controller('PaintingsCtrl', ['$scope','$http', 'dataFactory', function ( $scope, $http, dataFactory){
 
-
         $scope.paintings;
         $scope.filteredPaintings;
         $scope.totalItems;
         $scope.currentPage = 1;
         $scope.maxSize = 5;
         $scope.itemsPerPage = 2;
-
+        $scope.filterSold = 0;
         getPaintings();
 
         function getPaintings() {
@@ -24,11 +23,7 @@
                 .success(function (p) {
                     $scope.paintings = p;
                     $scope.totalItems = p.length;
-
-                    var begin = (($scope.currentPage - 1) * $scope.itemsPerPage);
-                    var end = begin + $scope.itemsPerPage;
-
-                    $scope.filteredPaintings = $scope.paintings.slice(begin, end);
+                    pageChanged();
                 })
                 .error(function (error) {
                     $scope.status = 'Unable to load Painting data: ' + error.message;
@@ -40,6 +35,10 @@
            var end = begin + $scope.itemsPerPage;
 
            $scope.filteredPaintings = $scope.paintings.slice(begin, end);
+         };
+
+         $scope.isForSale = function(p) {
+           return $scope.filterSold==1 && p.sold === "0";
          };
 
       }]);
@@ -81,13 +80,15 @@
 		<th>Size</th>
         <th>Price</th>
       </tr>
-      <tr ng-repeat="painting in filteredPaintings | orderBy: 'price' ">
+      <tr ng-repeat="painting in filteredPaintings | filter:isForSale | orderBy: 'price' ">
         <td>{{painting.name}}</td>
 		    <td>{{painting.size}}</td>
         <td>{{painting.price}}</td>
       </tr>
     </table>
-
+    <button type="button" class="btn btn-primary" ng-model="filterSold" uib-btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0">
+        Show For Sale Only
+    </button>
     <uib-pagination total-items="totalItems" ng-model="currentPage"  items-per-page="itemsPerPage" ng-change="pageChanged()"></uib-pagination>
   </body>
 </html>
