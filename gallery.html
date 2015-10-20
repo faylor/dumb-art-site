@@ -15,7 +15,7 @@
         $scope.currentPage = 1;
         $scope.maxSize = 5;
         $scope.itemsPerPage = 2;
-        $scope.filterSold = 0;
+        $scope.filterSold = "0";
         getPaintings();
 
         function getPaintings() {
@@ -38,7 +38,9 @@
          };
 
          $scope.isForSale = function(p) {
-           return $scope.filterSold==1 && p.sold === "0";
+          alert('in');
+          alert($scope.filterSold);
+           return $scope.filterSold==="1" && p.sold === "0";
          };
 
       }]);
