@@ -23,7 +23,7 @@
                 .success(function (p) {
                     $scope.paintings = p;
                     $scope.totalItems = p.length;
-                    pageChanged();
+                    //pageChanged();
                 })
                 .error(function (error) {
                     $scope.status = 'Unable to load Painting data: ' + error.message;
