@@ -10,6 +10,7 @@
       galleryApp.controller('PaintingsCtrl', function ($scope, $http){
         $http.get('/returnAllPaintings').success(function(data) {
           $scope.paintings = data;
+          $scope.totalItems = data.length;
         });
         $scope.currentPage = 1;
         $scope.maxSize = 5;
