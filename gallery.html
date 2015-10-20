@@ -1,4 +1,4 @@
-<html ng-app="countryApp">
+<html ng-app="galleryApp">
   <head>
     <meta charset="utf-8">
     <title>Angular.js JSON Fetching Example</title>
@@ -6,10 +6,10 @@
 	  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.2/ui-bootstrap-tpls.min.js"></script>
     <script>
-      var countryApp = angular.module('countryApp', ['ui.bootstrap']);
-      countryApp.controller('CountryCtrl', function ($scope, $http){
+      var galleryApp = angular.module('galleryApp', ['ui.bootstrap']);
+      countryApp.controller('PaintingsCtrl', function ($scope, $http){
         $http.get('/returnAllPaintings').success(function(data) {
-          $scope.countries = data;
+          $scope.paintings = data;
           $scope.totalItems = data.length;
         });
         $scope.currentPage = 4;
@@ -23,6 +23,19 @@
         };
 
         $scope.maxSize = 5;
+
+
+        $scope.paintings.$promise.then(function () {
+          $scope.totalItems = $scope.paintings.length;
+          $scope.$watch('currentPage + itemsPerPage', function() {
+            var begin = (($scope.currentPage - 1) * $scope.itemsPerPage),
+              end = begin + $scope.itemsPerPage;
+
+            $scope.filteredPaintings = $scope.paintings.slice(begin, end);
+          });
+        });
+
+
       });
     </script>
   </head>
@@ -34,10 +47,10 @@
 		<th>Country</th>
         <th>Population</th>
       </tr>
-      <tr ng-repeat="country in countries | orderBy: 'price' ">
-        <td>{{country.name}}</td>
-		<td>{{country.size}}</td>
-        <td>{{country.price}}</td>
+      <tr ng-repeat="painting in filteredPaintings | orderBy: 'price' ">
+        <td>{{painting.name}}</td>
+		<td>{{painting.size}}</td>
+        <td>{{painting.price}}</td>
       </tr>
     </table>
 
