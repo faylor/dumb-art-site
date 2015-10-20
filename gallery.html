@@ -3,27 +3,28 @@
     <meta charset="utf-8">
     <title>Angular.js JSON Fetching Example</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-	  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.2/ui-bootstrap-tpls.min.js"></script>
+	  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.2/ui-bootstrap-tpls.min.js"></script>
     <script>
       var countryApp = angular.module('countryApp', ['ui.bootstrap']);
       countryApp.controller('CountryCtrl', function ($scope, $http){
         $http.get('/returnAllPaintings').success(function(data) {
           $scope.countries = data;
+          $scope.totalItems = data.length;
         });
-        $scope.totalItems = 64;
-          $scope.currentPage = 4;
+        $scope.currentPage = 4;
 
-          $scope.setPage = function (pageNo) {
-            $scope.currentPage = pageNo;
-          };
+        $scope.setPage = function (pageNo) {
+          $scope.currentPage = pageNo;
+        };
 
-          $scope.pageChanged = function() {
-            $log.log('Page changed to: ' + $scope.currentPage);
-          };
+        $scope.pageChanged = function() {
+          $log.log('Page changed to: ' + $scope.currentPage);
+        };
 
-          $scope.maxSize = 5;
-          $scope.bigTotalItems = 175;
-          $scope.bigCurrentPage = 1;
+        $scope.maxSize = 5;
+        $scope.bigTotalItems = 175;
+        $scope.bigCurrentPage = 1;
 
       });
     </script>
