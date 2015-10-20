@@ -24,6 +24,8 @@
                 .success(function (p) {
                     $scope.paintings = p;
                     $scope.totalItems = p.length;
+                    alert(p.length);
+                    alert(p);
                     var begin = (($scope.currentPage - 1) * $scope.itemsPerPage);
                     var end = begin + $scope.itemsPerPage;
 
@@ -70,16 +72,16 @@
     </script>
   </head>
   <body ng-controller="PaintingsCtrl">
-	<h2>Angular.js JSON Fetching Example</h2>
+	<h2>Di Taylor Gallery</h2>
     <table>
       <tr>
-        <th>Code</th>
-		<th>Country</th>
-        <th>Population</th>
+        <th>Title</th>
+		<th>Size</th>
+        <th>Price</th>
       </tr>
       <tr ng-repeat="painting in filteredPaintings | orderBy: 'price' ">
         <td>{{painting.name}}</td>
-		<td>{{painting.size}}</td>
+		    <td>{{painting.size}}</td>
         <td>{{painting.price}}</td>
       </tr>
     </table>
