@@ -38,7 +38,7 @@
          };
 
          $scope.isForSale = function(p) {
-          return ($scope.filterSold==="1" && (p.sold==null || p.sold === "0")) || $scope.filterSold===0;
+          return ($scope.filterSold===1 &&  p.sold === 0)) || $scope.filterSold===0;
          };
 
       }]);
