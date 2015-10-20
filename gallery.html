@@ -37,6 +37,10 @@
 
         $scope.pageChanged = function() {
            $log.log('Page changed to: ' + $scope.currentPage);
+           var begin = (($scope.currentPage - 1) * $scope.itemsPerPage);
+           var end = begin + $scope.itemsPerPage;
+
+           $scope.filteredPaintings = $scope.paintings.slice(begin, end);
          };
 
       }]);
