@@ -7,7 +7,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.2/ui-bootstrap-tpls.min.js"></script>
     <script>
       var galleryApp = angular.module('galleryApp', ['ui.bootstrap']);
-      countryApp.controller('PaintingsCtrl', function ($scope, $http){
+      galleryApp.controller('PaintingsCtrl', function ($scope, $http){
         $http.get('/returnAllPaintings').success(function(data) {
           $scope.paintings = data;
           $scope.totalItems = data.length;
@@ -39,7 +39,7 @@
       });
     </script>
   </head>
-  <body ng-controller="CountryCtrl">
+  <body ng-controller="PaintingsCtrl">
 	<h2>Angular.js JSON Fetching Example</h2>
     <table>
       <tr>
