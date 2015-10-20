@@ -24,8 +24,7 @@
                 .success(function (p) {
                     $scope.paintings = p;
                     $scope.totalItems = p.length;
-                    alert(p.length);
-                    alert(p);
+
                     var begin = (($scope.currentPage - 1) * $scope.itemsPerPage);
                     var end = begin + $scope.itemsPerPage;
 
@@ -86,6 +85,6 @@
       </tr>
     </table>
 
-    <uib-pagination total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()"></uib-pagination>
+    <uib-pagination total-items="totalItems" ng-model="currentPage"  itemsPerPage="itemsPerPage" ng-change="pageChanged()"></uib-pagination>
   </body>
 </html>
