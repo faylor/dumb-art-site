@@ -9,11 +9,11 @@
     "openshift"
   ],
   "author": {
-    "name": "OpenShift",
-    "email": "ramr@example.org",
-    "url": "http://www.openshift.com/"
+    "name": "DiTaylor",
+    "email": "di@ditaylor.com.au",
+    "url": "http://www.ditaylor.com.au/"
   },
-  "homepage": "http://www.openshift.com/",
+  "homepage": "http://www.ditaylor.com.au/",
   "repository": {
     "type": "git",
     "url": "https://github.com/openshift/origin-server"
@@ -27,7 +27,8 @@
   "dependencies": {
     "mongodb" : "> 1.1.10",
     "express": "~3.4.4",
-    "mongojs":">1.0.0"
+    "mongojs":">1.0.0",
+    "angular":"~1.4.7"
   },
   "devDependencies": {},
   "bundleDependencies": [],
