@@ -157,7 +157,7 @@ var SampleApp = function() {
                     }
                 });
                 var data = {
-                    title: "test",
+                    title: fields.title,
                     size: "100x100 test",
                     price: 19999,
                     sold: 0
