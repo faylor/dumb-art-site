@@ -130,18 +130,13 @@ var SampleApp = function() {
 
         self.postroutes['/upload'] = function(req, res) {
             var form = new formidable.IncomingForm();
-            var fields = [];
+
             form.parse(req, function(err, fields, files) {
                               res.writeHead(200, {'content-type': 'text/plain'});
                               res.write('received upload:\n\n');
                               res.end(util.inspect({fields: fields, files: files}));
                             });
-          form
-            .on('field', function (field, value) {
-                                  console.log(field, value);
-                                  fields.push([field, value]);
-                                })
-            .on('end', function(fields, files) {
+            form.on('end', function(fields, files) {
                 var temp_path = this.openedFiles[0].path;
                 var file_name = this.openedFiles[0].name;
 
@@ -163,7 +158,7 @@ var SampleApp = function() {
 
 
                 var data = {
-                    title: util.inspect(fields),
+                    title: req.body.title,
                     size: "100x100 test",
                     price: 19999,
                     sold: 0
@@ -171,7 +166,7 @@ var SampleApp = function() {
                 self.db.collection('Paintings').insert(data, function(err, result) {
                   if(err) { throw err; }
                   res.write("<p>Product inserted:</p>");
-                  res.end("<p>" + result[0].make + " " + result[0].model + "</p>");
+                  res.end("<p>" + result[0].title + " " + result[0].price + "</p>");
                 });
             });
         };
