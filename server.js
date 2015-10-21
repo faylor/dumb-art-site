@@ -52,7 +52,6 @@ var SampleApp = function() {
 
         //  Local cache for static content.
         self.zcache['index.html'] = fse.readFileSync('./index.html');
-        self.zcache['gallery.html'] = fse.readFileSync('./gallery.html');
     };
 
 
@@ -108,12 +107,12 @@ var SampleApp = function() {
             res.setHeader('Content-Type', 'text/html');
             res.send(self.cache_get('index.html') );
         };
-
+/*
         self.getroutes['/gallery'] = function(req, res) {
             res.setHeader('Content-Type', 'text/html');
             res.send(self.cache_get('gallery.html') );
         };
-
+*/
         self.getroutes['/returnAllPaintings'] = function(req, res){
             self.db.collection('Paintings').find().toArray(function(err, names) {
                 res.header("Content-Type:","text/json");
