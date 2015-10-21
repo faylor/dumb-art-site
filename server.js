@@ -149,6 +149,15 @@ var SampleApp = function() {
                       console.error(err);
                     } else {
                       console.log("success!");
+                      quickthumb.convert({
+                        src: self.imagedir + file_name,
+                        dst: self.imagedir + "thumbs/" + file_name,
+                        width: 50
+                      }, function (err, path) {
+                        if (err) {
+                          console.error(err);
+                        } 
+                      });
                     }
                 });
             });
@@ -164,7 +173,7 @@ var SampleApp = function() {
         self.createRoutes();
         self.app = express();
         self.app.use('/images',express.static(__dirname+ '/images'));
-        self.app.use(quickthumb.static(__dirname + '/images'));
+        //self.app.use(quickthumb.static(__dirname + '/images'));
         //  Add handlers for the app (from the routes).
         for (var g in self.getroutes) {
             self.app.get(g, self.getroutes[g]);
