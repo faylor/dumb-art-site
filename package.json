@@ -27,7 +27,8 @@
   "dependencies": {
     "mongodb" : "> 1.1.10",
     "express": "~3.4.4",
-    "mongojs":">1.0.0"
+    "mongojs":">1.0.0",
+    "multer": "~1.0.6"
   },
   "devDependencies": {},
   "bundleDependencies": [],

@@ -4,14 +4,8 @@ var express = require('express');
 var fs      = require('fs');
 var mongodb = require('mongodb');
 var mongojs = require('mongojs');
-
-/*var connection_string = process.env.OPENSHIFT_APP_NAME || 'node';
-if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD){
-  connection_string = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +
-  process.env.OPENSHIFT_MONGODB_DB_PASSWORD + "@" +
-  process.env.OPENSHIFT_MONGODB_DB_HOST + '/' +
-  process.env.OPENSHIFT_APP_NAME;
-}*/
+var formidable  = require('formidable');
+var quickthumb  = require('quickthumb');
 
 /**
  *  Define the sample application.
@@ -33,7 +27,7 @@ var SampleApp = function() {
         //  Set the environment variables we need.
         self.ipaddress = process.env.OPENSHIFT_NODEJS_IP;
         self.port      = process.env.OPENSHIFT_NODEJS_PORT || 8080;
-
+        self.imagedir = process.env.OPENSHIFT_DATA_DIR+'/images';
         if (typeof self.ipaddress === "undefined") {
             //  Log errors on OpenShift but continue w/ 127.0.0.1 - this
             //  allows us to run/test the app locally.
@@ -126,6 +120,34 @@ var SampleApp = function() {
                 res.end(JSON.stringify(names));
             });
         };
+        self.routes['/upload'].get = function (req, res){
+          res.writeHead(200, {'Content-Type': 'text/html' });
+          var form = '<form action="/upload" enctype="multipart/form-data" method="post">Add a title: <input name="title" type="text" /><br><br><input multiple="multiple" name="upload" type="file" /><br><br><input type="submit" value="Upload" /></form>';
+          res.end(form);
+        };
+        self.routes['/upload'].post = function(req, res) {
+            var form = new formidable.IncomingForm();
+            form.parse(req, function(err, fields, files) {
+                              res.writeHead(200, {'content-type': 'text/plain'});
+                              res.write('received upload:\n\n');
+                              res.end(util.inspect({fields: fields, files: files}));
+                            });
+
+            form.on('end', function(fields, files) {
+            /* Temporary location of our uploaded file */
+            var temp_path = this.openedFiles[0].path;
+            /* The file name of the uploaded file */
+            var file_name = this.openedFiles[0].name;
+            /* Location where we want to copy the uploaded file */
+
+            fs.copy(temp_path, imagedir + file_name, function(err) {
+              if (err) {
+                console.error(err);
+              } else {
+                console.log("success!")
+              }
+            });
+        };
     };
 
 
@@ -141,6 +163,8 @@ var SampleApp = function() {
         for (var r in self.routes) {
             self.app.get(r, self.routes[r]);
         }
+
+        self.app.use(quickthumb.static(imagedir));
     };
 
 
