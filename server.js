@@ -162,7 +162,7 @@ var SampleApp = function() {
     self.initializeServer = function() {
         self.createRoutes();
         self.app = express();
-        self.app.use(quickthumb.static(imagedir));
+        self.app.use(quickthumb.static(self.imagedir));
         //  Add handlers for the app (from the routes).
         for (var g in self.getroutes) {
             self.app.get(g, self.getroutes[g]);
