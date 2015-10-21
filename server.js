@@ -102,30 +102,33 @@ var SampleApp = function() {
      *  Create the routing table entries + handlers for the application.
      */
     self.createRoutes = function() {
-        self.routes = { };
+        self.getroutes = { };
 
-        self.routes['/'] = function(req, res) {
+        self.getroutes['/'] = function(req, res) {
             res.setHeader('Content-Type', 'text/html');
             res.send(self.cache_get('index.html') );
         };
 
-        self.routes['/gallery'] = function(req, res) {
+        self.getroutes['/gallery'] = function(req, res) {
             res.setHeader('Content-Type', 'text/html');
             res.send(self.cache_get('gallery.html') );
         };
 
-        self.routes['/returnAllPaintings'] = function(req, res){
+        self.getroutes['/returnAllPaintings'] = function(req, res){
             self.db.collection('Paintings').find().toArray(function(err, names) {
                 res.header("Content-Type:","text/json");
                 res.end(JSON.stringify(names));
             });
         };
-        self.routes['/upload'].get = function (req, res){
+        self.getroutes['/upload'] = function (req, res){
           res.writeHead(200, {'Content-Type': 'text/html' });
           var form = '<form action="/upload" enctype="multipart/form-data" method="post">Add a title: <input name="title" type="text" /><br><br><input multiple="multiple" name="upload" type="file" /><br><br><input type="submit" value="Upload" /></form>';
           res.end(form);
         };
-        self.routes['/upload'].post = function(req, res) {
+
+        self.postroutes = { };
+
+        self.postroutes['/upload'] = function(req, res) {
             var form = new formidable.IncomingForm();
             form.parse(req, function(err, fields, files) {
                               res.writeHead(200, {'content-type': 'text/plain'});
@@ -159,13 +162,15 @@ var SampleApp = function() {
     self.initializeServer = function() {
         self.createRoutes();
         self.app = express();
-
+        self.app.use(quickthumb.static(imagedir));
         //  Add handlers for the app (from the routes).
-        for (var r in self.routes) {
-            self.app.get(r, self.routes[r]);
+        for (var g in self.getroutes) {
+            self.app.get(g, self.getroutes[g]);
+        }
+        for (var p in self.postroutes) {
+            self.app.post(p, self.postroutes[p]);
         }
 
-        self.app.use(quickthumb.static(imagedir));
     };
 
 
