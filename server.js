@@ -156,8 +156,10 @@ var SampleApp = function() {
                       });
                     }
                 });
+                alert(fields);
+                
                 var data = {
-                    title: fields.title,
+                    title: "ff",
                     size: "100x100 test",
                     price: 19999,
                     sold: 0
