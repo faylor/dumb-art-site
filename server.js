@@ -155,12 +155,7 @@ var SampleApp = function() {
                     }
                 });
 
-                var data = {
-                    title: req.body.title,
-                    size: "100x100 test",
-                    price: 19999,
-                    sold: 0
-                  };
+              
                 self.db.collection('Paintings').insert(util.inspect(fields), function(err, result) {
                   if(err) { throw err; }
                   res.write("<p>Product inserted:</p>");
