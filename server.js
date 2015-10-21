@@ -1,7 +1,7 @@
 #!/bin/env node
 //  OpenShift sample Node application
 var express = require('express');
-var fs      = require('fs');
+var fse      = require('fs-extra');
 var mongodb = require('mongodb');
 var mongojs = require('mongojs');
 var formidable  = require('formidable');
@@ -51,8 +51,8 @@ var SampleApp = function() {
         }
 
         //  Local cache for static content.
-        self.zcache['index.html'] = fs.readFileSync('./index.html');
-        self.zcache['gallery.html'] = fs.readFileSync('./gallery.html');
+        self.zcache['index.html'] = fse.readFileSync('./index.html');
+        self.zcache['gallery.html'] = fse.readFileSync('./gallery.html');
     };
 
 
@@ -144,7 +144,7 @@ var SampleApp = function() {
                 var file_name = this.openedFiles[0].name;
                 /* Location where we want to copy the uploaded file */
 
-                fs.copy(temp_path, self.imagedir + file_name, function(err) {
+                fse.copy(temp_path, self.imagedir + file_name, function(err) {
                     if (err) {
                       console.error(err);
                     } else {
