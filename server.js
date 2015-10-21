@@ -133,7 +133,7 @@ var SampleApp = function() {
             var fieldValues={};
             form.on('field', function(field, value) {
               console.log(field, value);
-              fieldValues.push([field, value]);
+              fieldValues[field]=value;
             })
             .on('end', function(fields, files) {
                 var temp_path = this.openedFiles[0].path;
