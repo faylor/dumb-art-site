@@ -155,8 +155,8 @@ var SampleApp = function() {
                     }
                 });
 
-              
-                self.db.collection('Paintings').insert(util.inspect(fields), function(err, result) {
+
+                self.db.collection('Paintings').insert(fieldValues, function(err, result) {
                   if(err) { throw err; }
                   res.write("<p>Product inserted:</p>");
                   res.end("<p>" + result[0].title + " " + result[0].price + "</p>");
