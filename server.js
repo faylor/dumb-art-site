@@ -156,10 +156,10 @@ var SampleApp = function() {
                       });
                     }
                 });
-                alert(fields);
-                
+
+
                 var data = {
-                    title: "ff",
+                    title: util.inspect({fields: fields}),
                     size: "100x100 test",
                     price: 19999,
                     sold: 0
