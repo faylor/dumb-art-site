@@ -28,7 +28,8 @@
     "mongodb" : "> 1.1.10",
     "express": "~3.4.4",
     "mongojs":">1.0.0",
-    "formidable": "~1.0.17"
+    "formidable": "~1.0.17",
+    "quickthumb":"~0.0.11"
   },
   "devDependencies": {},
   "bundleDependencies": [],
