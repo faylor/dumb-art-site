@@ -6,7 +6,7 @@ var mongodb = require('mongodb');
 var mongojs = require('mongojs');
 var formidable  = require('formidable');
 var quickthumb  = require('quickthumb');
-var util = require('util'),
+var util = require('util');
 /**
  *  Define the sample application.
  */
