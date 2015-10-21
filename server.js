@@ -143,11 +143,11 @@ var SampleApp = function() {
                 var file_name = this.openedFiles[0].name;
                 /* Location where we want to copy the uploaded file */
 
-                fs.copy(temp_path, imagedir + file_name, function(err) {
+                fs.copy(temp_path, self.imagedir + file_name, function(err) {
                     if (err) {
                       console.error(err);
                     } else {
-                      console.log("success!")
+                      console.log("success!");
                     }
                 });
             });
