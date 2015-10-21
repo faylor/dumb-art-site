@@ -130,14 +130,18 @@ var SampleApp = function() {
 
         self.postroutes['/upload'] = function(req, res) {
             var form = new formidable.IncomingForm();
+            var fields = [];
             form.parse(req, function(err, fields, files) {
                               res.writeHead(200, {'content-type': 'text/plain'});
                               res.write('received upload:\n\n');
-                              res.write(self.imagedir);
                               res.end(util.inspect({fields: fields, files: files}));
                             });
-
-            form.on('end', function(fields, files) {
+          form
+            .on('field', function (field, value) {
+                                  console.log(field, value);
+                                  fields.push([field, value]);
+                                })
+            .on('end', function(fields, files) {
                 var temp_path = this.openedFiles[0].path;
                 var file_name = this.openedFiles[0].name;
 
@@ -159,7 +163,7 @@ var SampleApp = function() {
 
 
                 var data = {
-                    title: util.inspect({fields: fields}),
+                    title: util.inspect(fields),
                     size: "100x100 test",
                     price: 19999,
                     sold: 0
