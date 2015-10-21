@@ -30,7 +30,8 @@
     "mongojs":">1.0.0",
     "formidable": "~1.0.17",
     "quickthumb":"~0.0.11",
-    "util":"~0.10.3"
+    "util":"~0.10.3",
+    "fs-extra":"~0.24.0"
   },
   "devDependencies": {},
   "bundleDependencies": [],
