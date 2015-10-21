@@ -1,4 +1,4 @@
-var galleryApp = angular.module('galleryApp', ['ngRoute','ui.bootstrap']);
+var galleryApp = angular.module('galleryApp', ['ngNewRouter','ui.bootstrap']);
 
 galleryApp.config(function($routeProvider) {
         $routeProvider

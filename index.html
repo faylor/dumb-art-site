@@ -1,15 +1,16 @@
 <!doctype html>
-<html ng-app="galleryApp" lang="en">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <title>Di Taylor Art</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
   <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+  <script src="scripts/router.es5.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.2/ui-bootstrap-tpls.min.js"></script>
-  <script src="scripts/script.js"></script>
+  <script src="scripts/galleryApp.js"></script>
 </head>
-<body>
+<body ng-app="galleryApp" ng-controller="AppController as thisApp">
     <!-- HEADER AND NAVBAR -->
     <header>
         <nav class="navbar navbar-default">
@@ -19,9 +20,9 @@
             </div>
 
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#"><i class="fa fa-home"></i> Home</a></li>
-                <li><a href="#about"><i class="fa fa-shield"></i> About</a></li>
-                <li><a href="#contact"><i class="fa fa-comment"></i> Contact</a></li>
+                <li><a ng-link="home"><i class="fa fa-home"></i> Home</a></li>
+                <li><a ng-link="gallery"><i class="fa fa-shield"></i> Gallery</a></li>
+                <li><a ng-link="contact"><i class="fa fa-comment"></i> Contact</a></li>
             </ul>
         </div>
         </nav>
@@ -32,7 +33,7 @@
 
         <!-- angular templating -->
         <!-- this is where content will be injected -->
-        <div ng-view></div>
+        <div ng-viewport></div>
 
     </div>
 </body>
