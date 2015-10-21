@@ -138,27 +138,34 @@ var SampleApp = function() {
                             });
 
             form.on('end', function(fields, files) {
-                /* Temporary location of our uploaded file */
                 var temp_path = this.openedFiles[0].path;
-                /* The file name of the uploaded file */
                 var file_name = this.openedFiles[0].name;
-                /* Location where we want to copy the uploaded file */
 
                 fse.copy(temp_path, self.imagedir + file_name, function(err) {
                     if (err) {
                       console.error(err);
                     } else {
-                      console.log("success!");
                       quickthumb.convert({
                         src: self.imagedir + file_name,
                         dst: self.imagedir + "thumbs/" + file_name,
-                        width: 50
+                        height: 200
                       }, function (err, path) {
                         if (err) {
                           console.error(err);
-                        } 
+                        }
                       });
                     }
+                });
+                var data = {
+                    title: "test",
+                    size: "100x100 test",
+                    price: 19999,
+                    sold: 0
+                  };
+                self.db.collection('Paintings').insert(data, function(err, result) {
+                  if(err) { throw err; }
+                  res.write("<p>Product inserted:</p>");
+                  res.end("<p>" + result[0].make + " " + result[0].model + "</p>");
                 });
             });
         };
