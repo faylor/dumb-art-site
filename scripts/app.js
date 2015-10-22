@@ -1,11 +1,17 @@
-angular.module('app', ['app.home', 'app.gallery', 'app.contact','ngNewRouter'])
-  .controller('AppController', ['$router', AppController]);
+var app = angular.module('app', ['ngRoute','app.home', 'app.gallery', 'app.contact']);
 
-function AppController ($router) {
-  $router.config([
-    {path: '/', component: 'home'},
-    {path: '/contact', component: 'contact'},
-    {path: '/gallery', component: 'gallery'}
-  ]);
-
-}
+app.config(['$routeProvider',
+  function($routeProvider) {
+    $routeProvider.
+      when('/', {
+        templateUrl: 'components/home/home.html',
+        controller: 'HomeController'
+    }).
+      when('/Contact', {
+        templateUrl: 'components/contact/contact.html',
+        controller: 'ContactController'
+      }).
+      otherwise({
+        redirectTo: '/AddNewOrder'
+      });
+}]);
