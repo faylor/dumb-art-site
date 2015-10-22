@@ -1,2 +1,18 @@
 <h2>Di Taylor Gallery</h2>
 <p>{{name}} home copy</p>
+  <table>
+    <tr>
+      <th>Title</th>
+  <th>Size</th>
+      <th>Price</th>
+    </tr>
+    <tr ng-repeat="painting in filteredPaintings | filter:isForSale | orderBy: 'price' ">
+      <td>{{painting.name}}</td>
+      <td>{{painting.size}}</td>
+      <td>{{painting.price}}</td>
+    </tr>
+  </table>
+  <button type="button" class="btn btn-primary" ng-model="filterSold" uib-btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0">
+      Show For Sale Only
+  </button>
+  <uib-pagination total-items="totalItems" ng-model="currentPage"  items-per-page="itemsPerPage" ng-change="pageChanged()"></uib-pagination>
