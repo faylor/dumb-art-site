@@ -13,7 +13,7 @@ app.config(['$routeProvider',
         templateUrl: 'components/gallery/gallery.html'
       }).
       otherwise({
-        redirectTo: '/Home'
+        redirectTo: '/home'
       });
 }]);
 
