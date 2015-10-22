@@ -10,7 +10,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.2/ui-bootstrap-tpls.min.js"></script>
   <script src="scripts/app.js"></script>
 </head>
-<body ng-app="myApp" ng-controller="AppController as app">
+<body ng-app="app">
     <!-- HEADER AND NAVBAR -->
     <header>
         <nav class="navbar navbar-default">
@@ -33,7 +33,7 @@
 
         <!-- angular templating -->
         <!-- this is where content will be injected -->
-        <div ng-viewport></div>
+        <div ng-view></div>
 
     </div>
 </body>

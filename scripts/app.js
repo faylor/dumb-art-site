@@ -12,6 +12,6 @@ app.config(['$routeProvider',
         controller: 'ContactController'
       }).
       otherwise({
-        redirectTo: '/AddNewOrder'
+        redirectTo: '/'
       });
 }]);
