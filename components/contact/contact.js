@@ -1,4 +1,4 @@
 angular.module('app.contact', [])
-  .controller('ContactController', [function () {
-    this.name = 'Contacter';
-  }]);
+  .controller('ContactController', function ($scope) {
+    $scope.name = 'Contacter';
+  });
