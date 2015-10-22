@@ -1,17 +1,20 @@
-var app = angular.module('app', ['ngRoute','app.home', 'app.gallery', 'app.contact']);
-
-app.config(['$routeProvider',
+angular.module('app', ['ngRoute','app.home', 'app.gallery', 'app.contact'])
+.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
-      when('/', {
+      when('/home', {
         templateUrl: 'components/home/home.html',
         controller: 'HomeController'
     }).
-      when('/Contact', {
+      when('/contact', {
+        templateUrl: 'components/contact/contact.html',
+        controller: 'ContactController'
+      }).
+      when('/gallery', {
         templateUrl: 'components/contact/contact.html',
         controller: 'ContactController'
       }).
       otherwise({
-        redirectTo: '/'
+        redirectTo: '/Home'
       });
 }]);
