@@ -3,7 +3,8 @@ app.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
       when('/home', {
-        templateUrl: 'components/home/home.html'
+        templateUrl: 'components/home/home.html',
+        resolve: resolveController('components/home/home.js')
     }).
       when('/contact', {
         templateUrl: 'components/contact/contact.html'
