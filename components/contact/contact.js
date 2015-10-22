@@ -1,4 +1,4 @@
-angular.module('galleryApp.contact', [])
+angular.module('app.contact', [])
   .controller('ContactController', [function () {
     this.name = 'Contacter';
   }]);
