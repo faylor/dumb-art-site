@@ -1,5 +1,5 @@
-angular.module('app', ['ngRoute','app.home', 'app.gallery', 'app.contact'])
-.config(['$routeProvider',
+var app = angular.module('app', ['ngRoute'])
+app.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
       when('/home', {
@@ -7,14 +7,18 @@ angular.module('app', ['ngRoute','app.home', 'app.gallery', 'app.contact'])
         controller: 'HomeController'
     }).
       when('/contact', {
-        templateUrl: 'components/contact/contact.html',
-        controller: 'ContactController'
+        templateUrl: 'components/home/home.html',
+        controller: 'HomeController'
       }).
       when('/gallery', {
-        templateUrl: 'components/contact/contact.html',
-        controller: 'ContactController'
+        templateUrl: 'components/home/home.html',
+        controller: 'HomeController'
       }).
       otherwise({
         redirectTo: '/Home'
       });
 }]);
+
+app.controller('HomeController', function($scope) {
+    $scope.name = 'Friend';
+  });
