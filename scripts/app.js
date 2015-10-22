@@ -4,7 +4,7 @@ app.config(['$routeProvider',
     $routeProvider.
       when('/home', {
         templateUrl: 'components/home/home.html',
-        resolve: resolveController('components/home/home.js')
+        controller:'HomeController'
     }).
       when('/contact', {
         templateUrl: 'components/contact/contact.html'
@@ -16,3 +16,7 @@ app.config(['$routeProvider',
         redirectTo: '/Home'
       });
 }]);
+
+app.controller('HomeController', function ($scope) {
+    $scope.name = 'Homies';
+  }];
