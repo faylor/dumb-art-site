@@ -1,4 +1,5 @@
-var app = angular.module('app', ['ngRoute'])
+var app = angular.module('galleryApp', ['ngRoute'])
+
 app.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
