@@ -1,4 +1,4 @@
-angular.module('app.gallery', [])
-  .controller('GalleryController', [function () {
-    this.name = 'Galleries';
-  }]);
+angular.module('app', [])
+  .controller('GalleryController', function ($scope) {
+    $scope.name = 'Galleries';
+  });

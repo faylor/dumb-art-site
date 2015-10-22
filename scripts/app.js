@@ -3,21 +3,15 @@ app.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
       when('/home', {
-        templateUrl: 'components/home/home.html',
-        controller: 'HomeController'
+        templateUrl: 'components/home/home.html'
     }).
       when('/contact', {
         templateUrl: 'components/contact/contact.html'
       }).
       when('/gallery', {
-        templateUrl: 'components/home/home.html',
-        controller: 'HomeController'
+        templateUrl: 'components/gallery/gallery.html'
       }).
       otherwise({
         redirectTo: '/Home'
       });
 }]);
-
-app.controller('HomeController', function($scope) {
-    $scope.name = 'Friend';
-  });
