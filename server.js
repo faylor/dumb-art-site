@@ -180,7 +180,7 @@ var SampleApp = function() {
         self.createRoutes();
         self.app = express();
         self.app.use('/images',express.static(__dirname+ '/images'));
-        self.app.use('/components',express.static(__dirname+ '/components'));
+        self.app.use('/components/home',express.static(__dirname+ '/components/home'));
         self.app.use('/scripts',express.static(__dirname+ '/scripts'));
         //self.app.use(quickthumb.static(__dirname + '/images'));
         //  Add handlers for the app (from the routes).
