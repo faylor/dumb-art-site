@@ -1,4 +1,4 @@
-var app = angular.module('app', ['ngRoute','app.contact'])
+var app = angular.module('app', ['ngRoute'])
 app.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
@@ -7,8 +7,7 @@ app.config(['$routeProvider',
         controller: 'HomeController'
     }).
       when('/contact', {
-        templateUrl: 'components/contact/contact.html',
-        controller: 'ContactController'
+        templateUrl: 'components/contact/contact.html'
       }).
       when('/gallery', {
         templateUrl: 'components/home/home.html',
