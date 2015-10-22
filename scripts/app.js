@@ -25,7 +25,7 @@ app.controller('homeController', function ($scope) {
     $scope.message = 'Look! I am an about page.';
 });
 
-app.controller('galleryController', '$http', 'dataFactory', function ( $scope, $http, dataFactory){
+app.controller('galleryController', ['$scope','$http', 'dataFactory', function ( $scope, $http, dataFactory){
   $scope.name = 'Galleries';
   $scope.paintings;
   $scope.filteredPaintings;
