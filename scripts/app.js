@@ -7,8 +7,8 @@ app.config(['$routeProvider',
         controller: 'HomeController'
     }).
       when('/contact', {
-        templateUrl: 'components/home/home.html',
-        controller: 'HomeController'
+        templateUrl: 'components/contact/contact.html',
+        controller: 'ContactController'
       }).
       when('/gallery', {
         templateUrl: 'components/home/home.html',
