@@ -4,8 +4,8 @@ app.config(['$routeProvider',
     $routeProvider.
       when('/home', {
         templateUrl: 'components/home/home.html',
-        controller:'HomeController'
-    }).
+        controller:'homeController'
+      }).
       when('/contact', {
         templateUrl: 'components/contact/contact.html'
       }).
@@ -17,6 +17,7 @@ app.config(['$routeProvider',
       });
 }]);
 
-app.controller('HomeController', function ($scope) {
+app.controller('homeController', function ($scope) {
     $scope.namer = 'Homies';
-  });
+    $scope.message = 'Look! I am an about page.';
+});
