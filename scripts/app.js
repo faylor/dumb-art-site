@@ -40,7 +40,7 @@ app.controller('galleryController', ['$scope','$http', 'dataFactory', function (
       dataFactory.getPaintings()
           .success(function (p) {
               $scope.paintings = p;
-              $scope.totalItems = p.length;
+
               $scope.pageChanged();
           })
           .error(function (error) {
@@ -53,6 +53,7 @@ app.controller('galleryController', ['$scope','$http', 'dataFactory', function (
      var end = begin + $scope.itemsPerPage;
 
      $scope.filteredPaintings = $scope.paintings.slice(begin, end);
+     $scope.totalItems = filteredPaintings.length;
    };
 
    $scope.isForSale = function(p) {
