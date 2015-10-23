@@ -7,7 +7,7 @@ var mongoose = require('mongoose');
 var formidable  = require('formidable');
 var quickthumb  = require('quickthumb');
 var util = require('util');
-var routes = require('./node_config/routes.js')
+
 /**
  *  Define the sample application.
  */
@@ -55,9 +55,9 @@ var SampleApp = function() {
 
         self.db = mongoose.connection;
         self.db.on('error', console.error);
-        self.db.on('disconnected', connect);
+        self.db.on('disconnected', self.connectDatabase);
 
-        require(__dirname + 'node_config/models/painting.js');
+        require(__dirname + '/node_config/models/painting.js');
     };
 
     /**
@@ -122,7 +122,8 @@ var SampleApp = function() {
      *  the handlers.
      */
     self.initializeServer = function() {
-        routes(self);
+
+        require('./node_config/routes.js')(self)
         self.app = express();
         self.app.use('/images',express.static(__dirname+ '/images'));
         self.app.use('/components',express.static(__dirname+ '/components/',{ maxAge: 86400000 }));

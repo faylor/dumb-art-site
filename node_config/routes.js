@@ -1,3 +1,5 @@
+var paintings = require('./controllers/paintings.js');
+
 module.exports = function(self) {
     self.getroutes = { };
 
@@ -11,12 +13,13 @@ module.exports = function(self) {
         res.send(self.cache_get('gallery.html') );
     };
 */
-    self.getroutes['/returnAllPaintings'] = function(req, res){
+    self.getroutes['/returnAllPaintings'] = paintings.index;
+    /*function(req, res){
         self.db.collection('Paintings').find().toArray(function(err, names) {
             res.header("Content-Type:","text/json");
             res.end(JSON.stringify(names));
         });
-    };
+    };*/
     self.getroutes['/upload'] = function (req, res){
       res.writeHead(200, {'Content-Type': 'text/html' });
       var form = '<form action="/upload" enctype="multipart/form-data" method="post">Add a title: <input name="title" type="text" /><br><br><input multiple="multiple" name="upload" type="file" /><br><br><input type="submit" value="Upload" /></form>';
