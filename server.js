@@ -51,7 +51,7 @@ var SampleApp = function() {
 
     self.setupDatabase = function() {
 
-        connectDatabase();
+        self.connectDatabase();
 
         self.db = mongoose.connection;
         self.db.on('error', console.error);

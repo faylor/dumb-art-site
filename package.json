@@ -8,34 +8,30 @@
     "application",
     "openshift"
   ],
-  "author": {
-    "name": "DiTaylor",
-    "email": "di@ditaylor.com.au",
-    "url": "http://www.ditaylor.com.au/"
-  },
+  "author": "DiTaylor <di@ditaylor.com.au> (http://www.ditaylor.com.au/)",
   "homepage": "http://www.ditaylor.com.au/",
   "repository": {
     "type": "git",
-    "url": "https://github.com/openshift/origin-server"
+    "url": "git://github.com/openshift/origin-server.git"
   },
-
   "engines": {
     "node": ">= 0.6.0",
     "npm": ">= 1.0.0"
   },
-
   "dependencies": {
-    "mongodb" : "> 1.1.10",
+    "mongodb": "> 1.1.10",
     "express": "~3.4.4",
-    "mongoose":"~4.2.2",
+    "mongoose": "~4.2.2",
     "formidable": "~1.0.17",
-    "quickthumb":"~0.0.11",
-    "util":"~0.10.3",
-    "fs-extra":"~0.24.0"
+    "quickthumb": "~0.0.11",
+    "util": "~0.10.3",
+    "fs-extra": "~0.24.0"
   },
   "devDependencies": {},
   "bundleDependencies": [],
-
   "private": true,
-  "main": "server.js"
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  }
 }
