@@ -7,7 +7,7 @@ var mongoose = require('mongoose');
 var formidable  = require('formidable');
 var quickthumb  = require('quickthumb');
 var util = require('util');
-var routes = require('node_config/routes.js')
+var routes = require('./node_config/routes.js')
 /**
  *  Define the sample application.
  */
@@ -115,17 +115,14 @@ var SampleApp = function() {
     /*  App server functions (main app logic here).                       */
     /*  ================================================================  */
 
-    /**
-     *  Create the routing table entries + handlers for the application.
-     */
-    self.createRoutes = routes(self);
+
 
     /**
      *  Initialize the server (express) and create the routes and register
      *  the handlers.
      */
     self.initializeServer = function() {
-        self.createRoutes();
+        routes(self);
         self.app = express();
         self.app.use('/images',express.static(__dirname+ '/images'));
         self.app.use('/components',express.static(__dirname+ '/components/',{ maxAge: 86400000 }));
