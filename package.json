@@ -27,7 +27,7 @@
   "dependencies": {
     "mongodb" : "> 1.1.10",
     "express": "~3.4.4",
-    "mongojs":">1.0.0",
+    "mongoose":"~4.2.2",
     "formidable": "~1.0.17",
     "quickthumb":"~0.0.11",
     "util":"~0.10.3",

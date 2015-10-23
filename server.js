@@ -3,10 +3,11 @@
 var express = require('express');
 var fse      = require('fs-extra');
 var mongodb = require('mongodb');
-var mongojs = require('mongojs');
+var mongoose = require('mongoose');
 var formidable  = require('formidable');
 var quickthumb  = require('quickthumb');
 var util = require('util');
+var routes = require('node_config/routes.js')
 /**
  *  Define the sample application.
  */
@@ -34,13 +35,30 @@ var SampleApp = function() {
             console.warn('No OPENSHIFT_NODEJS_IP var, using 127.0.0.1');
             self.ipaddress = "127.0.0.1";
         };
-        var dbName = "/nodejs";
-        var connection_string = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +  process.env.OPENSHIFT_MONGODB_DB_PASSWORD + "@" + process.env.OPENSHIFT_MONGODB_DB_HOST + dbName;
-        self.db = mongojs(connection_string, ['Paintings']);
-
-
+        //var dbName = "/nodejs";
+        //var connection_string = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +  process.env.OPENSHIFT_MONGODB_DB_PASSWORD + "@" + process.env.OPENSHIFT_MONGODB_DB_HOST + dbName;
+        //self.db = mongojs(connection_string, ['Paintings']);
+        self.url = process.env.OPENSHIFT_MONGODB_DB_URL + process.env.OPENSHIFT_APP_NAME;
     };
 
+    /**
+     *  Set up server IP address and port # using env variables/defaults.
+     */
+    self.connectDatabase = function () {
+       var options = { server: { socketOptions: { keepAlive: 1 } } };
+       mongoose.connect(self.url, options);
+    };
+
+    self.setupDatabase = function() {
+
+        connectDatabase();
+
+        self.db = mongoose.connection;
+        self.db.on('error', console.error);
+        self.db.on('disconnected', connect);
+
+        require(__dirname + 'node_config/models/painting.js');
+    };
 
     /**
      *  Populate the cache.
@@ -100,77 +118,7 @@ var SampleApp = function() {
     /**
      *  Create the routing table entries + handlers for the application.
      */
-    self.createRoutes = function() {
-        self.getroutes = { };
-
-        self.getroutes['/'] = function(req, res) {
-            res.setHeader('Content-Type', 'text/html');
-            res.send(self.cache_get('index.html') );
-        };
-/*
-        self.getroutes['/gallery'] = function(req, res) {
-            res.setHeader('Content-Type', 'text/html');
-            res.send(self.cache_get('gallery.html') );
-        };
-*/
-        self.getroutes['/returnAllPaintings'] = function(req, res){
-            self.db.collection('Paintings').find().toArray(function(err, names) {
-                res.header("Content-Type:","text/json");
-                res.end(JSON.stringify(names));
-            });
-        };
-        self.getroutes['/upload'] = function (req, res){
-          res.writeHead(200, {'Content-Type': 'text/html' });
-          var form = '<form action="/upload" enctype="multipart/form-data" method="post">Add a title: <input name="title" type="text" /><br><br><input multiple="multiple" name="upload" type="file" /><br><br><input type="submit" value="Upload" /></form>';
-          res.end(form);
-        };
-
-        self.postroutes = { };
-
-        self.postroutes['/upload'] = function(req, res) {
-            var form = new formidable.IncomingForm();
-            var fieldValues={};
-            form.on('field', function(field, value) {
-              console.log(field, value);
-              fieldValues[field]=value;
-            })
-            .on('end', function(fields, files) {
-                var temp_path = this.openedFiles[0].path;
-                var file_name = this.openedFiles[0].name;
-
-                fse.copy(temp_path, self.imagedir + file_name, function(err) {
-                    if (err) {
-                      console.error(err);
-                    } else {
-                      quickthumb.convert({
-                        src: self.imagedir + file_name,
-                        dst: self.imagedir + "thumbs/" + file_name,
-                        height: 200
-                      }, function (err, path) {
-                        if (err) {
-                          console.error(err);
-                        }
-                      });
-                    }
-                });
-
-
-                self.db.collection('Paintings').insert(fieldValues, function(err, result) {
-                  if(err) { throw err; }
-                  res.write("<p>Product inserted:</p>");
-                  res.end("<p>" + result[0].title + " " + result[0].price + "</p>");
-                });
-            });
-
-
-            form.parse(req, function(err, fields, files) {
-                              res.writeHead(200, {'content-type': 'text/plain'});
-                              res.write('received upload:\n\n');
-                              res.end(util.inspect({fields: fields, files: files}));
-                            });
-        };
-    };
-
+    self.createRoutes = routes(self);
 
     /**
      *  Initialize the server (express) and create the routes and register
@@ -201,7 +149,7 @@ var SampleApp = function() {
         self.setupVariables();
         self.populateCache();
         self.setupTerminationHandlers();
-
+        self.setupDatabase();
         // Create the express server and routes.
         self.initializeServer();
     };
