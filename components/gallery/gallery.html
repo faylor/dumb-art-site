@@ -7,9 +7,10 @@
       <th>Price</th>
     </tr>
     <tr ng-repeat="painting in filteredPaintings | filter:isForSale | orderBy: 'price' ">
-      <td>{{painting.name}}</td>
+      <td>{{painting.title}}</td>
       <td>{{painting.size}}</td>
       <td>{{painting.price}}</td>
+      <td><img src="images/thumbs/{{painting.image}}"/></td>
     </tr>
   </table>
   <button type="button" class="btn btn-primary" ng-model="filterSold" uib-btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0">
