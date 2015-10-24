@@ -17,7 +17,7 @@ exports.login = function (req, res) {
     });
 
     if (username == '' || password == '') {
-        console.log("empty username and password" + user.username);
+        console.log("empty username and password" + username);
         return res.send(401);
     }
 
