@@ -58,6 +58,7 @@ var SampleApp = function() {
         self.db.on('disconnected', self.connectDatabase);
 
         require(__dirname + '/node_config/models/painting.js');
+        require(__dirname + '/node_config/models/user.js');
     };
 
     /**

@@ -1,4 +1,5 @@
 var paintings = require('./controllers/paintings.js');
+var users = require('./controllers/users.js');
 
 module.exports = function(self) {
     self.getroutes = { };
@@ -27,6 +28,11 @@ module.exports = function(self) {
     };
 
     self.postroutes = { };
+
+    /*
+        Login
+    */
+    self.postroutes['/login'] = users.login;
 
     self.postroutes['/upload'] = function(req, res) {
         var form = new formidable.IncomingForm();

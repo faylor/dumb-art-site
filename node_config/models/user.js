@@ -1,3 +1,4 @@
+var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 // User schema
@@ -30,4 +31,4 @@ User.methods.comparePassword = function(password, cb) {
         cb(isMatch);
     });
 };
-mongoose.model('User', UserSchema);
+mongoose.model('User', User);
