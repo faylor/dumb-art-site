@@ -97,7 +97,7 @@ app.controller('loginController', ['$scope', '$location', '$window', 'UserServic
                 UserService.logIn(username, password).success(function(data) {
                     AuthenticationService.isLogged = true;
                     $window.sessionStorage.token = data.token;
-                    $location.path("/admin");
+                    $location.path("/contact");
                 }).error(function(status, data) {
                     console.log(status);
                     console.log(data);
