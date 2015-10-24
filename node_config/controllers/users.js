@@ -24,6 +24,20 @@ exports.login = function (req, res) {
     }
     console.log("THIS IS WHAT IS FOUND:::>>"+fieldValues.username);
     console.log("THIS IS WHAT IS FOUND:::>>"+fieldValues.password);
+    var query  = User.where({ username: fieldValues.username });
+    query.findOne(function (err, doc) {
+      if (err) {
+        console.log(err);
+        return res.send(401);
+      }
+      if (doc) {
+        // doc may be null if no document matched
+        console.log(doc.toObject().username);
+        console.log(doc.toObject().password);
+      }
+    });
+
+/*
     User.findOne({username: fieldValues.username}, function (err, obj) {
         if (err) {
             console.log(err);
@@ -37,7 +51,7 @@ exports.login = function (req, res) {
 
           return res.json({token:token});
         }
-        /*user.comparePassword(fieldValues.password, function(isMatch) {
+        user.comparePassword(fieldValues.password, function(isMatch) {
             if (!isMatch) {
                 console.log("Attempt failed to login with " + user.username);
                 return res.send(401);
@@ -46,9 +60,10 @@ exports.login = function (req, res) {
             var token = jwt.sign(user, secret.secretToken, { expiresInMinutes: 60 });
 
             return res.json({token:token});
-        });*/
+        });
 
     });
+    */
 };
 
 
