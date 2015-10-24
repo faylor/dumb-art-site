@@ -7,7 +7,7 @@ var mongoose = require('mongoose');
 var User = mongoose.model('User');
 
 exports.login = function (req, res) {
-    var username = req.body.username || '';
+    var username = "di";//req.body.username || '';
     var password = req.body.password || '';
 
     if (username == '' || password == '') {
