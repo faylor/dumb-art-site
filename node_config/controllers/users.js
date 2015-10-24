@@ -5,6 +5,7 @@
 
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
+var bodyParser = require('body-parser');
 
 exports.login = function (req, res) {
     var username = "di";//req.body.username || '';

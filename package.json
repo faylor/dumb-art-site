@@ -19,6 +19,7 @@
     "npm": ">= 1.0.0"
   },
   "dependencies": {
+    "body-parser": "^1.14.1",
     "express": "^3.4.8",
     "formidable": "^1.0.17",
     "fs-extra": "^0.24.0",
