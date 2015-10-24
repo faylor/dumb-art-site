@@ -11,7 +11,12 @@ var Painting = mongoose.model('Painting')
  */
 
 exports.index = function (req, res){
-  var page = (req.params.page > 0 ? req.params.page : 1) - 1;
+  
+  Painting.find().lean().exec(function(err, docs) {
+      res.header("Content-Type:","text/json");
+      res.end(JSON.stringify(docs));
+  });
+  /*var page = (req.params.page > 0 ? req.params.page : 1) - 1;
   var perPage = 30;
   var options = {
     perPage: perPage,
@@ -28,5 +33,5 @@ exports.index = function (req, res){
         pages: Math.ceil(count / perPage)
       });
     });
-  });
+  });*/
 };
