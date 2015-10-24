@@ -5,6 +5,7 @@
 
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
+var formidable  = require('formidable');
 
 exports.login = function (req, res) {
     var username = '';

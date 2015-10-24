@@ -4,7 +4,6 @@ var express = require('express');
 var fse      = require('fs-extra');
 var mongodb = require('mongodb');
 var mongoose = require('mongoose');
-var formidable  = require('formidable');
 var quickthumb  = require('quickthumb');
 var util = require('util');
 
