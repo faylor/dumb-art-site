@@ -25,7 +25,7 @@ exports.login = function (req, res) {
     console.log("THIS IS WHAT IS FOUND:::>>"+fieldValues.username);
     console.log("THIS IS WHAT IS FOUND:::>>"+fieldValues.password);
 
-    User.find().lean().exec(function(err, docs) {
+    User.find().limit(1).lean().exec(function(err, docs) {
         console.log(JSON.stringify(docs));
     });
 
