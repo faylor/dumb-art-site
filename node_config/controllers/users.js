@@ -5,11 +5,15 @@
 
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
-var bodyParser = require('body-parser');
 
 exports.login = function (req, res) {
-    var username = "di";//req.body.username || '';
-    var password = req.body.password || '';
+    var username = '';
+    var password = '';
+    var form = new formidable.IncomingForm();
+    form.parse(req, function(err, fields, files) {
+        username = fields.username
+        password = fields.password;
+    });
 
     if (username == '' || password == '') {
         return res.send(401);

@@ -57,8 +57,10 @@ var SampleApp = function() {
         self.db.on('error', console.error);
         self.db.on('disconnected', self.connectDatabase);
 
-        require(__dirname + '/node_config/models/painting.js');
-        require(__dirname + '/node_config/models/user.js');
+        // Bootstrap models
+        fse.readdirSync(__dirname + '/node_config/models/').forEach(function (file) {
+          if (~file.indexOf('.js')) require(__dirname + '/node_config/models/' + file);
+        });
     };
 
     /**
@@ -151,6 +153,7 @@ var SampleApp = function() {
         self.setupDatabase();
         // Create the express server and routes.
         self.initializeServer();
+
     };
 
     /**

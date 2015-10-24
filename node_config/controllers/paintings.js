@@ -5,13 +5,12 @@
 var mongoose = require('mongoose')
 var Painting = mongoose.model('Painting')
 
-
 /**
  * List
  */
 
 exports.index = function (req, res){
-  
+
   Painting.find().lean().exec(function(err, docs) {
       res.header("Content-Type:","text/json");
       res.end(JSON.stringify(docs));
