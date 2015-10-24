@@ -24,11 +24,12 @@ exports.login = function (req, res) {
     }
     console.log("THIS IS WHAT IS FOUND:::>>"+fieldValues.username);
     console.log("THIS IS WHAT IS FOUND:::>>"+fieldValues.password);
-    User.findOne({username: fieldValues.username}, function (err, user) {
+    User.findOne({username: fieldValues.username}, function (err, obj) {
         if (err) {
             console.log(err);
             return res.send(401);
         }
+        var user = obj.toObject();
         console.log("username>>"+user.username);
         console.log("username>>"+user.password);
         if(user.password==fieldValues.password){
