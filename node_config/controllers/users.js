@@ -12,11 +12,12 @@ exports.login = function (req, res) {
     var password = '';
     var form = new formidable.IncomingForm();
     form.parse(req, function(err, fields, files) {
-        username = fields.username
+        username = fields.username;
         password = fields.password;
     });
 
     if (username == '' || password == '') {
+        console.log("empty username and password" + user.username);
         return res.send(401);
     }
 
