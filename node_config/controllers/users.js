@@ -16,6 +16,7 @@ exports.login = function (req, res) {
       console.log("THIS IS WHAT IS FOUND:::>>"+field, value);
       fieldValues[field]=value;
     })
+    form.parse(req, function(err, fields, files) {});
 
     if (username == '' || password == '') {
         console.log("empty username and password" + fieldValues.username);
