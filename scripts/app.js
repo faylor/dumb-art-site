@@ -87,8 +87,8 @@ app.controller('contactController', function ($scope) {
 
 
 
-app.controller('AdminUserCtrl', ['$scope', '$location', '$window', 'UserService', 'AuthenticationService',
-    function AdminUserCtrl($scope, $location, $window, UserService, AuthenticationService) {
+app.controller('loginController', ['$scope', '$location', '$window', 'UserService', 'AuthenticationService',
+    function ($scope, $location, $window, UserService, AuthenticationService) {
 
         //Admin User Controller (login, logout)
         $scope.logIn = function logIn(username, password) {
