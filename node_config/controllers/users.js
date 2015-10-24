@@ -17,7 +17,7 @@ exports.login = function (req, res) {
     })
     form.parse(req, function(err, fields, files) {});
 
-    if (username == '' || password == '') {
+    if (fieldValues.username == '' || fieldValues.password == '') {
         return res.send(401);
     }
     console.log("THIS IS WHAT IS FOUND:::>>"+fieldValues.username);
