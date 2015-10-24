@@ -13,16 +13,15 @@ exports.login = function (req, res) {
     var form = new formidable.IncomingForm();
     var fieldValues={};
     form.on('field', function(field, value) {
-      console.log("THIS IS WHAT IS FOUND:::>>"+field, value);
       fieldValues[field]=value;
     })
     form.parse(req, function(err, fields, files) {});
 
     if (username == '' || password == '') {
-        console.log("empty username and password" + fieldValues.username);
         return res.send(401);
     }
-
+    console.log("THIS IS WHAT IS FOUND:::>>"+fieldValues.username);
+    console.log("THIS IS WHAT IS FOUND:::>>"+fieldValues.password);
     User.findOne({username: fieldValues.username}, function (err, user) {
         if (err) {
             console.log(err);
@@ -41,4 +40,29 @@ exports.login = function (req, res) {
         });
 
     });
+};
+
+
+exports.save = function (req, res) {
+    var username = '';
+    var password = '';
+    var form = new formidable.IncomingForm();
+    var fieldValues={};
+    form.on('field', function(field, value) {
+      fieldValues[field]=value;
+    })
+    form.parse(req, function(err, fields, files) {});
+
+    if (username == '' || password == '') {
+        return res.send(401);
+    }
+    console.log("THIS IS WHAT IS FOUND:::>>"+fieldValues.username);
+    console.log("THIS IS WHAT IS FOUND:::>>"+fieldValues.password);
+    User.findOne({username: fieldValues.username}, function (err, user) {
+        if (err) {
+            console.log(err);
+            return res.send(401);
+        }
+    });
+    //User.save();
 };
