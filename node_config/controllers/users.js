@@ -27,8 +27,12 @@ exports.login = function (req, res) {
             console.log(err);
             return res.send(401);
         }
+        if(user.password==fieldValues.password){
+          var token = jwt.sign(user, secret.secretToken, { expiresInMinutes: 60 });
 
-        user.comparePassword(fieldValues.password, function(isMatch) {
+          return res.json({token:token});
+        }
+        /*user.comparePassword(fieldValues.password, function(isMatch) {
             if (!isMatch) {
                 console.log("Attempt failed to login with " + user.username);
                 return res.send(401);
@@ -37,7 +41,7 @@ exports.login = function (req, res) {
             var token = jwt.sign(user, secret.secretToken, { expiresInMinutes: 60 });
 
             return res.json({token:token});
-        });
+        });*/
 
     });
 };
