@@ -11,23 +11,24 @@ exports.login = function (req, res) {
     var username = '';
     var password = '';
     var form = new formidable.IncomingForm();
-    form.parse(req, function(err, fields, files) {
-        username = fields.username;
-        password = fields.password;
-    });
+    var fieldValues={};
+    form.on('field', function(field, value) {
+      console.log("THIS IS WHAT IS FOUND:::>>"+field, value);
+      fieldValues[field]=value;
+    })
 
     if (username == '' || password == '') {
-        console.log("empty username and password" + username);
+        console.log("empty username and password" + fieldValues.username);
         return res.send(401);
     }
 
-    User.findOne({username: username}, function (err, user) {
+    User.findOne({username: fieldValues.username}, function (err, user) {
         if (err) {
             console.log(err);
             return res.send(401);
         }
 
-        user.comparePassword(password, function(isMatch) {
+        user.comparePassword(fieldValues.password, function(isMatch) {
             if (!isMatch) {
                 console.log("Attempt failed to login with " + user.username);
                 return res.send(401);
