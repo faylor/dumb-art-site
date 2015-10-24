@@ -13,8 +13,10 @@ exports.login = function (req, res) {
     var form = new formidable.IncomingForm();
     var fieldValues={};
     form.on('field', function(field, value) {
+      console.log("THIS IS WHAT IS FOUND:::>>"+field+"   "+value);
+      console.log("THIS IS WHAT IS FOUND:::>>"+field+"  "+value);
       fieldValues[field]=value;
-    })
+    });
     form.parse(req, function(err, fields, files) {});
 
     if (fieldValues.username == '' || fieldValues.password == '') {
