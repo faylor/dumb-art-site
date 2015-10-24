@@ -32,8 +32,8 @@ exports.login = function (req, res) {
       }
       if (doc) {
         // doc may be null if no document matched
-        console.log(doc.toObject().username);
-        console.log(doc.toObject().password);
+        console.log(doc['username']);
+        console.log(doc['password']);
       }
         console.log(JSON.stringify(docs));
     });
