@@ -24,6 +24,12 @@ exports.login = function (req, res) {
     }
     console.log("THIS IS WHAT IS FOUND:::>>"+fieldValues.username);
     console.log("THIS IS WHAT IS FOUND:::>>"+fieldValues.password);
+
+    User.find().lean().exec(function(err, docs) {
+        console.log(JSON.stringify(docs));
+    });
+
+
     var query  = User.where({ username: fieldValues.username });
     query.findOne(function (err, doc) {
       if (err) {
