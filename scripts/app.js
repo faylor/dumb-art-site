@@ -28,6 +28,11 @@ app.config(['$locationProvider','$routeProvider',
         controller:'loginController',
         access: { requiredLogin: false }
       }).
+      when('/admin/register', {
+        templateUrl: 'components/admin/register.html',
+        controller:'loginController',
+        access: { requiredLogin: true }
+      }).
       otherwise({
         redirectTo: '/home'
       });
@@ -120,6 +125,18 @@ app.controller('loginController', ['$scope', '$location', '$window', 'UserServic
             }
         }
 
+        //Admin User Controller (login, logout)
+        $scope.register = function register(username, password) {
+            if (username !== undefined && password !== undefined) {
+                UserService.register(username, password).success(function(data) {
+                    $scope.status = "Successfully added a new user."
+                }).error(function(status, data) {
+                    console.log(status);
+                    console.log(data);
+                });
+            }
+        }
+
         $scope.isAuthed = function isAuthed() {
             return AuthenticationService.isLogged;
         }
@@ -169,9 +186,11 @@ app.factory('UserService', function($http) {
         logIn: function(username, password) {
             return $http.post('/login', {username: username, password: password});
         },
-
         logOut: function() {
 
+        },
+        register: function(username, password) {
+            return $http.post('/register', {username: username, password: password});
         }
     }
 });

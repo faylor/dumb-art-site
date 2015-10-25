@@ -16,8 +16,6 @@ exports.login = function (req, res) {
     var form = new formidable.IncomingForm();
     var fieldValues={};
     form.on('field', function(field, value) {
-      console.log("THIS IS WHAT IS FOUND:::>>"+field+"   "+value);
-      console.log("THIS IS WHAT IS FOUND:::>>"+field+"  "+value);
       fieldValues[field]=value;
     }).
     on('end', function(fields, files) {
@@ -71,26 +69,43 @@ exports.login = function (req, res) {
 };
 
 
-exports.save = function (req, res) {
+exports.register = function (req, res) {
     var username = '';
     var password = '';
     var form = new formidable.IncomingForm();
     var fieldValues={};
     form.on('field', function(field, value) {
       fieldValues[field]=value;
-    })
+    }).
+    on('end', function(fields, files) {
+      if(fieldValues.username == '' || fieldValues.password == '') {
+          return res.send(401);
+      }
+      User.findOne({username:fieldValues.username}).lean().exec(function(err, user) {
+        if (err) {
+          console.log(err);
+          return res.send(401);
+        }
+        if (!user) {
+          var newUser = {username:fieldValues.username,password:fieldValues.password};
+          newUser.save(function (err) {
+            if (err) {
+              return res.render('/register', {
+                errors: utils.errors(err.errors),
+                user: user,
+                title: 'Sign up'
+              });
+            }
+          }
+        }else{
+          res.write("User already exists.");
+        }
+
+      });
+    });
     form.parse(req, function(err, fields, files) {});
 
-    if (username == '' || password == '') {
-        return res.send(401);
-    }
-    console.log("THIS IS WHAT IS FOUND:::>>"+fieldValues.username);
-    console.log("THIS IS WHAT IS FOUND:::>>"+fieldValues.password);
-    User.findOne({username: fieldValues.username}, function (err, user) {
-        if (err) {
-            console.log(err);
-            return res.send(401);
-        }
-    });
+
+
     //User.save();
 };
