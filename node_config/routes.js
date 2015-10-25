@@ -33,7 +33,7 @@ module.exports = function(self) {
         Login / Register
     */
     self.postroutes['/login'] = users.login;
-    self.postroutes['/admin/register'] = users.register;
+    self.postroutes['/register'] = users.register;
 
     self.postroutes['/upload'] = function(req, res) {
         var form = new formidable.IncomingForm();
