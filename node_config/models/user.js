@@ -71,7 +71,7 @@ User.methods = {
     } catch (err) {
       return '';
     }
-  },
+  }
 
 
 };
