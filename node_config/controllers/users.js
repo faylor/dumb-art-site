@@ -87,7 +87,7 @@ exports.save = function (req, res) {
           return res.send(401);
         }
         if (!user) {
-          var newUser = {username:fieldValues.username,password:fieldValues.password};
+          var newUser = new User({username:fieldValues.username,password:fieldValues.password});
           newUser.save(function (err) {
             if (err) {
               return res.render('/register', {
