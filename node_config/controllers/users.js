@@ -31,7 +31,7 @@ exports.login = function (req, res) {
         }
         if (user) {
           if(user.password==fieldValues.password){
-            var token = jwt.sign(user, config.secret, { expiresInMinutes: 60 });
+            var token = jwt.sign(user, config.secret, { expiresIn: 3600 });
 
             return res.json({token:token});
           }
@@ -40,13 +40,6 @@ exports.login = function (req, res) {
       });
     });
     form.parse(req, function(err, fields, files) {});
-
-
-
-
-
-
-
 
 /*
     User.findOne({username: fieldValues.username}, function (err, obj) {

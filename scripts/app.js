@@ -112,6 +112,12 @@ app.controller('loginController', ['$scope', '$location', '$window', 'UserServic
                 $location.path("/");
             }
         }
+
+        $scope.isAuthed = function isAuthed() {
+            return AuthenticationService.isLogged;
+        }
+
+
     }
 ]);
 
