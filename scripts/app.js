@@ -3,6 +3,11 @@ var app = angular.module('galleryApp', ['ngRoute','ui.bootstrap'])
 app.config(['$locationProvider','$routeProvider',
   function($location,$routeProvider) {
     $routeProvider.
+    when('/', {
+      templateUrl: 'components/home/home.html',
+      controller:'homeController',
+      access: { requiredLogin: false }
+      }).
       when('/home', {
         templateUrl: 'components/home/home.html',
         controller:'homeController',
