@@ -1,7 +1,7 @@
 var app = angular.module('galleryApp', ['ngRoute','ui.bootstrap'])
 
 app.config(['$locationProvider','$routeProvider',
-  function($location,$routeProvider) {
+  function($locationProvider,$routeProvider) {
     $routeProvider.
     when('/', {
       templateUrl: 'components/home/home.html',
