@@ -69,7 +69,7 @@ exports.login = function (req, res) {
 };
 
 
-exports.register = function (req, res) {
+exports.save = function (req, res) {
     var username = '';
     var password = '';
     var form = new formidable.IncomingForm();
