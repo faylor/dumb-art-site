@@ -16,15 +16,20 @@ exports.login = function (req, res) {
       console.log("THIS IS WHAT IS FOUND:::>>"+field+"   "+value);
       console.log("THIS IS WHAT IS FOUND:::>>"+field+"  "+value);
       fieldValues[field]=value;
+    }).
+    on('end',, function(fields, files) {
+      console.log("THIS BB:::>>"+fieldValues.username);
+      console.log("THIS BBB:::>>"+fieldValues.password);
+      console.log(typeof fieldValues.username);
     });
     form.parse(req, function(err, fields, files) {});
 
     if (fieldValues.username == '' || fieldValues.password == '') {
         return res.send(401);
     }
-    console.log("THIS IS WHAT IS FOUND:::>>"+fieldValues.username);
-    console.log("THIS IS WHAT IS FOUND:::>>"+fieldValues.password);
-
+    console.log("THIS CC:::>>"+fieldValues.username);
+    console.log("THIS CCC:::>>"+fieldValues.password);
+    console.log(typeof fieldValues.username);
     User.findOne({username:fieldValues.username}).lean().exec(function(err, doc) {
       if (err) {
         console.log(err);
@@ -32,7 +37,7 @@ exports.login = function (req, res) {
       }
       if (doc) {
         // doc may be null if no document matched
-        //console.log(doc.password);
+        console.log(doc.password);
         console.log(JSON.stringify(doc));
       }
 
