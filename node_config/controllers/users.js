@@ -18,30 +18,27 @@ exports.login = function (req, res) {
       fieldValues[field]=value;
     }).
     on('end', function(fields, files) {
-      console.log("THIS BB:::>>"+fieldValues.username);
-      console.log("THIS BBB:::>>"+fieldValues.password);
-      console.log(typeof fieldValues.username);
+      if(fieldValues.username == '' || fieldValues.password == '') {
+          return res.send(401);
+      }
+      User.findOne({username:fieldValues.username}).lean().exec(function(err, doc) {
+        if (err) {
+          console.log(err);
+          return res.send(401);
+        }
+        if (doc) {
+          // doc may be null if no document matched
+          console.log("DD>>"+doc.password);
+          console.log(JSON.stringify(doc));
+        }
+
+      });
     });
     form.parse(req, function(err, fields, files) {});
 
-    if (fieldValues.username == '' || fieldValues.password == '') {
-        return res.send(401);
-    }
-    console.log("THIS CC:::>>"+fieldValues.username);
-    console.log("THIS CCC:::>>"+fieldValues.password);
-    console.log(typeof fieldValues.username);
-    User.findOne({username:fieldValues.username}).lean().exec(function(err, doc) {
-      if (err) {
-        console.log(err);
-        return res.send(401);
-      }
-      if (doc) {
-        // doc may be null if no document matched
-        console.log(doc.password);
-        console.log(JSON.stringify(doc));
-      }
 
-    });
+
+
 
 
     var query  = User.where({ username: fieldValues.username });
