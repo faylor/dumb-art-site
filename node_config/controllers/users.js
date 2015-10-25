@@ -17,7 +17,7 @@ exports.login = function (req, res) {
       console.log("THIS IS WHAT IS FOUND:::>>"+field+"  "+value);
       fieldValues[field]=value;
     }).
-    on('end',, function(fields, files) {
+    on('end', function(fields, files) {
       console.log("THIS BB:::>>"+fieldValues.username);
       console.log("THIS BBB:::>>"+fieldValues.password);
       console.log(typeof fieldValues.username);
