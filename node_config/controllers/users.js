@@ -21,15 +21,17 @@ exports.login = function (req, res) {
       if(fieldValues.username == '' || fieldValues.password == '') {
           return res.send(401);
       }
-      User.findOne({username:fieldValues.username}).lean().exec(function(err, doc) {
+      User.findOne({username:fieldValues.username}).lean().exec(function(err, user) {
         if (err) {
           console.log(err);
           return res.send(401);
         }
-        if (doc) {
-          // doc may be null if no document matched
-          console.log("DD>>"+doc.password);
-          console.log(JSON.stringify(doc));
+        if (user) {
+          if(user.password==fieldValues.password){
+            var token = jwt.sign(user, secret.secretToken, { expiresInMinutes: 60 });
+
+            return res.json({token:token});
+          }
         }
 
       });
@@ -41,18 +43,7 @@ exports.login = function (req, res) {
 
 
 
-    var query  = User.where({ username: fieldValues.username });
-    query.findOne(function (err, doc) {
-      if (err) {
-        console.log(err);
-        return res.send(401);
-      }
-      if (doc) {
-        // doc may be null if no document matched
-        console.log(doc.toObject().username);
-        console.log(doc.toObject().password);
-      }
-    });
+
 
 /*
     User.findOne({username: fieldValues.username}, function (err, obj) {
