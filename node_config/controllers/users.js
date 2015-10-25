@@ -25,14 +25,14 @@ exports.login = function (req, res) {
     console.log("THIS IS WHAT IS FOUND:::>>"+fieldValues.username);
     console.log("THIS IS WHAT IS FOUND:::>>"+fieldValues.password);
 
-    User.find({ username: fieldValues.username }).limit(1).lean().exec(function(err, doc) {
+    User.find().limit(1).lean().exec(function(err, doc) {
       if (err) {
         console.log(err);
         return res.send(401);
       }
       if (doc) {
         // doc may be null if no document matched
-        console.log(doc.password);
+        //console.log(doc.password);
         console.log(JSON.stringify(doc));
       }
 
