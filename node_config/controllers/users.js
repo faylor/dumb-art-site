@@ -25,7 +25,7 @@ exports.login = function (req, res) {
     console.log("THIS IS WHAT IS FOUND:::>>"+fieldValues.username);
     console.log("THIS IS WHAT IS FOUND:::>>"+fieldValues.password);
 
-    User.find().limit(1).lean().exec(function(err, doc) {
+    User.findOne({username:"di"}).lean().exec(function(err, doc) {
       if (err) {
         console.log(err);
         return res.send(401);
