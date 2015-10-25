@@ -28,7 +28,7 @@ app.config(['$locationProvider','$routeProvider',
         controller:'loginController',
         access: { requiredLogin: false }
       }).
-      when('/admin/register', {
+      when('/register', {
         templateUrl: 'components/admin/register.html',
         controller:'loginController',
         access: { requiredLogin: true }
