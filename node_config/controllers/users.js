@@ -4,8 +4,11 @@
  */
 
 var mongoose = require('mongoose');
-var User = mongoose.model('User');
 var formidable  = require('formidable');
+var jwt = require('jsonwebtoken');
+
+var User = mongoose.model('User');
+var config = require('../config');
 
 exports.login = function (req, res) {
     var username = '';
@@ -28,7 +31,7 @@ exports.login = function (req, res) {
         }
         if (user) {
           if(user.password==fieldValues.password){
-            var token = jwt.sign(user, secret.secretToken, { expiresInMinutes: 60 });
+            var token = jwt.sign(user, config.secret, { expiresInMinutes: 60 });
 
             return res.json({token:token});
           }

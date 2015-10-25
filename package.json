@@ -23,6 +23,7 @@
     "express": "^3.4.8",
     "formidable": "^1.0.17",
     "fs-extra": "^0.24.0",
+    "jsonwebtoken": "^5.4.0",
     "mongodb": "^2.0.46",
     "mongoose": "^4.2.2",
     "quickthumb": "0.0.11",
