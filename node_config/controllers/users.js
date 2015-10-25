@@ -96,6 +96,7 @@ exports.register = function (req, res) {
                 title: 'Sign up'
               });
             }
+          });
         }else{
           res.write("User already exists.");
         }
