@@ -98,7 +98,7 @@ exports.save = function (req, res) {
             }
           });
         }else{
-          res.write("User already exists.");
+          //res.write("User already exists.");
         }
 
       });
