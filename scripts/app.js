@@ -105,7 +105,7 @@ app.controller('loginController', ['$scope', '$location', '$window', 'UserServic
             }
         }
 
-        $scope.logout = function logout() {
+        $scope.logOut = function logOut() {
             if (AuthenticationService.isLogged) {
                 AuthenticationService.isLogged = false;
                 delete $window.sessionStorage.token;
