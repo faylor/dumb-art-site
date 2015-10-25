@@ -28,7 +28,9 @@ exports.login = function (req, res) {
           return res.send(401);
         }
         if (user) {
-          if(user.password==fieldValues.password){
+          if(user.authenticate(password)){
+
+          //if(user.password==fieldValues.password){
             var token = jwt.sign(user, config.secret, { expiresIn: 3600 });
 
             return res.json({token:token});
