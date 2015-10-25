@@ -2,7 +2,6 @@ var mongoose = require('mongoose');
 var bcrypt = require('bcrypt');
 var SALT_WORK_FACTOR = 10;
 var Schema = mongoose.Schema;
-
 // User schema
 var User = new Schema({
     username: { type: String, required: true, unique: true },
