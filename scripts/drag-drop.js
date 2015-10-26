@@ -8,16 +8,11 @@ module.directive('lvlDraggable', ['$rootScope', 'uuid', function ($rootScope, uu
             angular.element(el).attr("draggable", "true");
 
             var id = angular.element(el).attr("id");
-
-            if (!id) {
-                id = uuid.new()
-                angular.element(el).attr("id", id);
-            }
-            console.log(id);
+            console.log('mongodb id:'+id);
             //el.get(0).addEventListener("dragstart",
             el[0].addEventListener("dragstart",function (e) {
                 e.dataTransfer.setData('text', id);
-                console.log('drag');
+                console.log('draggable directive drag');
                 $rootScope.$emit("LVL-DRAG-START");
             });
 
