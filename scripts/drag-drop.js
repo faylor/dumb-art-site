@@ -5,10 +5,13 @@ module.directive('lvlDraggable', ['$rootScope', 'uuid', function ($rootScope, uu
         restrict: 'A',
         templateUrl:'/components/admin/painting-dragable.html',
         link: function (scope, el, attrs, controller) {
-            angular.element(el).attr("draggable", "true");
-
+            //angular.element(el).attr("draggable", "true");
+            console.log("a:"+attrs('id'));
+            attrs.$observe('id', function(id) {
+              console.log("b:"+attrs('id'));
+            });
             var id = angular.element(el).attr("id");
-            console.log('mongodb id:'+id);
+            console.log('c:'+id);
             //el.get(0).addEventListener("dragstart",
             el[0].addEventListener("dragstart",function (e) {
                 e.dataTransfer.setData('text', id);
