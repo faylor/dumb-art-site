@@ -117,12 +117,10 @@ exports.save = function (req, res) {
               console.log(err);
               return res.send(401);
             }else{
-              req.flash('info', 'Sorry! We are not able to log you in!');
               return res.redirect('/login');
             }
           });
         }else{
-          req.flash('info', 'Sorry! User already exists.');
           return res.redirect('/register');
         }
 
