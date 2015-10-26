@@ -201,6 +201,9 @@ app.factory('dataFactory', ['$http', function($http) {
   dataFactory.updatePainting = function (cust) {
     return $http.put(urlBase + '/' + cust.ID, cust)
   };
+  dataFactory.setRanking = function (id,toId) {
+    return $http.put(urlBase + '/' + id, toID)
+  };
 
   dataFactory.deletePainting = function (id) {
     return $http.delete(urlBase + '/' + id);
