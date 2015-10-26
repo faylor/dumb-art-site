@@ -5,7 +5,7 @@ module.directive('lvlDraggable', ['$rootScope', 'uuid', function ($rootScope, uu
         restrict: 'A',
         templateUrl:'/components/admin/painting-dragable.html',
         link: function (scope, el, attrs, controller) {
-            //angular.element(el).attr("draggable", "true");
+            angular.element(el).attr("draggable", "true");
             var id = attrs.id;
             //This below was recommended by above seems ok.. not sure why the observe is needed...
             //attrs.$observe('id', function(id) {
