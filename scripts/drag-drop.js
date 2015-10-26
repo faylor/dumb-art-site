@@ -6,13 +6,12 @@ module.directive('lvlDraggable', ['$rootScope', 'uuid', function ($rootScope, uu
         templateUrl:'/components/admin/painting-dragable.html',
         link: function (scope, el, attrs, controller) {
             //angular.element(el).attr("draggable", "true");
-            console.log("a:"+attrs.id);
-            attrs.$observe('id', function(id) {
-              console.log("b:"+id);
-            });
-            var id = angular.element(el).attr("id");
-            console.log('c:'+id);
-            //el.get(0).addEventListener("dragstart",
+            var id = attrs.id;
+            //This below was recommended by above seems ok.. not sure why the observe is needed...
+            //attrs.$observe('id', function(id) {
+            //  console.log("b:"+id);
+            //});
+
             el[0].addEventListener("dragstart",function (e) {
                 e.dataTransfer.setData('text', id);
                 console.log('draggable directive drag');
@@ -33,11 +32,7 @@ module.directive('lvlDropTarget', ['$rootScope', 'uuid', function ($rootScope, u
             onDrop: '&'
         },
         link: function (scope, el, attrs, controller) {
-            var id = angular.element(el).attr("id");
-            if (!id) {
-                id = uuid.new();
-                angular.element(el).attr("id", id);
-            }
+            var id = attrs.id;
             //el.bind("dragover",
             el[0].addEventListener("dragover", function (e) {
                 if (e.preventDefault) {
