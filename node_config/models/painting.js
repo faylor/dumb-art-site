@@ -25,6 +25,7 @@ var setTags = function (tags) {
  */
 
 var PaintingSchema = new Schema({
+
   title: {type : String, default : '', trim : true},
   body: {type : String, default : '', trim : true},
   size: {type : String, default : '', trim : true},
