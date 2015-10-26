@@ -36,7 +36,7 @@ app.config(['$locationProvider','$routeProvider',
       when('/admin-paintings', {
         templateUrl: 'components/admin/paintings.html',
         controller:'adminPaintingsController',
-        access: { requiredLogin: true }
+        access: { requiredLogin: false }
       }).
       otherwise({
         redirectTo: '/home'

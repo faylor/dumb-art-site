@@ -7,8 +7,10 @@
       <th>Price</th>
     </tr>
     <tr ng-repeat="painting in paintings | orderBy: 'rank' ">
-      <div x-lvl-draggable='true' style="border:2px solid blue;"/>
-      <div x-lvl-drop-target='true' x-on-drop='dropped(dragEl, dropEl)' style="height:20px;width:300px;border:2px solid black;"/>
+      <td>
+        <div x-lvl-draggable='true'/>
+        <div x-lvl-drop-target='true' x-on-drop='dropped(dragEl, dropEl)'/>
+      </td>
     </tr>
   </table>
 
