@@ -92,7 +92,7 @@ PaintingSchema.statics = {
 
   load: function (id, cb) {
     this.findOne({ _id : id })
-      .populate('user', 'name email username')
+      .populate('painting', 'title size price rank')
       .exec(cb);
   },
 
