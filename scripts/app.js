@@ -170,7 +170,7 @@ app.controller('adminPaintingsController', ['$scope','$http', 'dataFactory', fun
 
   $scope.dropped = function(dragID, dropID) {
 
-
+      dataFactory.updateRanking(dragID,dropID);
       console.log("The element " + dragID + " has been dropped on " + dropID + "!");
   };
 }]);
@@ -201,8 +201,8 @@ app.factory('dataFactory', ['$http', function($http) {
   dataFactory.updatePainting = function (cust) {
     return $http.put(urlBase + '/' + cust.ID, cust)
   };
-  dataFactory.setRanking = function (id,toId) {
-    return $http.put(urlBase + '/' + id, toID)
+  dataFactory.updateRanking = function (dragid,dropid) {
+    return $http.put('/updateRanking', JSON.stringify({dragid:dragid,dropid:dropid}))
   };
 
   dataFactory.deletePainting = function (id) {
