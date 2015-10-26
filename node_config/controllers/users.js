@@ -117,10 +117,12 @@ exports.save = function (req, res) {
               console.log(err);
               return res.send(401);
             }else{
+              console.log("User sAved.");
               return res.redirect('/login');
             }
           });
         }else{
+          console.log("User already exists.");
           return res.redirect('/register');
         }
 
