@@ -3,7 +3,7 @@ var module = angular.module("lvl.directives.dragdrop", ['lvl.services']);
 module.directive('lvlDraggable', ['$rootScope', 'uuid', function ($rootScope, uuid) {
     return {
         restrict: 'A',
-        template:'/components/admin/painting-dragable.html',
+        templateUrl:'/components/admin/painting-dragable.html',
         link: function (scope, el, attrs, controller) {
             angular.element(el).attr("draggable", "true");
 
