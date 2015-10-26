@@ -10,7 +10,6 @@ var Painting = mongoose.model('Painting')
  */
 
 exports.index = function (req, res){
-
   Painting.find().lean().exec(function(err, docs) {
       res.header("Content-Type:","text/json");
       res.end(JSON.stringify(docs));

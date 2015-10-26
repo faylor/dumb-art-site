@@ -7,10 +7,18 @@
       <th>Price</th>
     </tr>
     <tr ng-repeat="painting in paintings | orderBy: 'rank' ">
-      <td>{{painting.title}}</td>
-      <td>{{painting.size}}</td>
-      <td>{{painting.price}}</td>
-      <td><img src="images/thumbs/{{painting.image}}"/></td>
+      <td>
+          <div id="{{ _id }}" x-lvl-draggable='true' x-lvl-drop-target='true' x-on-drop='dropped(dragEl, dropEl)'>
+              <table>
+                <tr>
+                  <td>{{painting.title}}</td>
+                  <td>{{painting.size}}</td>
+                  <td>{{painting.price}}</td>
+                  <td><img src="images/thumbs/{{painting.image}}"/></td>
+                </tr>
+              </table>
+          </div>
+      </td>
     </tr>
   </table>
 
@@ -36,4 +44,4 @@
 <div x-lvl-draggable='true'>drag me!</div>
 
 <!-- create a drop target and specify a callback function>-->
-<div x-lvl-drop-target='true' x-on-drop='dropped(dragEl, dropEl)'>drop zone</div>
+<div  x-lvl-draggable='true' x-lvl-drop-target='true' x-on-drop='dropped(dragEl, dropEl)'>drop zone</div>
