@@ -31,6 +31,7 @@ module.directive('lvlDropTarget', ['$rootScope', 'uuid', function ($rootScope, u
         scope: {
             onDrop: '&'
         },
+        template: "<div x-lvl-draggable='true' id='{{ painting._id }}'/>",
         link: function (scope, el, attrs, controller) {
             var id = attrs.id;
             //el.bind("dragover",
@@ -61,7 +62,7 @@ module.directive('lvlDropTarget', ['$rootScope', 'uuid', function ($rootScope, u
                     e.stopPropagation(); // Necessary. Allows us to drop.
                 }
                 var dragID = e.dataTransfer.getData("text");
-                
+
                 scope.onDrop({dragID: dragID, dropID: id});
             });
 
