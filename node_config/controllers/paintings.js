@@ -41,8 +41,6 @@ exports.updateRanking = function (req, res){
   });
   req.on('end', function () {
     var ids = JSON.parse(body);
-    console.log('out:'+ids.dragid);
-    console.log('out:'+ids.dropid);
     if (ids.dragid && ids.dropid){
       console.log(ids.dragid);
       console.log(ids.dropid);
@@ -57,27 +55,31 @@ exports.updateRanking = function (req, res){
         }
         if(painting){
           dragPainting = painting;
+          console.log("Drag Painting"+dragPainting.rank);
+
+          //use promises
+          var dropPainting;
+          Painting.load(ids.dropid,function(err,painting){
+            if (err) {
+              console.log(err);
+              return res.send(401);
+            }
+            if(painting){
+              dropPainting = painting;
+              console.log("Drag Painting"+dropPainting.rank);
+              return res.json({message:"Drag Rank:"+dragPainting.rank+"Drop Rank:"+dropPainting.rank});
+            }else{
+              console.log("Drop Painting not found");
+              return res.send(401);
+            }
+          });
+
         }else{
           console.log("Drag Painting not found");
           return res.send(401);
         }
       });
 
-      var dropPainting;
-      Painting.load(ids.dropid,function(err,painting){
-        if (err) {
-          console.log(err);
-          return res.send(401);
-        }
-        if(painting){
-          dropPainting = painting;
-        }else{
-          console.log("Drop Painting not found");
-          return res.send(401);
-        }
-      });
-
-      return res.json({message:"Drag Rank:"+dragPainting.rank+"Drop Rank:"+dropPainting.rank});
     }else{
       return res.status(500).json({message:"Drag Drop failed, no ids found."});
     }
