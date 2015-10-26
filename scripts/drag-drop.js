@@ -60,11 +60,9 @@ module.directive('lvlDropTarget', ['$rootScope', 'uuid', function ($rootScope, u
                 if (e.stopPropagation) {
                     e.stopPropagation(); // Necessary. Allows us to drop.
                 }
-                var data = e.dataTransfer.getData("text");
-                var dest = document.getElementById(id);
-                var src = document.getElementById(data);
-
-                scope.onDrop({dragEl: data, dropEl: id});
+                var dragID = e.dataTransfer.getData("text");
+                
+                scope.onDrop({dragID: dragID, dropID: id});
             });
 
             $rootScope.$on("LVL-DRAG-START", function () {
