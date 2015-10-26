@@ -35,53 +35,53 @@ exports.index = function (req, res){
 };
 
 exports.updateRanking = function (req, res){
-  var ids;
+  var body = "";
   req.on('data', function(data){
-      ids = JSON.parse(data);
+      body += data.toString();
+  });
+  req.on('end', function () {
+    var ids = JSON.parse(body);
+    console.log('out:'+ids.dragid);
+    console.log('out:'+ids.dropid);
+    if (ids.dragid && ids.dropid){
       console.log(ids.dragid);
       console.log(ids.dropid);
-  });
-  console.log('out:'+ids.dragid);
-  console.log('out:'+ids.dropid);
-  if (ids.dragid && ids.dropid){
-    console.log(ids.dragid);
-    console.log(ids.dropid);
-    if(ids.dragid == ids.dropid){
-      return res.json({message:"Same ids, no action."});
+      if(ids.dragid == ids.dropid){
+        return res.json({message:"Same ids, no action."});
+      }
+      var dragPainting;
+      Painting.load(ids.dragid,function(err,painting){
+        if (err) {
+          console.log(err);
+          return res.send(401);
+        }
+        if(painting){
+          dragPainting = painting;
+        }else{
+          console.log("Drag Painting not found");
+          return res.send(401);
+        }
+      });
+
+      var dropPainting;
+      Painting.load(ids.dropid,function(err,painting){
+        if (err) {
+          console.log(err);
+          return res.send(401);
+        }
+        if(painting){
+          dropPainting = painting;
+        }else{
+          console.log("Drop Painting not found");
+          return res.send(401);
+        }
+      });
+
+      return res.json({message:"Drag Rank:"+dragPainting.rank+"Drop Rank:"+dropPainting.rank});
+    }else{
+      return res.status(500).json({message:"Drag Drop failed, no ids found."});
     }
-    var dragPainting;
-    Painting.load(ids.dragid,function(err,painting){
-      if (err) {
-        console.log(err);
-        return res.send(401);
-      }
-      if(painting){
-        dragPainting = painting;
-      }else{
-        console.log("Drag Painting not found");
-        return res.send(401);
-      }
-    });
-
-    var dropPainting;
-    Painting.load(ids.dropid,function(err,painting){
-      if (err) {
-        console.log(err);
-        return res.send(401);
-      }
-      if(painting){
-        dropPainting = painting;
-      }else{
-        console.log("Drop Painting not found");
-        return res.send(401);
-      }
-    });
-
-    return res.json({message:"Drag Rank:"+dragPainting.rank+"Drop Rank:"+dropPainting.rank});
-  }else{
-    return res.status(500).json({message:"Drag Drop failed, no ids found."});
-  }
-
+  });
 
 
 };
