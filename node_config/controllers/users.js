@@ -22,7 +22,29 @@ exports.login = function (req, res) {
       if(fieldValues.username == '' || fieldValues.password == '') {
           return res.send(401);
       }
-      User.findOne({username:fieldValues.username}).lean().exec(function(err, user) {
+      var options = {
+          criteria: { username: fieldValues.username },
+          select: 'username hashed_password salt'
+      };
+      User.load(options, function (err, user) {
+        if (err) {
+          console.log(err);
+          return res.send(401);
+        }
+        if (!user) {
+          console.log("Unknown User");
+          return res.send(401);
+        }
+        if (!user.authenticate(password)) {
+          console.log("Invalid Password");
+          return res.send(401);
+        }else{
+          var token = jwt.sign(user, config.secret, { expiresIn: 3600 });
+          return res.json({token:token});
+        }
+
+      });
+      /*User.findOne({username:fieldValues.username}).lean().exec(function(err, user) {
         if (err) {
           console.log(err);
           return res.send(401);
@@ -37,7 +59,7 @@ exports.login = function (req, res) {
           }
         }
 
-      });
+      });*/
     });
     form.parse(req, function(err, fields, files) {});
 
