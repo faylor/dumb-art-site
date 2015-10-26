@@ -114,15 +114,16 @@ exports.save = function (req, res) {
           var newUser = new User({username:fieldValues.username,password:fieldValues.password});
           newUser.save(function (err) {
             if (err) {
-              return res.render('/register', {
-                errors: utils.errors(err.errors),
-                user: user,
-                title: 'Sign up'
-              });
+              console.log(err);
+              return res.send(401);
+            }else{
+              req.flash('info', 'Sorry! We are not able to log you in!');
+              return res.redirect('/login');
             }
           });
         }else{
-          //res.write("User already exists.");
+          req.flash('info', 'Sorry! User already exists.');
+          return res.redirect('/register');
         }
 
       });
