@@ -14,7 +14,6 @@
   <table>
     <tr ng-repeat="painting in paintings | orderBy: 'rank' ">
       <td>
-        <div x-lvl-drop-target='true' x-on-drop='dropped(dragEl, dropEl)'/>
         <div x-lvl-draggable='true'/>
         <div x-lvl-drop-target='true' x-on-drop='dropped(dragEl, dropEl)' class="dropZone"/>
       </td>
