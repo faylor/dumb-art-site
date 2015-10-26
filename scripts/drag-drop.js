@@ -14,13 +14,13 @@ module.directive('lvlDraggable', ['$rootScope', 'uuid', function ($rootScope, uu
             }
             console.log(id);
             //el.get(0).addEventListener("dragstart",
-            el.find("div")[0].addEventListener("dragstart",function (e) {
+            el[0].addEventListener("dragstart",function (e) {
                 e.originalEvent.dataTransfer.setData('text', id);
                 console.log('drag');
                 $rootScope.$emit("LVL-DRAG-START");
             });
 
-            el.on("dragend", function (e) {
+            el.addEventListener("dragend", function (e) {
                 $rootScope.$emit("LVL-DRAG-END");
             });
         }
