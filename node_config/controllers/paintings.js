@@ -36,7 +36,7 @@ exports.index = function (req, res){
 
 exports.updateRanking = function (req, res){
   req.on('data', function(data){
-      var ids = JSON.stringify(data);
+      var ids = JSON.parse(data);
       console.log(ids);
       return res.status(500).json(ids);
   });
