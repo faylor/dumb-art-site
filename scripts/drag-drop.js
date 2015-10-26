@@ -40,25 +40,25 @@ module.directive('lvlDropTarget', ['$rootScope', 'uuid', function ($rootScope, u
                 angular.element(el).attr("id", id);
             }
             //el.bind("dragover",
-            el.get(0).addEventListener("dragover", function (e) {
+            el[0].addEventListener("dragover", function (e) {
                 if (e.preventDefault) {
                     e.preventDefault(); // Necessary. Allows us to drop.
                 }
 
-                e.originalEvent.dataTransfer.dropEffect = 'move';  // See the section on the DataTransfer object.
+                e.dataTransfer.dropEffect = 'move';  // See the section on the DataTransfer object.
                 return false;
             });
 
-            el.get(0).addEventListener("dragenter", function (e) {
+            el[0].addEventListener("dragenter", function (e) {
                 // this / e.target is the current hover target.
                 angular.element(e.target).addClass('lvl-over');
             });
 
-            el.get(0).addEventListener("dragleave", function (e) {
+            el[0].addEventListener("dragleave", function (e) {
                 angular.element(e.target).removeClass('lvl-over');  // this / e.target is previous target element.
             });
 
-            el.get(0).addEventListener("drop", function (e) {
+            el[0].addEventListener("drop", function (e) {
                 if (e.preventDefault) {
                     e.preventDefault(); // Necessary. Allows us to drop.
                 }
@@ -66,7 +66,7 @@ module.directive('lvlDropTarget', ['$rootScope', 'uuid', function ($rootScope, u
                 if (e.stopPropagation) {
                     e.stopPropagation(); // Necessary. Allows us to drop.
                 }
-                var data = e.originalEvent.dataTransfer.getData("text");
+                var data = e.dataTransfer.getData("text");
                 var dest = document.getElementById(id);
                 var src = document.getElementById(data);
 
