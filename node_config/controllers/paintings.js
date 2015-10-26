@@ -37,11 +37,14 @@ exports.index = function (req, res){
 exports.updateRanking = function (req, res){
   var ids;
   req.on('data', function(data){
-      var ids = JSON.parse(data);
+      ids = JSON.parse(data);
   });
   if (ids){
     console.log(ids.dragid);
     console.log(ids.dropid);
+    if(ids.dragid == ids.dropid){
+      return res.json({message:"Same ids, no action."});
+    }
     var dragPainting;
     Painting.load(ids.dragid,function(err,painting){
       if (err) {
