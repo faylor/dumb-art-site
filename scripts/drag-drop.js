@@ -6,9 +6,9 @@ module.directive('lvlDraggable', ['$rootScope', 'uuid', function ($rootScope, uu
         templateUrl:'/components/admin/painting-dragable.html',
         link: function (scope, el, attrs, controller) {
             //angular.element(el).attr("draggable", "true");
-            console.log("a:"+attrs('id'));
+            console.log("a:"+attrs.id);
             attrs.$observe('id', function(id) {
-              console.log("b:"+attrs('id'));
+              console.log("b:"+id);
             });
             var id = angular.element(el).attr("id");
             console.log('c:'+id);
