@@ -168,12 +168,10 @@ app.controller('adminPaintingsController', ['$scope','$http', 'dataFactory', fun
           });
   }
 
-  $scope.dropped = function(dragEl, dropEl) {
-      // this is your application logic, do whatever makes sense
-      var drag = angular.element(dragEl);
-      var drop = angular.element(dropEl);
+  $scope.dropped = function(dragID, dropID) {
 
-      console.log("The element " + drag.attr('id') + " has been dropped on " + drop.attr("id") + "!");
+
+      console.log("The element " + dragID + " has been dropped on " + dropID + "!");
   };
 }]);
 
