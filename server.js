@@ -135,6 +135,9 @@ var SampleApp = function() {
         for (var g in self.getroutes) {
             self.app.get(g, self.getroutes[g]);
         }
+        for (var p in self.putroutes) {
+            self.app.put(p, self.putroutes[p]);
+        }
         for (var p in self.postroutes) {
             self.app.post(p, self.postroutes[p]);
         }

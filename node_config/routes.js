@@ -27,6 +27,9 @@ module.exports = function(self) {
       res.end(form);
     };
 
+    self.putroutes = { };
+    self.putroutes['/updateRanking'] = paintings.updateRanking;
+
     self.postroutes = { };
 
     /*
@@ -34,8 +37,6 @@ module.exports = function(self) {
     */
     self.postroutes['/login'] = users.login;
     self.postroutes['/register'] = users.save;
-
-    self.postroutes['/updateRanking'] = paintings.updateRanking;
 
     self.postroutes['/upload'] = function(req, res) {
         var form = new formidable.IncomingForm();
