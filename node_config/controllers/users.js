@@ -32,12 +32,10 @@ exports.login = function (req, res) {
           return res.send(401);
         }
         if (!user) {
-          console.log("Unknown User");
-          return res.send(401);
+          return res.json({message:"User not found."});
         }
         if (!user.authenticate(fieldValues.password)) {
-          console.log("Invalid Password");
-          return res.send(401);
+          return res.json({message:"Login Incorrect."});
         }else{
           var token = jwt.sign(user, config.secret, { expiresIn: 3600 });
           return res.json({token:token});
@@ -117,13 +115,11 @@ exports.save = function (req, res) {
               console.log(err);
               return res.send(401);
             }else{
-              console.log("User sAved.");
               return res.json({message:"User Created Successfully."});
             }
           });
         }else{
-          console.log("User already exists.");
-          return res.redirect('/register');
+          return res.json({message:"User already exists."});
         }
 
       });
