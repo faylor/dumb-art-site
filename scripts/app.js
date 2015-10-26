@@ -31,7 +31,7 @@ app.config(['$locationProvider','$routeProvider',
       when('/register', {
         templateUrl: 'components/admin/register.html',
         controller:'loginController',
-        access: { requiredLogin: true }
+        access: { requiredLogin: false }
       }).
       otherwise({
         redirectTo: '/home'

@@ -85,7 +85,7 @@ User.statics = {
    */
 
   load: function (options, cb) {
-    options.select = options.select || 'name username';
+    options.select = options.select || 'username';
     this.findOne(options.criteria)
       .select(options.select)
       .exec(cb);
