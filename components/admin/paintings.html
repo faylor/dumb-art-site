@@ -15,8 +15,9 @@
     <tr ng-repeat="painting in paintings | orderBy: 'rank' ">
       <td>
         <div x-lvl-draggable='true'  id='{{ painting._id }}'/>
+        <div x-lvl-drop-target='true' x-on-drop='dropped(dragEl, dropEl)'>drop zone</div>
       </td>
     </tr>
   </table>
-<div x-lvl-drop-target='true' x-on-drop='dropped(dragEl, dropEl)'>drop zone</div>
+
   <!-- include the uuid service as well as the directive -->
