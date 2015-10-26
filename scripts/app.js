@@ -129,7 +129,7 @@ app.controller('loginController', ['$scope', '$location', '$window', 'UserServic
         $scope.register = function register(username, password) {
             if (username !== undefined && password !== undefined) {
                 UserService.register(username, password).success(function(data) {
-                    $scope.status = "Successfully added a new user."
+                    $scope.message = data.message;
                 }).error(function(status, data) {
                     console.log(status);
                     console.log(data);

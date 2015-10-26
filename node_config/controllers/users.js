@@ -118,7 +118,7 @@ exports.save = function (req, res) {
               return res.send(401);
             }else{
               console.log("User sAved.");
-              return res.redirect('/login');
+              return res.json({message:"User Created Successfully."});
             }
           });
         }else{
