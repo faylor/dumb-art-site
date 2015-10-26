@@ -38,8 +38,12 @@ exports.updateRanking = function (req, res){
   var ids;
   req.on('data', function(data){
       ids = JSON.parse(data);
+      console.log(ids.dragid);
+      console.log(ids.dropid);
   });
-  if (ids){
+  console.log('out:'+ids.dragid);
+  console.log('out:'+ids.dropid);
+  if (ids.dragid && ids.dropid){
     console.log(ids.dragid);
     console.log(ids.dropid);
     if(ids.dragid == ids.dropid){
