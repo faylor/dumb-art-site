@@ -1,4 +1,4 @@
-var app = angular.module('galleryApp', ['ngRoute','ui.bootstrap'])
+var app = angular.module('galleryApp', ['ngRoute','ui.bootstrap','lvl.directives.dragdrop'])
 
 app.config(['$locationProvider','$routeProvider',
   function($locationProvider,$routeProvider) {
@@ -31,7 +31,12 @@ app.config(['$locationProvider','$routeProvider',
       when('/register', {
         templateUrl: 'components/admin/register.html',
         controller:'loginController',
-        access: { requiredLogin: false }
+        access: { requiredLogin: true }
+      }).
+      when('/admin-paintings', {
+        templateUrl: 'components/admin/paintings.html',
+        controller:'adminPaintingsController',
+        access: { requiredLogin: true }
       }).
       otherwise({
         redirectTo: '/home'
@@ -146,6 +151,36 @@ app.controller('loginController', ['$scope', '$location', '$window', 'UserServic
 
     }
 ]);
+
+
+app.controller('adminPaintingsController', ['$scope','$http', 'dataFactory', function ( $scope, $http, dataFactory){
+  $scope.name = 'Admin Paintings';
+  $scope.paintings;
+  getPaintings();
+
+  function getPaintings() {
+      dataFactory.getPaintings()
+          .success(function (p) {
+              $scope.paintings = p;
+          })
+          .error(function (error) {
+              $scope.status = 'Unable to load Painting data: ' + error.message;
+          });
+  }
+
+  $scope.dropped = function(dragEl, dropEl) {
+      // this is your application logic, do whatever makes sense
+      var drag = angular.element(dragEl);
+      var drop = angular.element(dropEl);
+
+      console.log("The element " + drag.attr('id') + " has been dropped on " + drop.attr("id") + "!");
+  };
+}]);
+
+app.controller('contactController', function ($scope) {
+  $scope.name = 'Contttact';
+});
+
 
 /* dataFactory */
 app.factory('dataFactory', ['$http', function($http) {

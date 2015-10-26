@@ -1,0 +1,39 @@
+<h2>Di Taylor</h2>
+<p>{{name}}</p>
+  <table>
+    <tr>
+      <th>Title</th>
+  <th>Size</th>
+      <th>Price</th>
+    </tr>
+    <tr ng-repeat="painting in paintings | orderBy: 'rank' ">
+      <td>{{painting.title}}</td>
+      <td>{{painting.size}}</td>
+      <td>{{painting.price}}</td>
+      <td><img src="images/thumbs/{{painting.image}}"/></td>
+    </tr>
+  </table>
+
+  <!-- include the uuid service as well as the directive -->
+
+
+<style>
+  .lvl-over {
+    border: 2px dashed black !important;
+  }
+
+  .lvl-target {
+    background-color: #ddd;
+    opacity: .5;
+  }
+
+  [draggable] {
+    cursor: move;
+  }
+</style>
+
+<!-- make an element draggable -->
+<div x-lvl-draggable='true'>drag me!</div>
+
+<!-- create a drop target and specify a callback function>-->
+<div x-lvl-drop-target='true' x-on-drop='dropped(dragEl, dropEl)'>drop zone</div>
