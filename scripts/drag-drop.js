@@ -13,14 +13,14 @@ module.directive('lvlDraggable', ['$rootScope', 'uuid', function ($rootScope, uu
                 angular.element(el).attr("id", id);
             }
             console.log(id);
-            //el.bind("dragstart",
+            //el.get(0).addEventListener("dragstart",
             el.get(0).addEventListener("dragstart",function (e) {
                 e.originalEvent.dataTransfer.setData('text', id);
                 console.log('drag');
                 $rootScope.$emit("LVL-DRAG-START");
             });
 
-            el.bind("dragend", function (e) {
+            el.get(0).addEventListener("dragend", function (e) {
                 $rootScope.$emit("LVL-DRAG-END");
             });
         }
@@ -39,8 +39,8 @@ module.directive('lvlDropTarget', ['$rootScope', 'uuid', function ($rootScope, u
                 id = uuid.new();
                 angular.element(el).attr("id", id);
             }
-
-            el.bind("dragover", function (e) {
+            //el.bind("dragover",
+            el.get(0).addEventListener("dragover", function (e) {
                 if (e.preventDefault) {
                     e.preventDefault(); // Necessary. Allows us to drop.
                 }
@@ -49,16 +49,16 @@ module.directive('lvlDropTarget', ['$rootScope', 'uuid', function ($rootScope, u
                 return false;
             });
 
-            el.bind("dragenter", function (e) {
+            el.get(0).addEventListener("dragenter", function (e) {
                 // this / e.target is the current hover target.
                 angular.element(e.target).addClass('lvl-over');
             });
 
-            el.bind("dragleave", function (e) {
+            el.get(0).addEventListener("dragleave", function (e) {
                 angular.element(e.target).removeClass('lvl-over');  // this / e.target is previous target element.
             });
 
-            el.bind("drop", function (e) {
+            el.get(0).addEventListener("drop", function (e) {
                 if (e.preventDefault) {
                     e.preventDefault(); // Necessary. Allows us to drop.
                 }
