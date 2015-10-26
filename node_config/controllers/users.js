@@ -32,10 +32,10 @@ exports.login = function (req, res) {
           return res.send(401);
         }
         if (!user) {
-          return res.json({message:"User not found."});
+          return res.status(500).json({message:"User not found."});
         }
         if (!user.authenticate(fieldValues.password)) {
-          return res.json({message:"Login Incorrect."});
+          return res.status(500).json({message:"Login Incorrect."});
         }else{
           var token = jwt.sign(user, config.secret, { expiresIn: 3600 });
           return res.json({token:token});

@@ -111,6 +111,7 @@ app.controller('loginController', ['$scope', '$location', '$window', 'UserServic
                     $window.sessionStorage.token = data.token;
                     $location.path("/contact");
                 }).error(function(status, data) {
+                    $scope.message = data.message;
                     console.log(status);
                     console.log(data);
                 });
@@ -131,6 +132,7 @@ app.controller('loginController', ['$scope', '$location', '$window', 'UserServic
                 UserService.register(username, password).success(function(data) {
                     $scope.message = data.message;
                 }).error(function(status, data) {
+                    $scope.message = data.message;
                     console.log(status);
                     console.log(data);
                 });
