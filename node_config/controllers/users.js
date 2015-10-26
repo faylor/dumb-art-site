@@ -35,7 +35,7 @@ exports.login = function (req, res) {
           console.log("Unknown User");
           return res.send(401);
         }
-        if (!user.authenticate(password)) {
+        if (!user.authenticate(fieldValues.password)) {
           console.log("Invalid Password");
           return res.send(401);
         }else{
