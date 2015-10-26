@@ -1,35 +1,24 @@
+<style type='text/css'>
+  .listWrapper{float:left; clear:both;border:1px solid black; margin:3px; padding:5px;}
+  .listTitle{float:left;padding-right:10px;min-width:200px;}
+  .listSize{float:left;padding-right:10px;min-width:100px;}
+  .listPrice{float:left;padding-right:10px;min-width:50px;}
+  .listImage{float:left;padding-right:10px;min-width:80px;}
+  .dropZone{float:left; clear:both;padding:1px;width:100%;background-color: #CCC}
+  .lvl-over {border: 2px dashed black !important;}
+  .lvl-target {background-color: #ddd;opacity: .5;}
+  [draggable] {cursor: move;}
+</style>
 <h2>Di Taylor</h2>
 <p>{{name}}</p>
   <table>
     <tr ng-repeat="painting in paintings | orderBy: 'rank' ">
       <td>
-        <div x-lvl-drop-target='true' x-on-drop='dropped(dragEl, dropEl)'>
-          <div x-lvl-draggable='true'/>
-        </div>
+        <div x-lvl-drop-target='true' x-on-drop='dropped(dragEl, dropEl)'/>
+        <div x-lvl-draggable='true'/>
+        <div x-lvl-drop-target='true' x-on-drop='dropped(dragEl, dropEl)' class="dropZone"/>
       </td>
     </tr>
   </table>
 
   <!-- include the uuid service as well as the directive -->
-
-
-<style>
-  .lvl-over {
-    border: 2px dashed black !important;
-  }
-
-  .lvl-target {
-    background-color: #ddd;
-    opacity: .5;
-  }
-
-  [draggable] {
-    cursor: move;
-  }
-</style>
-
-<!-- make an element draggable -->
-<div x-lvl-draggable='true'>drag me!</div>
-
-<!-- create a drop target and specify a callback function>-->
-<div  x-lvl-draggable='true' x-lvl-drop-target='true' x-on-drop='dropped(dragEl, dropEl)'>drop zone</div>

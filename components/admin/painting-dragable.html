@@ -1,2 +1,6 @@
-<div id='{{ painting._id }}'><table><tr><td>{{painting.title}}</td><td>{{painting.size}}</td><td>{{painting.price}}</td><td><img src='images/thumbs/{{painting.image}}'/></td></tr>
-</table></div>
+<div id='{{ painting._id }}' class='listWrapper'>
+  <div class='listTitle'>{{painting.title}}</div>
+  <div class='listSize'>{{painting.size}}</div>
+  <div class='listPrice'>{{painting.price}}</td>
+  <div class='listImage'><img src='images/thumbs/{{painting.image}}' height="50px"/></div>
+</div>
