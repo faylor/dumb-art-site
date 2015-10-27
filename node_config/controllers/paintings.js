@@ -73,7 +73,7 @@ exports.updateRanking = function (req, res){
               //now every painting with a ranking >= drop rank +1.
               console.log("a:Drag Rank:"+dragPainting.rank+"  Drop Rank:"+dropPainting.rank);
 
-              Painting.where('rank').gte(dropPainting.rank).update({ $inc: { rank: 1 }}, function (err, count) {
+              Painting.where('rank').gte(dropPainting.rank).update({ $inc: { rank: dropPainting.rank+1 }}, function (err, count) {
                 if(err){
                   console.log(err);
                   return res.send(401);
