@@ -229,7 +229,7 @@ app.controller('adminPaintingsController', ['$scope','$http','$uibModal','dataFa
     });
 
     modalInstance.result.then(function (updatedPainting) {
-      dataFactory.updatedPainting(updatedPainting);
+      dataFactory.updatePainting(updatedPainting);
       getPaintings();
     }, function () {
       $log.info('Modal dismissed at: ' + new Date());
