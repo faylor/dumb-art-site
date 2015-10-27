@@ -29,6 +29,7 @@ module.exports = function(self) {
 
     self.putroutes = { };
     self.putroutes['/updateRanking'] = paintings.updateRanking;
+    self.putroutes['/painting/:id'] = paintings.update;
 
     self.postroutes = { };
 

@@ -34,6 +34,24 @@ exports.index = function (req, res){
   });*/
 };
 
+exports.update = function (req, res){
+  var body = "";
+  req.on('data', function(data){
+      body += data.toString();
+  });
+  req.on('end', function () {
+    var painting = JSON.parse(body);
+    Painting.update({ _id: req.params.id }, painting, {upsert: true}, function(err) {
+          if (!err) {
+              return res.send("updated");
+          } else {
+              console.log(err);
+              return res.send(404, { error: "Painting was not updated." });
+          }
+    });
+  });
+};
+
 exports.updateRanking = function (req, res){
   var body = "";
   req.on('data', function(data){
