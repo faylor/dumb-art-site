@@ -228,7 +228,7 @@ app.controller('adminPaintingsController', ['$scope','$http','$uibModal','dataFa
       }
     });
 
-    modalInstance.result.then(function (updatedPainting) {
+    modalInstance.result.then(function (id,updatedPainting) {
       dataFactory.updatePainting(id,updatedPainting);
       //getPaintings();
     }, function () {
