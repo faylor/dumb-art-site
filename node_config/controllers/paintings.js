@@ -77,7 +77,7 @@ exports.updateRanking = function (req, res){
                   return res.send(401);
                 }
                 dragPainting.save();
-                console.log("b:Drag Rank:"+dragPainting.rank+"  Drop Rank:"+dropPainting.rank);
+                console.log(count+" << count of updated rows... b:Drag Rank:"+dragPainting.rank+"  Drop Rank:"+dropPainting.rank);
               });
               console.log("c:Drag Rank:"+dragPainting.rank+"  Drop Rank:"+dropPainting.rank);
               //Painting.update(query.where('rank').gte(dropPainting.rank),{ $inc: { rank: 1 }},{ multi: true },function(){});
