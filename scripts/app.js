@@ -203,8 +203,13 @@ app.controller('adminPaintingsController', ['$scope','$http', 'dataFactory', fun
 
   $scope.dropped = function(dragID, dropID) {
 
-      dataFactory.updateRanking(dragID,dropID);
-      console.log("The element " + dragID + " has been dropped on " + dropID + "!");
+      dataFactory.updateRanking(dragID,dropID)
+          .success(function (p) {
+              $scope.paintings = p;
+          })
+          .error(function (error) {
+              $scope.status = 'Unable to load Painting data: ' + error.message;
+          });
   };
 }]);
 
