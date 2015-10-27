@@ -187,6 +187,8 @@ app.controller('loginController', ['$scope', '$location', '$window', 'UserServic
 
 
 app.controller('adminPaintingsController', ['$scope','$http','$uibModal','dataFactory', function ( $scope, $http, $uibModal, dataFactory){
+//app.controller('adminPaintingsController', ['$scope','$http','dataFactory', function ( $scope, $http, dataFactory){
+
   $scope.name = 'Admin Paintings';
   $scope.paintings;
   getPaintings();
