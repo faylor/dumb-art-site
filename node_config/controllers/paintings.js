@@ -80,16 +80,10 @@ exports.updateRanking = function (req, res){
                 }
                 dragPainting.rank = newRank; //Replacing the orginal spot
                 dragPainting.save();
-                console.log(count+" << count of updated rows... b:Drag Rank:"+dragPainting.rank+"  Drop Rank:"+dropPainting.rank);
-              });
-              console.log("c:Drag Rank:"+dragPainting.rank+"  Drop Rank:"+dropPainting.rank);
-              //Painting.update(query.where('rank').gte(dropPainting.rank),{ $inc: { rank: 1 }},{ multi: true },function(){});
-              //set drag rank to drop rank
-               //hmmm not sure this will work
-              console.log("e:Drag Rank:"+dragPainting.rank+"  Drop Rank:"+dropPainting.rank);
-              Painting.find().lean().exec(function(err, docs) {
-                  res.header("Content-Type:","text/json");
-                  res.end(JSON.stringify(docs));
+                Painting.find().lean().exec(function(err, docs) {
+                    res.header("Content-Type:","text/json");
+                    res.end(JSON.stringify(docs));
+                });
               });
             }else{
               console.log("Drop Painting not found");
