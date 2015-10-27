@@ -68,7 +68,7 @@ exports.updateRanking = function (req, res){
               dropPainting = painting;
               console.log("Drop Painting"+dropPainting.rank);
 
-
+              dragPainting.rank = dropPainting.rank;
               //now every painting with a ranking >= drop rank +1.
               console.log("a:Drag Rank:"+dragPainting.rank+"  Drop Rank:"+dropPainting.rank);
               Painting.where('rank').gte(dropPainting.rank).update({ $inc: { rank: 1 }}, function (err, count) {
@@ -76,14 +76,13 @@ exports.updateRanking = function (req, res){
                   console.log(err);
                   return res.send(401);
                 }
+                dragPainting.save();
                 console.log("b:Drag Rank:"+dragPainting.rank+"  Drop Rank:"+dropPainting.rank);
               });
               console.log("c:Drag Rank:"+dragPainting.rank+"  Drop Rank:"+dropPainting.rank);
               //Painting.update(query.where('rank').gte(dropPainting.rank),{ $inc: { rank: 1 }},{ multi: true },function(){});
               //set drag rank to drop rank
-              dragPainting.rank = dropPainting.rank-1; //hmmm not sure this will work
-              console.log("d:Drag Rank:"+dragPainting.rank+"  Drop Rank:"+dropPainting.rank);
-              dragPainting.save();
+               //hmmm not sure this will work
               console.log("e:Drag Rank:"+dragPainting.rank+"  Drop Rank:"+dropPainting.rank);
               return res.json({message:"Drag Rank:"+dragPainting.rank+"  Drop Rank:"+dropPainting.rank});
             }else{
