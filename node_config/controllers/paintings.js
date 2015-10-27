@@ -87,7 +87,7 @@ exports.updateRanking = function (req, res){
               //set drag rank to drop rank
                //hmmm not sure this will work
               console.log("e:Drag Rank:"+dragPainting.rank+"  Drop Rank:"+dropPainting.rank);
-              return res.json({message:"Drag Rank:"+dragPainting.rank+"  Drop Rank:"+dropPainting.rank});
+              return exports.index;
             }else{
               console.log("Drop Painting not found");
               return res.send(401);
