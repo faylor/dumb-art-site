@@ -230,7 +230,7 @@ app.controller('adminPaintingsController', ['$scope','$http','$uibModal','dataFa
 
     modalInstance.result.then(function (updatedPainting) {
       dataFactory.updatePainting(updatedPainting);
-      getPaintings();
+      //getPaintings();
     }, function () {
       $log.info('Modal dismissed at: ' + new Date());
     });
@@ -274,7 +274,7 @@ app.factory('dataFactory', ['$http', function($http) {
   };
 
   dataFactory.updatePainting = function (painting) {
-    return $http.put(urlBase + '/' + painting._id, painting)
+    return $http.put( '/painting/' + painting._id, painting)
   };
   dataFactory.updateRanking = function (dragid,dropid) {
     return $http.put('/updateRanking', JSON.stringify({dragid:dragid,dropid:dropid}))
