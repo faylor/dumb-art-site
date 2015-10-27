@@ -7,7 +7,7 @@
                 <div class="form-group">
                     <label for="inputTitle" class="col-sm-4 control-label">Title</label>
                     <div class="col-sm-4">
-                        <input type="hidden" class="form-control" id="inputId" placeholder="Id" ng-model="painting.id">
+                        <input type="hidden" class="form-control" id="inputId" placeholder="_Id" ng-model="painting._id">
                         <input type="text" class="form-control" id="inputTitle" placeholder="Title" ng-model="painting.title">
                     </div>
                 </div>
@@ -20,7 +20,7 @@
             </form>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-primary" type="button" ng-click="save(painting.id,painting.title,painting.size)">OK</button>
+            <button class="btn btn-primary" type="button" ng-click="save(painting._id,painting.title,painting.size)">OK</button>
             <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
         </div>
     </script>
