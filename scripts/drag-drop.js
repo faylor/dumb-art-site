@@ -1,6 +1,6 @@
-var module = angular.module("lvl.directives.dragdrop", ['lvl.services']);
+var module = angular.module("galleryApp.dragdrop",[]);
 
-module.directive('lvlDraggable', ['$rootScope', 'uuid', function ($rootScope, uuid) {
+module.directive('lvlDraggable', ['$rootScope', function ($rootScope, uuid) {
     return {
         restrict: 'A',
         templateUrl:'/components/admin/painting-dragable.html',
@@ -25,7 +25,7 @@ module.directive('lvlDraggable', ['$rootScope', 'uuid', function ($rootScope, uu
     };
 }]);
 
-module.directive('lvlDropTarget', ['$rootScope', 'uuid', function ($rootScope, uuid) {
+module.directive('lvlDropTarget', ['$rootScope', function ($rootScope, uuid) {
     return {
         restrict: 'A',
         scope: {

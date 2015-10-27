@@ -10,6 +10,7 @@ var util = require('util');
 /**
  *  Define the sample application.
  */
+
 var SampleApp = function() {
 
     //  Scope.
@@ -141,7 +142,10 @@ var SampleApp = function() {
         for (var p in self.postroutes) {
             self.app.post(p, self.postroutes[p]);
         }
-
+        self.app.all('/*', function(req, res) {
+         res.sendfile('index.html', { root: __dirname+'/' });
+       });
+       
     };
 
 

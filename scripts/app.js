@@ -1,6 +1,7 @@
-var app = angular.module('galleryApp', ['ui.router','ui.bootstrap','lvl.directives.dragdrop'])
+/*var app = angular.module('galleryApp', ['ui.router','ui.bootstrap','galleryApp.dragdrop'])
 
-app.config(['$stateProvider','$urlRouterProvider',function($stateProvider, $urlRouterProvider) {
+app.config(['$locationProvider','$stateProvider','$urlRouterProvider',function($locationProvider,$stateProvider, $urlRouterProvider) {
+    $locationProvider.html5Mode(true); //remove the hash from the URL
     $urlRouterProvider.otherwise("/home");
     $stateProvider
       .state('home', {
@@ -34,8 +35,9 @@ app.config(['$stateProvider','$urlRouterProvider',function($stateProvider, $urlR
         controller:'adminPaintingsController'
       });
 }]);
+*/
+var app = angular.module('galleryApp', ['ngRoute','ui.bootstrap','galleryApp.dragdrop'])
 
-/*
 app.config(['$locationProvider','$routeProvider',
   function($locationProvider,$routeProvider) {
     $routeProvider.
@@ -80,7 +82,7 @@ app.config(['$locationProvider','$routeProvider',
       // use the HTML5 History API
       $locationProvider.html5Mode(true);
 }]);
-*/
+
 app.config(function ($httpProvider) {
     $httpProvider.interceptors.push('TokenInterceptor');
 });
