@@ -6,9 +6,8 @@
   <title>Di Taylor Art</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
   <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
-  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-route.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.2/ui-bootstrap-tpls.min.js"></script>
-  <script src="scripts/uuid.js"></script>
+  <script src="scripts/angular-ui-router.min.js"></script>
   <script src="scripts/drag-drop.js"></script>
   <script src="scripts/app.js"></script>
   <base href="/">
@@ -23,12 +22,12 @@
             </div>
 
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="/home"><i class="fa fa-home"></i> Home</a></li>
-                <li><a href="/gallery"><i class="fa fa-shield"></i> Gallery</a></li>
-                <li><a href="/contact"><i class="fa fa-comment"></i> Contact</a></li>
-                <li><a href="/login"><i class="fa fa-comment"></i> Login</a></li>
-                <li><a href="/register"><i class="fa fa-comment"></i> register</a></li>
-                <li><a href="/admin-paintings"><i class="fa fa-comment"></i> admin paintings</a></li>
+                <li><a ui-sref="/home"><i class="fa fa-home"></i> Home</a></li>
+                <li><a ui-sref="/gallery"><i class="fa fa-shield"></i> Gallery</a></li>
+                <li><a ui-sref="/contact"><i class="fa fa-comment"></i> Contact</a></li>
+                <li><a ui-sref="/login"><i class="fa fa-comment"></i> Login</a></li>
+                <li><a ui-sref="/register"><i class="fa fa-comment"></i> register</a></li>
+                <li><a ui-sref="/admin-paintings"><i class="fa fa-comment"></i> admin paintings</a></li>
             </ul>
         </div>
         </nav>
@@ -39,7 +38,7 @@
 
         <!-- angular templating -->
         <!-- this is where content will be injected -->
-        <div ng-view></div>
+        <div ui-view></div>
 
     </div>
 </body>

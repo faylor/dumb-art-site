@@ -1,5 +1,41 @@
-var app = angular.module('galleryApp', ['ngRoute','ui.bootstrap','lvl.directives.dragdrop'])
+var app = angular.module('galleryApp', ['ui.router','ui.bootstrap','lvl.directives.dragdrop'])
 
+app.config(['$stateProvider','$urlRouterProvider',function($stateProvider, $urlRouterProvider) {
+    $urlRouterProvider.otherwise("/home");
+    $stateProvider
+      .state('home', {
+        url: '/home',
+        templateUrl: 'components/home/home.html',
+        controller: 'homeController'
+      }).
+      state('contact', {
+        url: '/contact',
+        templateUrl: 'components/contact/contact.html',
+        controller:'contactController'
+      }).
+      state('gallery', {
+        url: '/gallery',
+        templateUrl: 'components/gallery/gallery.html',
+        controller:'galleryController'
+      }).
+      state('login', {
+        url:'/login',
+        templateUrl: 'components/login/login.html',
+        controller:'loginController'
+      }).
+      state('register', {
+        url:'/register',
+        templateUrl: 'components/admin/register.html',
+        controller:'loginController'
+      }).
+      state('admin-paintings', {
+        url:'/admin-paintings',
+        templateUrl: 'components/admin/paintings.html',
+        controller:'adminPaintingsController'
+      });
+}]);
+
+/*
 app.config(['$locationProvider','$routeProvider',
   function($locationProvider,$routeProvider) {
     $routeProvider.
@@ -44,7 +80,7 @@ app.config(['$locationProvider','$routeProvider',
       // use the HTML5 History API
       $locationProvider.html5Mode(true);
 }]);
-
+*/
 app.config(function ($httpProvider) {
     $httpProvider.interceptors.push('TokenInterceptor');
 });

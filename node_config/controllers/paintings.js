@@ -66,8 +66,18 @@ exports.updateRanking = function (req, res){
             }
             if(painting){
               dropPainting = painting;
-              console.log("Drag Painting"+dropPainting.rank);
-              return res.json({message:"Drag Rank:"+dragPainting.rank+"Drop Rank:"+dropPainting.rank});
+              console.log("Drop Painting"+dropPainting.rank);
+
+
+              //now every painting with a ranking >= drop rank +1.
+
+
+              Painting.update(query.where('rank').gte(dropPainting.rank),{ $inc: { rank: 1 }},{ multi: true },function(){});
+              //set drag rank to drop rank
+              dragPainting.rank = dropPainting.rank;
+              dragPainting.save();
+
+              return res.json({message:"Drag Rank:"+dragPainting.rank+"  Drop Rank:"+dropPainting.rank});
             }else{
               console.log("Drop Painting not found");
               return res.send(401);
