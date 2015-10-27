@@ -55,8 +55,6 @@ exports.updateRanking = function (req, res){
         }
         if(painting){
           dragPainting = painting;
-          console.log("Drag Painting"+dragPainting.rank);
-
           //use promises
           var dropPainting;
           Painting.load(ids.dropid,function(err,painting){
@@ -66,14 +64,15 @@ exports.updateRanking = function (req, res){
             }
             if(painting){
               dropPainting = painting;
-              console.log("Drop Painting"+dropPainting.rank);
+              console.log("a:Drag Rank:"+dragPainting.rank+"  Drop Rank:"+dropPainting.rank);
+
               var newRank = dropPainting.rank;
               dragPainting.rank = 0; //Do this to make sure its not in the way
               dragPainting.save();
               //now every painting with a ranking >= drop rank +1.
-              console.log("a:Drag Rank:"+dragPainting.rank+"  Drop Rank:"+dropPainting.rank);
+              console.log("b:Drag Rank:"+dragPainting.rank+"  Drop Rank:"+dropPainting.rank);
 
-              Painting.where('rank').gte(dropPainting.rank).update({ $inc: { rank: 1 }}, function (err, count) {
+              Painting.where({'rank':{"$gte":newRank}}).update({ $inc: { rank: 1 }}, function (err, count) {
                 if(err){
                   console.log(err);
                   return res.send(401);
