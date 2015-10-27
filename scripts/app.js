@@ -46,11 +46,6 @@ app.config(['$locationProvider','$routeProvider',
       controller:'homeController',
       access: { requiredLogin: false }
       }).
-      when('/home', {
-        templateUrl: 'components/home/home.html',
-        controller:'homeController',
-        access: { requiredLogin: false }
-      }).
       when('/contact', {
         templateUrl: 'components/contact/contact.html',
         controller:'contactController',
@@ -77,7 +72,7 @@ app.config(['$locationProvider','$routeProvider',
         access: { requiredLogin: false }
       }).
       otherwise({
-        redirectTo: '/home'
+        redirectTo: '/'
       });
       // use the HTML5 History API
       $locationProvider.html5Mode(true);

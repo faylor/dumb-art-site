@@ -144,8 +144,8 @@ var SampleApp = function() {
         }
         self.app.all('/*', function(req, res) {
          res.sendfile('index.html', { root: __dirname+'/' });
-       });
-       
+        });
+
     };
 
 
