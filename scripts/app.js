@@ -186,7 +186,7 @@ app.controller('loginController', ['$scope', '$location', '$window', 'UserServic
 ]);
 
 
-app.controller('adminPaintingsController', ['$scope','$http', 'dataFactory', function ( $scope, $http, dataFactory){
+app.controller('adminPaintingsController', ['$scope','$http','$uibModal','dataFactory', function ( $scope, $http, $uibModal, dataFactory){
   $scope.name = 'Admin Paintings';
   $scope.paintings;
   getPaintings();
@@ -211,7 +211,41 @@ app.controller('adminPaintingsController', ['$scope','$http', 'dataFactory', fun
               $scope.status = 'Unable to load Painting data: ' + error.message;
           });
   };
+
+
+  $scope.showEditor = function (_painting) {
+
+    var modalInstance = $uibModal.open({
+      animation: true,
+      templateUrl: 'myModalContent.html',
+      controller: 'adminPaintingsEditorController',
+      resolve: {
+        painting: function () {
+          return _painting;
+        }
+      }
+    });
+
+    modalInstance.result.then(function (selectedItem) {
+      $scope.selected = selectedItem;
+    }, function () {
+      $log.info('Modal dismissed at: ' + new Date());
+    });
+  };
 }]);
+
+app.controller('adminPaintingsEditorController', function ($scope, $uibModalInstance, painting) {
+  $scope.painting = painting;
+
+  $scope.ok = function () {
+    $uibModalInstance.close($scope.selected.item);
+  };
+
+  $scope.cancel = function () {
+    $uibModalInstance.dismiss('cancel');
+  };
+});
+
 
 app.controller('contactController', function ($scope) {
   $scope.name = 'Contttact';
