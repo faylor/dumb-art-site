@@ -21,12 +21,12 @@ module.exports = function(self) {
             res.end(JSON.stringify(names));
         });
     };*/
-    self.getroutes['/upload'] = function (req, res){
+  /*  self.getroutes['/upload'] = function (req, res){
       res.writeHead(200, {'Content-Type': 'text/html' });
       var form = '<form action="/upload" enctype="multipart/form-data" method="post">Add a title: <input name="title" type="text" /><br><br><input multiple="multiple" name="upload" type="file" /><br><br><input type="submit" value="Upload" /></form>';
       res.end(form);
     };
-
+*/
     self.putroutes = { };
     self.putroutes['/updateRanking'] = paintings.updateRanking;
     self.putroutes['/painting/:id'] = paintings.update;

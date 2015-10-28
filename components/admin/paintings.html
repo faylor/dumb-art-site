@@ -12,6 +12,9 @@
 <h2>Di Taylor</h2>
 <p>{{name}}</p>
   <table>
+    <tr>
+      <td><button type="button" class="btn btn-default" ng-click="showEditor()">Add New</button></td>
+    </tr>
     <tr ng-repeat="painting in paintings | orderBy: 'rank' ">
       <td>
         <div x-lvl-draggable='true' id='{{ painting._id }}'/>

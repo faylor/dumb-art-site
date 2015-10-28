@@ -3,7 +3,7 @@
             <h3 class="modal-title">Edit Painting:</h3>
         </div>
         <div class="modal-body">
-            <form class="form-horizontal" role="form">
+            <form class="form-horizontal" role="form" action="/upload" enctype="multipart/form-data" method="post">
                 <div class="form-group">
                     <label for="inputTitle" class="col-sm-4 control-label">Title</label>
                     <div class="col-sm-4">
@@ -12,7 +12,25 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="inputPassword" class="col-sm-4 control-label">Size</label>
+                    <label for="inputSize" class="col-sm-4 control-label">Size</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="inputSize" placeholder="Size" ng-model="painting.size">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputPrice" class="col-sm-4 control-label">Price</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="inputPrice" placeholder="Price" ng-model="painting.price">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputSold" class="col-sm-4 control-label">Sold</label>
+                    <div class="col-sm-4">
+                        <input type="checkbox" class="form-control" id="inputSold" placeholder="Sold" ng-model="painting.sold">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputPassword" class="col-sm-4 control-label">Image</label>
                     <div class="col-sm-4">
                         <input type="text" class="form-control" id="inputSize" placeholder="Size" ng-model="painting.size">
                     </div>
@@ -20,7 +38,7 @@
             </form>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-primary" type="button" ng-click="save(painting._id,painting.title,painting.size)">OK</button>
+            <button class="btn btn-primary" type="submit">Save</button>
             <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
         </div>
     </script>
@@ -30,6 +48,6 @@
   <div class='listSize'>{{painting.size}}</div>
   <div class='listPrice'>{{painting.price}}</td>
   <div class='listImage'><img src='images/thumbs/{{painting.image}}' height="50px"/></div>
-  <button type="button" class="btn btn-default" ng-click="showEditor(painting)">Open me!</button>
+  <button type="button" class="btn btn-default" ng-click="showEditor(painting)">Edit</button>
 </div>
 <div x-lvl-drop-target='true' x-on-drop='dropped(dragID, dropID)' id='{{painting._id}}'>...</div>

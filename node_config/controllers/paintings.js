@@ -93,7 +93,7 @@ exports.updateRanking = function (req, res){
                   var max = doc.rank;
                   dragPainting.rank = max + 1;
                   dragPainting.save();
-                  return res.json(JSON.stringify(getJSONList());
+                  return res.json(JSON.stringify(getJSONList()));
                 }
             );
           }
@@ -122,7 +122,7 @@ exports.updateRanking = function (req, res){
                 }
                 dragPainting.rank = newRank; //Replacing the orginal spot
                 dragPainting.save();
-                return res.json(JSON.stringify(getJSONList());
+                return res.json(JSON.stringify(getJSONList()));
               });
             }else{
               console.log("Drop Painting not found");
