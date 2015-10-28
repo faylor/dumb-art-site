@@ -274,7 +274,7 @@ app.factory('dataFactory', ['$http', function($http) {
   };
 
   dataFactory.updatePainting = function (id,painting) {
-    return $http.put( '/painting/' + id, painting)
+    return $http.put( '/painting/' + id, JSON.stringify(painting))
   };
   dataFactory.updateRanking = function (dragid,dropid) {
     return $http.put('/updateRanking', JSON.stringify({dragid:dragid,dropid:dropid}))
