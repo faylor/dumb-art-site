@@ -16,9 +16,13 @@
       <td>
         <div x-lvl-draggable='true' id='{{ painting._id }}'/>
       </td>
-      <footer ng-repeat-end>
-        <div x-lvl-drop-target='true' x-on-drop='dropped(dragID, "last")' class="dropZone">Move To Last Postion</div>
-      </footer>
+    </tr>
+    <tr>
+      <td>
+        <div class='listWrapper'>
+          <div x-lvl-drop-target='true' x-on-drop='dropped(dragID, "last")' class="dropZone">Move To Last Postion</div>
+        </div>
+      </td>
     </tr>
   </table>
 
