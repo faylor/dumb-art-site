@@ -41,7 +41,7 @@ exports.update = function (req, res){
   });
   req.on('end', function () {
     var painting = JSON.parse(body);
-    painting.delete('_id');
+    delete painting._id;
     Painting.update({ _id: req.params.id }, painting, {upsert: true}, function(err) {
           if (!err) {
               return res.send("updated");
