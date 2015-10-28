@@ -12,7 +12,7 @@ exports.index = function (req, res){
   Painting.find().lean().exec(function(err, docs) {
       if(err){
         console.log(err);
-        return res.json(JSON.stringify({error:err}));
+        return res.json({error:err});
       }
       return res.json(docs);
   });
@@ -88,7 +88,7 @@ exports.updateRanking = function (req, res){
                   }
                   var max = doc.rank;
                   dragPainting.rank = max + 1
-                  dragPainting,save();
+                  dragPainting.save();
                   return module.exports.index();
                 }
             );
