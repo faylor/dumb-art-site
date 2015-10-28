@@ -73,6 +73,24 @@ exports.updateRanking = function (req, res){
           return res.send(401);
         }
         if(painting){
+          if(ids.dropid='last'){
+            //get max rank + 1
+            Painting.findOne()
+                .sort('-rank')
+                .limit(1)
+                .exec(function(err, doc)
+                {
+                  if (err) {
+                    console.log(err);
+                    return res.send(401);
+                  }
+                  var max = doc.rank;
+                  console.log(max+'this is max');
+                  res.header("Content-Type:","text/json");
+                  res.end(JSON.stringify(doc));
+                }
+            );
+          }
           dragPainting = painting;
           //use promises
           var dropPainting;
