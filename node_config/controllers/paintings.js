@@ -75,7 +75,7 @@ exports.updateRanking = function (req, res){
           return res.send(401);
         }
         if(painting){
-          if(ids.dropid='last'){
+          if(ids.dropid=='last'){
             //get max rank + 1
             Painting.findOne()
                 .sort('-rank')
