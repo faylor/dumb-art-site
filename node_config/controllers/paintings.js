@@ -8,18 +8,18 @@ var Painting = mongoose.model('Painting')
 /**
  * List
  */
-var getJSONList = function(){
+var getAllAsJSONString = function(){
   Painting.find().lean().exec(function(err, docs) {
       if(err){
         console.log(err);
-        return {error:err};
+        return JSON.stringify({error:err})
       }
       return JSON.stringify(docs);
   });
 }
 exports.index = function (req, res){
   res.header("Content-Type:","text/json");
-  res.end(getJSONList);
+  res.end(getAllAsJSONString());
   /*var page = (req.params.page > 0 ? req.params.page : 1) - 1;
   var perPage = 30;
   var options = {
@@ -93,7 +93,7 @@ exports.updateRanking = function (req, res){
                   var max = doc.rank;
                   dragPainting.rank = max + 1;
                   dragPainting.save();
-                  return res.json(JSON.stringify(getJSONList()));
+                  return res.json(getAllAsJSONString());
                 }
             );
           }
@@ -122,7 +122,7 @@ exports.updateRanking = function (req, res){
                 }
                 dragPainting.rank = newRank; //Replacing the orginal spot
                 dragPainting.save();
-                return res.json(JSON.stringify(getJSONList()));
+                return res.json(getAllAsJSONString());
               });
             }else{
               console.log("Drop Painting not found");
