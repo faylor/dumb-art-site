@@ -12,7 +12,7 @@ var getJSONList = function(){
   Painting.find().lean().exec(function(err, docs) {
       if(err){
         console.log(err);
-        return JSON.stringify({error:err})
+        return {error:err};
       }
       return JSON.stringify(docs);
   });
