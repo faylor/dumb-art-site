@@ -14,7 +14,7 @@ exports.index = function (req, res){
         console.log(err);
         return res.json(JSON.stringify({error:err}));
       }
-      return res.json(JSON.stringify(docs));
+      return res.json(docs);
   });
   /*var page = (req.params.page > 0 ? req.params.page : 1) - 1;
   var perPage = 30;
