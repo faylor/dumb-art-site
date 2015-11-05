@@ -135,6 +135,8 @@ exports.updateRanking = function (req, res){
           return res.send(401);
         }
         if(painting){
+          dragPainting = painting;
+          
           if(ids.dropid=='last'){
             //get max rank + 1
             Painting.findOne()
@@ -153,7 +155,7 @@ exports.updateRanking = function (req, res){
                 }
             );
           }else{
-            dragPainting = painting;
+
             //use promises
             var dropPainting;
             Painting.load(ids.dropid,function(err,painting){
