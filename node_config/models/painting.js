@@ -55,6 +55,7 @@ PaintingSchema.path('size').required(true, 'Painting size cannot be blank');
 PaintingSchema.pre('remove', function (next) {
   var file = this.image;
   // if there are files associated with the item, remove from the cloud too
+  console.log('Deleting >>'+imagedir + file);
   fse.remove(imagedir + file, function (err) {
     if (err) {
       return console.error(err);
