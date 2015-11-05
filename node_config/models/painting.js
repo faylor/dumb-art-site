@@ -32,6 +32,7 @@ var PaintingSchema = new Schema({
   price: {type : Number, default : 0},
   tags: {type: [], get: getTags, set: setTags},
   image: {type : String, default : '', trim : true},
+  sold: {type: Boolean, default : false},
   createdAt  : {type : Date, default : Date.now},
   rank: {type : Number, default : 999}
 });

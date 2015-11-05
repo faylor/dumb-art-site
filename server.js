@@ -10,7 +10,18 @@ var util = require('util');
 /**
  *  Define the sample application.
  */
-
+ (function() {
+     var childProcess = require("child_process");
+     var oldSpawn = childProcess.spawn;
+     function mySpawn() {
+         console.log('spawn called');
+         console.log(arguments);
+         var result = oldSpawn.apply(this, arguments);
+         return result;
+     }
+     childProcess.spawn = mySpawn;
+ })();
+ 
 var SampleApp = function() {
 
     //  Scope.
@@ -28,7 +39,7 @@ var SampleApp = function() {
         //  Set the environment variables we need.
         self.ipaddress = process.env.OPENSHIFT_NODEJS_IP;
         self.port      = process.env.OPENSHIFT_NODEJS_PORT || 8080;
-        self.imagedir = process.env.OPENSHIFT_DATA_DIR+'images/';
+
         if (typeof self.ipaddress === "undefined") {
             //  Log errors on OpenShift but continue w/ 127.0.0.1 - this
             //  allows us to run/test the app locally.
@@ -39,6 +50,7 @@ var SampleApp = function() {
         //var connection_string = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +  process.env.OPENSHIFT_MONGODB_DB_PASSWORD + "@" + process.env.OPENSHIFT_MONGODB_DB_HOST + dbName;
         //self.db = mongojs(connection_string, ['Paintings']);
         self.url = process.env.OPENSHIFT_MONGODB_DB_URL + process.env.OPENSHIFT_APP_NAME;
+        if(process.env.NODE_ENV=="dev") self.url = 'mongodb://127.0.0.1:27017/nodejs';
     };
 
     /**

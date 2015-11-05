@@ -2,9 +2,12 @@
  * Module dependencies.
  */
 
-var mongoose = require('mongoose')
-var Painting = mongoose.model('Painting')
-
+var mongoose = require('mongoose');
+var Painting = mongoose.model('Painting');
+var formidable = require('formidable');
+var fse = require('fs-extra');
+var quickthumb  = require('quickthumb');
+var config = require('../config');
 /**
  * List
  */
@@ -14,26 +17,69 @@ exports.index = function (req, res){
         console.log(err);
         return res.json({error:err});
       }
-      return res.json(docs);
+      if(docs){
+        return res.json(docs);
+      }else{
+        return res.json({});
+      }
   });
-  /*var page = (req.params.page > 0 ? req.params.page : 1) - 1;
-  var perPage = 30;
-  var options = {
-    perPage: perPage,
-    page: page
-  };
+};
 
-  Painting.list(options, function (err, paintings) {
-    if (err) return res.render('500');
-    Painting.count().exec(function (err, count) {
-      res.render('paintings/index', {
-        title: 'Paintings',
-        paintings: paintings,
-        page: page + 1,
-        pages: Math.ceil(count / perPage)
+exports.updatePlus = function (req, res){
+  var form = new formidable.IncomingForm();
+  var fieldValues={};
+  form.on('field', function(field, value) {
+    fieldValues[field]=value;
+  })
+  .on('end', function(fields, files) {
+      var temp_path = this.openedFiles[0].path;
+      var file_name = this.openedFiles[0].name;
+      var imagedir = config.imagedir;
+      if(process.env.NODE_ENV=="dev")  imagedir = '/Users/jamestaylor/development/ditaylor/devimages/';
+      fse.copy(temp_path, imagedir + file_name, function(err) {
+          if (err) {
+            console.error(err);
+          } else {
+            quickthumb.convert({
+              src: imagedir + file_name,
+              dst: imagedir + "thumbs/" + file_name,
+              height: 200
+            }, function (err, path) {
+              if (err) {
+                console.error(err);
+              }
+            });
+          }
       });
-    });
-  });*/
+
+      if(req.params.id=='undefined' || !req.params.id){
+          var newPainting = new Painting({title:fieldValues.title,
+                                          size:fieldValues.size,
+                                          price:fieldValues.price,
+                                          sold:fieldValues.sold,
+                                          image:file_name});
+          newPainting.save(function (err) {
+            if (err) {
+              console.log(err);
+              return res.send(401);
+            }else{
+              console.log('success');
+              return res.json({message:"Painting Created Successfully."});
+            }
+          });
+      }else{
+          console.log('updating');
+          Painting.update({ _id: req.params.id }, fieldValues, {upsert: true}, function(err) {
+              if (!err) {
+                  return res.json({message:"updated"});
+              } else {
+                  console.log(err);
+                  return res.send(404, { error: "Painting was not updated." });
+              }
+        });
+      }
+  });
+  form.parse(req, function(err, fields, files) {});
 };
 
 exports.update = function (req, res){
@@ -42,16 +88,28 @@ exports.update = function (req, res){
       body += data.toString();
   });
   req.on('end', function () {
+    console.log(body);
     var painting = JSON.parse(body);
     delete painting._id;
-    Painting.update({ _id: req.params.id }, painting, {upsert: true}, function(err) {
-          if (!err) {
-              return res.send("updated");
-          } else {
-              console.log(err);
-              return res.send(404, { error: "Painting was not updated." });
-          }
-    });
+    if(req.params.id){
+      Painting.update({ _id: req.params.id }, painting, {upsert: true}, function(err) {
+            if (!err) {
+                return res.send("updated");
+            } else {
+                console.log(err);
+                return res.send(404, { error: "Painting was not updated." });
+            }
+      });
+    }else{
+      Painting.insert(painting, {upsert: true}, function(err) {
+            if (!err) {
+                return res.send("inserted");
+            } else {
+                console.log(err);
+                return res.send(404, { error: "Painting was not inserted." });
+            }
+      });
+    }
   });
 };
 

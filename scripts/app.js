@@ -1,41 +1,3 @@
-/*var app = angular.module('galleryApp', ['ui.router','ui.bootstrap','galleryApp.dragdrop'])
-
-app.config(['$locationProvider','$stateProvider','$urlRouterProvider',function($locationProvider,$stateProvider, $urlRouterProvider) {
-    $locationProvider.html5Mode(true); //remove the hash from the URL
-    $urlRouterProvider.otherwise("/home");
-    $stateProvider
-      .state('home', {
-        url: '/home',
-        templateUrl: 'components/home/home.html',
-        controller: 'homeController'
-      }).
-      state('contact', {
-        url: '/contact',
-        templateUrl: 'components/contact/contact.html',
-        controller:'contactController'
-      }).
-      state('gallery', {
-        url: '/gallery',
-        templateUrl: 'components/gallery/gallery.html',
-        controller:'galleryController'
-      }).
-      state('login', {
-        url:'/login',
-        templateUrl: 'components/login/login.html',
-        controller:'loginController'
-      }).
-      state('register', {
-        url:'/register',
-        templateUrl: 'components/admin/register.html',
-        controller:'loginController'
-      }).
-      state('admin-paintings', {
-        url:'/admin-paintings',
-        templateUrl: 'components/admin/paintings.html',
-        controller:'adminPaintingsController'
-      });
-}]);
-*/
 var app = angular.module('galleryApp', ['ngRoute','ui.bootstrap','galleryApp.dragdrop'])
 
 app.config(['$locationProvider','$routeProvider',
@@ -64,7 +26,7 @@ app.config(['$locationProvider','$routeProvider',
       when('/register', {
         templateUrl: 'components/admin/register.html',
         controller:'loginController',
-        access: { requiredLogin: true }
+        access: { requiredLogin: false }
       }).
       when('/admin-paintings', {
         templateUrl: 'components/admin/paintings.html',
@@ -191,6 +153,7 @@ app.controller('adminPaintingsController', ['$scope','$http','$uibModal','dataFa
 
   $scope.name = 'Admin Paintings';
   $scope.paintings;
+  $scope.editType;
   getPaintings();
 
   function getPaintings() {
@@ -213,10 +176,15 @@ app.controller('adminPaintingsController', ['$scope','$http','$uibModal','dataFa
               $scope.status = 'Unable to load Painting data: ' + error.message;
           });
   };
-
-
   $scope.showEditor = function (_painting) {
+    openModalForm(_painting,"Edit");
+  };
 
+  $scope.showAddNew = function (_painting) {
+    openModalForm(_painting, "Add New");
+  };
+
+  function openModalForm(_painting, editType) {
     var modalInstance = $uibModal.open({
       animation: true,
       templateUrl: 'myModalContent.html',
@@ -224,21 +192,54 @@ app.controller('adminPaintingsController', ['$scope','$http','$uibModal','dataFa
       resolve: {
         painting: function () {
           return _painting;
+        },
+        editType: function () {
+          return editType;
         }
       }
     });
 
     modalInstance.result.then(function (updatedPainting) {
-      dataFactory.updatePainting(updatedPainting._id,updatedPainting);
-      //getPaintings();
+      //dataFactory.updatePainting(updatedPainting._id,updatedPainting);
+      getPaintings();
     }, function () {
       console.log('Modal dismissed at: ' + new Date());
     });
-  };
+  }
 }]);
 
-app.controller('adminPaintingsEditorController', function ($scope, $uibModalInstance, painting) {
+app.controller('adminPaintingsEditorController',['$scope','$uibModalInstance','fileUpload','painting','editType',
+  function ($scope, $uibModalInstance, fileUpload, painting, editType) {
   $scope.painting = painting;
+  $scope.editType = editType;
+
+  // upload later on form submit or something similar
+  $scope.submit = function() {
+  /*  if (form.file.$valid && $scope.file) {
+      $scope.upload($scope.file);
+    }*/
+  };
+
+  $scope.uploadFile = function(id,title,size,price,sold){
+        var file = $scope.myFile;
+        var uploadUrl = "/painting/"+id;
+        fileUpload.uploadFileToUrl(id,file,{title:title,size:size,price:price,sold:sold}, uploadUrl);
+        $uibModalInstance.close({_id:id,title:title,size:size});
+    };
+  // upload on file select or drop
+  $scope.upload = function (file) {
+    /* Upload.upload({
+         url: '/painting/'+painting._id,
+         data: {file: file, 'username': $scope.username}
+     }).then(function (resp) {
+         console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
+     }, function (resp) {
+         console.log('Error status: ' + resp.status);
+     }, function (evt) {
+         var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+         console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+     });*/
+  };
 
   $scope.save = function (id, title, size) {
     $uibModalInstance.close({_id:id,title:title,size:size});
@@ -247,7 +248,7 @@ app.controller('adminPaintingsEditorController', function ($scope, $uibModalInst
   $scope.cancel = function () {
     $uibModalInstance.dismiss('cancel');
   };
-});
+}]);
 
 
 app.controller('contactController', function ($scope) {
@@ -273,7 +274,7 @@ app.factory('dataFactory', ['$http', function($http) {
     return $http.post(urlBase, cust);
   };
 
-  dataFactory.updatePainting = function (id,painting) {
+  dataFactory.updatePainting = function (id,file,painting) {
     return $http.put( '/painting/' + id, JSON.stringify(painting))
   };
   dataFactory.updateRanking = function (dragid,dropid) {
@@ -342,3 +343,37 @@ app.factory('TokenInterceptor', function ($q, $window, $location, Authentication
         }
     };
 });
+
+app.directive('fileModel', ['$parse', function ($parse) {
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+            var model = $parse(attrs.fileModel);
+            var modelSetter = model.assign;
+
+            element.bind('change', function(){
+                scope.$apply(function(){
+                    modelSetter(scope, element[0].files[0]);
+                });
+            });
+        }
+    };
+}]);
+
+app.service('fileUpload', ['$http', function ($http) {
+    this.uploadFileToUrl = function(id, file, data, uploadUrl){
+        var fd = new FormData();
+        fd.append('file', file);
+        fd.append('title',data.title);
+        fd.append('size',data.size);
+
+        $http.post(uploadUrl, fd, {
+            transformRequest: angular.identity,
+            headers: {'Content-Type': undefined}
+        })
+        .success(function(){
+        })
+        .error(function(){
+        });
+    }
+}]);
