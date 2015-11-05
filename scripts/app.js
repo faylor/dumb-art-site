@@ -208,8 +208,8 @@ app.controller('adminPaintingsController', ['$scope','$http','$uibModal','dataFa
   }
 }]);
 
-app.controller('adminPaintingsEditorController',['$scope','$uibModalInstance','fileUpload','painting','editType',
-  function ($scope, $uibModalInstance, fileUpload, painting, editType) {
+app.controller('adminPaintingsEditorController',['$scope','$uibModalInstance','dataFactory','painting','editType',
+  function ($scope, $uibModalInstance, dataFactory, painting, editType) {
   $scope.painting = painting;
   $scope.editType = editType;
 
