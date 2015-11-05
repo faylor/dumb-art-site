@@ -148,7 +148,7 @@ exports.updateRanking = function (req, res){
                   var max = doc.rank;
                   dragPainting.rank = max + 1
                   dragPainting.save();
-                  return module.exports.index();
+                  return module.exports.index(req, res);
                 }
             );
           }
@@ -177,7 +177,7 @@ exports.updateRanking = function (req, res){
                 }
                 dragPainting.rank = newRank; //Replacing the orginal spot
                 dragPainting.save();
-                return module.exports.index();
+                return module.exports.index(req, res);
               });
             }else{
               console.log("Drop Painting not found");
