@@ -33,7 +33,7 @@ var PaintingSchema = new Schema({
   title: {type : String, default : '', trim : true},
   body: {type : String, default : '', trim : true},
   size: {type : String, default : '', trim : true},
-  price: {type : Number, default : 0},
+  price: {type : String, default : '0'},
   tags: {type: [], get: getTags, set: setTags},
   image: {type : String, default : '', trim : true},
   sold: {type: Boolean, default : false},
@@ -125,7 +125,7 @@ PaintingSchema.statics = {
     var criteria = options.criteria || {}
 
     this.find(criteria)
-      .populate('user', 'name username')
+      .populate('painting', 'title price')
       .sort({'createdAt': -1}) // sort by date
       .limit(options.perPage)
       .skip(options.perPage * options.page)

@@ -14,7 +14,7 @@ module.exports = function(self) {
         res.send(self.cache_get('gallery.html') );
     };
 */
-    self.getroutes['/returnAllPaintings'] = paintings.index;
+    self.getroutes['/paintings'] = paintings.index;
     /*function(req, res){
         self.db.collection('Paintings').find().toArray(function(err, names) {
             res.header("Content-Type:","text/json");
