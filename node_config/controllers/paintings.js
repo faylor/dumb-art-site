@@ -58,6 +58,7 @@ exports.updatePlus = function (req, res){
                                           size:fieldValues.size,
                                           price:fieldValues.price,
                                           sold:fieldValues.sold,
+                                          rank:1,
                                           image:file_name});
           newPainting.save(function (err) {
             if (err) {
