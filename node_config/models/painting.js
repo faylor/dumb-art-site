@@ -3,9 +3,13 @@
  */
 
 var mongoose = require('mongoose');
+var fse = require('fs-extra');
+var config = require('../config');
 
 var Schema = mongoose.Schema;
 
+var imagedir = config.imagedir;
+if(process.env.NODE_ENV=="dev")  imagedir = '/Users/jamestaylor/development/ditaylor/devimages/';
 
 /**
  * Getters
@@ -49,10 +53,21 @@ PaintingSchema.path('size').required(true, 'Painting size cannot be blank');
  */
 
 PaintingSchema.pre('remove', function (next) {
-  var files = this.image;
-
+  var file = this.image;
   // if there are files associated with the item, remove from the cloud too
-
+  fse.remove(imagedir + file, function (err) {
+    if (err) {
+      return console.error(err);
+    }else{
+      fse.remove(imagedir + "thumbs/" + file, function (err) {
+        if (err) {
+          return console.error(err);
+        }else{
+          console.log('Deleted files, success!')
+        }
+      });
+    }
+  });
   next();
 });
 

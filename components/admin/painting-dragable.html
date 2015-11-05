@@ -32,6 +32,7 @@
                 <div class="form-group">
                     <label for="inputPassword" class="col-sm-4 control-label">Image</label>
                     <div class="col-sm-4">
+                    <input type="text" class="form-control" id="inputImage" placeholder="Image" ng-model="painting.image">
                     <input type="file" file-model="myFile"/>
                     </div>
                 </div>
@@ -49,5 +50,6 @@
   <div class='listPrice'>{{painting.price}}</td>
   <div class='listImage'><img src='images/thumbs/{{painting.image}}' height="50px"/></div>
   <button type="button" class="btn btn-default" ng-click="showEditor(painting)">Edit</button>
+  <button type="button" class="btn btn-default" ng-click="deletePainting(painting)">Delete</button>
 </div>
 <div x-lvl-drop-target='true' x-on-drop='dropped(dragID, dropID)' id='{{painting._id}}'>...</div>

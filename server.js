@@ -21,7 +21,7 @@ var util = require('util');
      }
      childProcess.spawn = mySpawn;
  })();
- 
+
 var SampleApp = function() {
 
     //  Scope.
@@ -153,6 +153,9 @@ var SampleApp = function() {
         }
         for (var p in self.postroutes) {
             self.app.post(p, self.postroutes[p]);
+        }
+        for (var p in self.deleteroutes) {
+            self.app.delete(p, self.deleteroutes[p]);
         }
         self.app.all('/*', function(req, res) {
          res.sendfile('index.html', { root: __dirname+'/' });

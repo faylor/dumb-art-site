@@ -115,6 +115,21 @@ exports.update = function (req, res){
   });
 };
 
+exports.deletePainting = function(req, res){
+  if(req.params.id){
+    Painting.find({ _id:req.params.id }).remove().exec(function(err, docs) {
+        if(err){
+          console.log(err);
+          return res.json({error:err});
+        }else{
+          return res.json({message:"Painting removed."});
+        }
+    });
+  }else{
+    return res.send(404, { error: "Painting was not deleted, missing id." });
+  }
+};
+
 exports.updateRanking = function (req, res){
   var body = "";
   req.on('data', function(data){
@@ -136,7 +151,7 @@ exports.updateRanking = function (req, res){
         }
         if(painting){
           dragPainting = painting;
-          
+
           if(ids.dropid=='last'){
             //get max rank + 1
             Painting.findOne()

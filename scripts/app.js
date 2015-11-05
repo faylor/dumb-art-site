@@ -148,7 +148,7 @@ app.controller('loginController', ['$scope', '$location', '$window', 'UserServic
 ]);
 
 
-app.controller('adminPaintingsController', ['$scope','$http','$uibModal','dataFactory', function ( $scope, $http, $uibModal, dataFactory){
+app.controller('adminPaintingsController', ['$scope','$http','$window','$uibModal','dataFactory', function ( $scope, $http,$window, $uibModal, dataFactory){
 //app.controller('adminPaintingsController', ['$scope','$http','dataFactory', function ( $scope, $http, dataFactory){
 
   $scope.name = 'Admin Paintings';
@@ -176,6 +176,20 @@ app.controller('adminPaintingsController', ['$scope','$http','$uibModal','dataFa
               $scope.status = 'Unable to load Painting data: ' + error.message;
           });
   };
+
+  $scope.deletePainting = function (_painting) {
+    var deleteUser = $window.confirm('Are you absolutely sure you want to delete?');
+
+    if (deleteUser) {
+      dataFactory.deletePainting(_painting._id).success(function () {
+          getPaintings();
+      })
+      .error(function (error) {
+          $scope.status = 'Unable to remove Painting: ' + error.message;
+      });
+    }
+  };
+
   $scope.showEditor = function (_painting) {
     openModalForm(_painting,"Edit");
   };
@@ -292,7 +306,7 @@ app.factory('dataFactory', ['$http', function($http) {
   };
 
   dataFactory.deletePainting = function (id) {
-    return $http.delete(urlBase + '/' + id);
+    return $http.delete('/painting/' + id);
   };
 
   return dataFactory;

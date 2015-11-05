@@ -27,6 +27,9 @@ module.exports = function(self) {
       res.end(form);
     };
 */
+    self.deleteroutes = {};
+    self.deleteroutes['/painting/:id'] = paintings.deletePainting;
+
     self.putroutes = { };
     self.putroutes['/updateRanking'] = paintings.updateRanking;
     //self.putroutes['/painting/:id'] = paintings.update;
