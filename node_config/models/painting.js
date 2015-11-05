@@ -64,7 +64,7 @@ PaintingSchema.pre('remove', function (next) {
         if (err) {
           return console.error(err);
         }else{
-          console.log('Deleted files, success!')
+          console.log('Deleted thumb and main file, success!')
         }
       });
     }

@@ -117,19 +117,15 @@ exports.update = function (req, res){
 
 exports.deletePainting = function(req, res){
   if(req.params.id){
-    var p = Painting.find({ _id:req.params.id },function(err,doc){  //needed for the pre-remove hook to work
-      if(err){
-        console.log(err);
-        return res.json({error:err});
-      }
-      doc.remove().exec(function(err, docs) {
-          if(err){
-            console.log(err);
-            return res.json({error:err});
-          }else{
-            return res.json({message:"Painting removed."});
-          }
-      });
+    var p = Painting.findOne({ _id:req.params.id },function(err, painting) {
+        if(err){
+          console.log(err);
+          return res.json({error:err});
+        }
+        if(painting){
+          painting.remove();
+          return res.json({message:"Painting removed."});
+        }
     });
   }else{
     return res.send(404, { error: "Painting was not deleted, missing id." });
