@@ -152,40 +152,40 @@ exports.updateRanking = function (req, res){
                   return module.exports.index(req, res);
                 }
             );
-          }
-          dragPainting = painting;
-          //use promises
-          var dropPainting;
-          Painting.load(ids.dropid,function(err,painting){
-            if (err) {
-              console.log(err);
-              return res.send(401);
-            }
-            if(painting){
-              dropPainting = painting;
-              console.log("a:Drag Rank:"+dragPainting.rank+"  Drop Rank:"+dropPainting.rank);
+          }else{
+            dragPainting = painting;
+            //use promises
+            var dropPainting;
+            Painting.load(ids.dropid,function(err,painting){
+              if (err) {
+                console.log(err);
+                return res.send(401);
+              }
+              if(painting){
+                dropPainting = painting;
+                console.log("a:Drag Rank:"+dragPainting.rank+"  Drop Rank:"+dropPainting.rank);
 
-              var newRank = dropPainting.rank;
-              dragPainting.rank = 0; //Do this to make sure its not in the way
-              dragPainting.save();
-              //now every painting with a ranking >= drop rank +1.
-              console.log("b:Drag Rank:"+dragPainting.rank+"  Drop Rank:"+dropPainting.rank);
-
-              Painting.update({'rank':{"$gte":newRank}},{ $inc: { rank: 1 }},{multi: true}, function (err, count) {
-                if(err){
-                  console.log(err);
-                  return res.send(401);
-                }
-                dragPainting.rank = newRank; //Replacing the orginal spot
+                var newRank = dropPainting.rank;
+                dragPainting.rank = 0; //Do this to make sure its not in the way
                 dragPainting.save();
-                return module.exports.index(req, res);
-              });
-            }else{
-              console.log("Drop Painting not found");
-              return res.send(401);
-            }
-          });
+                //now every painting with a ranking >= drop rank +1.
+                console.log("b:Drag Rank:"+dragPainting.rank+"  Drop Rank:"+dropPainting.rank);
 
+                Painting.update({'rank':{"$gte":newRank}},{ $inc: { rank: 1 }},{multi: true}, function (err, count) {
+                  if(err){
+                    console.log(err);
+                    return res.send(401);
+                  }
+                  dragPainting.rank = newRank; //Replacing the orginal spot
+                  dragPainting.save();
+                  return module.exports.index(req, res);
+                });
+              }else{
+                console.log("Drop Painting not found");
+                return res.send(401);
+              }
+            });
+          }
         }else{
           console.log("Drag Painting not found");
           return res.send(401);
