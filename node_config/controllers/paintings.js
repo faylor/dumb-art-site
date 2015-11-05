@@ -32,27 +32,29 @@ exports.updatePlus = function (req, res){
     fieldValues[field]=value;
   })
   .on('end', function(fields, files) {
-      var temp_path = this.openedFiles[0].path;
-      var file_name = this.openedFiles[0].name;
-      var imagedir = config.imagedir;
-      if(process.env.NODE_ENV=="dev")  imagedir = '/Users/jamestaylor/development/ditaylor/devimages/';
-      fse.copy(temp_path, imagedir + file_name, function(err) {
-          if (err) {
-            console.error(err);
-          } else {
-            quickthumb.convert({
-              src: imagedir + file_name,
-              dst: imagedir + "thumbs/" + file_name,
-              height: 200
-            }, function (err, path) {
-              if (err) {
-                console.error(err);
-                return res.send(401);
-              }
-            });
-          }
-      });
-
+      var file_name = "";
+      if(files){
+        var temp_path = this.openedFiles[0].path;
+        var file_name = this.openedFiles[0].name;
+        var imagedir = config.imagedir;
+        if(process.env.NODE_ENV=="dev")  imagedir = '/Users/jamestaylor/development/ditaylor/devimages/';
+        fse.copy(temp_path, imagedir + file_name, function(err) {
+            if (err) {
+              console.error(err);
+            } else {
+              quickthumb.convert({
+                src: imagedir + file_name,
+                dst: imagedir + "thumbs/" + file_name,
+                height: 200
+              }, function (err, path) {
+                if (err) {
+                  console.error(err);
+                  return res.send(401);
+                }
+              });
+            }
+        });
+      }
       if(req.params.id=='undefined' || !req.params.id){
           var newPainting = new Painting({title:fieldValues.title,
                                           size:fieldValues.size,

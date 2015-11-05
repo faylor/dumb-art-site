@@ -230,6 +230,7 @@ app.controller('adminPaintingsEditorController',['$scope','$uibModalInstance','d
   $scope.uploadFile = function(id,title,size,price,sold){
         var file = $scope.myFile;
         var uploadUrl = "/painting/"+id;
+        
         dataFactory.uploadFileAndFormToUrl(id,file,{title:title,size:size,price:price,sold:sold}, uploadUrl)
           .success(function (p) {
               $uibModalInstance.close({_id:id,title:title,size:size});
