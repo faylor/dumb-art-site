@@ -1,32 +1,35 @@
 <style type='text/css'>
-  .listWrapper{float:left; clear:both;border:1px solid black; margin:3px; padding:5px;}
-  .listTitle{float:left;padding-right:10px;min-width:200px;}
-  .listSize{float:left;padding-right:10px;min-width:100px;}
-  .listPrice{float:left;padding-right:10px;min-width:50px;}
-  .listImage{float:left;padding-right:10px;min-width:80px;}
-  .dropZone{float:left;clear:both;height:10px;width:100px;}
-  .lvl-over {border: 2px dashed black !important;}
-  .lvl-target {background-color: #ddd;opacity: .5;}
+  .listWrapper{float:left; clear:both;border:1px solid #777777; margin:0px 3px; padding:5px;width:900px;}
+  .listTitle{float:left;padding-right:10px;min-width:250px;}
+  .listSize{float:left;padding-right:10px;min-width:140px;}
+  .listSold{float:left;padding-right:10px;min-width:100px;}
+  .listPrice{float:left;padding-right:10px;min-width:100px;}
+  .listImage{float:left;padding-right:10px;min-width:150px;}
+  .dropZone{float:left;clear:both;height:5px;width:900px;font-size:8px;margin:0 4px;background-color: #DDD;}
+  .lvl-over {border: 2px dashed black !important;height:30px;}
   [draggable] {cursor: move;}
+  .center{margin:0 auto;width:900px;}
+  ul{list-style: none;margin:5px;padding:0px;}
+  li{list-style: none;margin:0px;padding:0px;}
 </style>
 <h2>Di Taylor</h2>
 <p>{{name}}</p>
-  <table>
-    <tr>
-      <td><button type="button" class="btn btn-default" ng-click="showAddNew()">Add New</button></td>
-    </tr>
-    <tr ng-repeat="painting in paintings | orderBy: 'rank' ">
-      <td>
+    <ul>
+      <li><div class='listWrapper'>
+        <div class='listTitle'>Title</div>
+        <div class='listSize'>Size</div>
+        <div class='listPrice'>Price</div>
+        <div class='listSold'>Sold</div>
+        <div class='listImage'>Image</div>
+        <button type="button" class="btn btn-default" ng-click="showAddNew()">Add New</button>
+      </div></li>
+      <li ng-repeat="painting in paintings | orderBy: 'rank' ">
         <div x-lvl-draggable='true' id='{{ painting._id }}'/>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <div class='listWrapper'>
-          <div x-lvl-drop-target='true' x-on-drop='dropped(dragID, dropID)' id='last'>Move To Last Postion</div>
-        </div>
-      </td>
-    </tr>
+      </li>
+      <li><div x-lvl-drop-target='true' x-on-drop='dropped(dragID, dropID)' id='last' class="dropZone"></div></li>
+    </ul>
+
+
   </table>
 
   <!-- include the uuid service as well as the directive -->

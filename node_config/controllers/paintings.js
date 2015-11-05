@@ -25,7 +25,7 @@ exports.index = function (req, res){
   });
 };
 
-exports.updatePlus = function (req, res){
+exports.updateDataAndFile = function (req, res){
   var form = new formidable.IncomingForm();
   var fieldValues={};
   form.on('field', function(field, value) {

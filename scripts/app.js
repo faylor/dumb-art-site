@@ -230,33 +230,15 @@ app.controller('adminPaintingsEditorController',['$scope','$uibModalInstance','d
   $scope.uploadFile = function(id,title,size,price,sold){
         var file = $scope.myFile;
         var uploadUrl = "/painting/"+id;
-        
+
         dataFactory.uploadFileAndFormToUrl(id,file,{title:title,size:size,price:price,sold:sold}, uploadUrl)
           .success(function (p) {
-              $uibModalInstance.close({_id:id,title:title,size:size});
+              $uibModalInstance.close({_id:id});
           })
           .error(function (error) {
               $scope.status = 'Unable to upload Painting data: ' + error.message;
           });
     };
-  // upload on file select or drop
-  $scope.upload = function (file) {
-    /* Upload.upload({
-         url: '/painting/'+painting._id,
-         data: {file: file, 'username': $scope.username}
-     }).then(function (resp) {
-         console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
-     }, function (resp) {
-         console.log('Error status: ' + resp.status);
-     }, function (evt) {
-         var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-         console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
-     });*/
-  };
-
-  $scope.save = function (id, title, size) {
-    $uibModalInstance.close({_id:id,title:title,size:size});
-  };
 
   $scope.cancel = function () {
     $uibModalInstance.dismiss('cancel');
@@ -272,7 +254,7 @@ app.controller('contactController', function ($scope) {
 /* dataFactory */
 app.factory('dataFactory', ['$http', function($http) {
 
-  var urlBase = '/returnAllPaintings';
+  var urlBase = '/painting/';
   var dataFactory = {};
 
   dataFactory.getPaintings = function () {
@@ -280,7 +262,7 @@ app.factory('dataFactory', ['$http', function($http) {
   };
 
   dataFactory.getPainting = function (id) {
-    return $http.get(urlBase + '/' + id);
+    return $http.get(urlBase + id);
   };
 
   dataFactory.insertPainting = function (cust) {
@@ -288,7 +270,7 @@ app.factory('dataFactory', ['$http', function($http) {
   };
 
   dataFactory.updatePainting = function (id,file,painting) {
-    return $http.put( '/painting/' + id, JSON.stringify(painting))
+    return $http.put( urlBase + id, JSON.stringify(painting))
   };
 
   dataFactory.uploadFileAndFormToUrl = function(id, file, data, uploadUrl, callback){
@@ -296,6 +278,8 @@ app.factory('dataFactory', ['$http', function($http) {
       fd.append('file', file);
       fd.append('title',data.title);
       fd.append('size',data.size);
+      fd.append('price',data.price);
+      fd.append('sold',data.sold);
 
       return $http.post(uploadUrl, fd, {
           transformRequest: angular.identity,
@@ -307,7 +291,7 @@ app.factory('dataFactory', ['$http', function($http) {
   };
 
   dataFactory.deletePainting = function (id) {
-    return $http.delete('/painting/' + id);
+    return $http.delete(urlBase + id);
   };
 
   return dataFactory;
