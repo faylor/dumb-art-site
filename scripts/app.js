@@ -216,14 +216,13 @@ app.controller('adminPaintingsEditorController',['$scope','$uibModalInstance','f
   $scope.uploadFile = function(id,title,size,price,sold){
         var file = $scope.myFile;
         var uploadUrl = "/painting/"+id;
-        fileUpload.uploadFileToUrl(id,file,{title:title,size:size,price:price,sold:sold}, uploadUrl)
-        .then(function (resp) {
-            console.log('Success ' + resp);
-            $uibModalInstance.close({_id:id,title:title,size:size});
-        }, function (resp) {
-            console.log('Error status: ' + resp);
-            $scope.messgage('Unable to upload, please try again.');
-        });
+        dataFactory.uploadFileAndFormToUrl(id,file,{title:title,size:size,price:price,sold:sold}, uploadUrl)
+          .success(function (p) {
+              $uibModalInstance.close({_id:id,title:title,size:size});
+          })
+          .error(function (error) {
+              $scope.status = 'Unable to upload Painting data: ' + error.message;
+          });
     };
   // upload on file select or drop
   $scope.upload = function (file) {
@@ -276,6 +275,18 @@ app.factory('dataFactory', ['$http', function($http) {
   dataFactory.updatePainting = function (id,file,painting) {
     return $http.put( '/painting/' + id, JSON.stringify(painting))
   };
+
+  dataFactory.uploadFileAndFormToUrl = function(id, file, data, uploadUrl, callback){
+      var fd = new FormData();
+      fd.append('file', file);
+      fd.append('title',data.title);
+      fd.append('size',data.size);
+
+      return $http.post(uploadUrl, fd, {
+          transformRequest: angular.identity,
+          headers: {'Content-Type': undefined}
+      })
+  }
   dataFactory.updateRanking = function (dragid,dropid) {
     return $http.put('/updateRanking', JSON.stringify({dragid:dragid,dropid:dropid}))
   };
@@ -357,24 +368,4 @@ app.directive('fileModel', ['$parse', function ($parse) {
             });
         }
     };
-}]);
-
-app.service('fileUpload', ['$http', function ($http) {
-    this.uploadFileToUrl = function(id, file, data, uploadUrl){
-        var fd = new FormData();
-        fd.append('file', file);
-        fd.append('title',data.title);
-        fd.append('size',data.size);
-
-        $http.post(uploadUrl, fd, {
-            transformRequest: angular.identity,
-            headers: {'Content-Type': undefined}
-        })
-        .success(function(){
-          return 'success';
-        })
-        .error(function(err){
-          return 'error:'+err;
-        });
-    }
 }]);
