@@ -213,18 +213,17 @@ app.controller('adminPaintingsEditorController',['$scope','$uibModalInstance','f
   $scope.painting = painting;
   $scope.editType = editType;
 
-  // upload later on form submit or something similar
-  $scope.submit = function() {
-  /*  if (form.file.$valid && $scope.file) {
-      $scope.upload($scope.file);
-    }*/
-  };
-
   $scope.uploadFile = function(id,title,size,price,sold){
         var file = $scope.myFile;
         var uploadUrl = "/painting/"+id;
-        fileUpload.uploadFileToUrl(id,file,{title:title,size:size,price:price,sold:sold}, uploadUrl);
-        $uibModalInstance.close({_id:id,title:title,size:size});
+        fileUpload.uploadFileToUrl(id,file,{title:title,size:size,price:price,sold:sold}, uploadUrl)
+        .then(function (resp) {
+            console.log('Success ' + resp);
+            $uibModalInstance.close({_id:id,title:title,size:size});
+        }, function (resp) {
+            console.log('Error status: ' + resp);
+            $scope.messgage('Unable to upload, please try again.');
+        });
     };
   // upload on file select or drop
   $scope.upload = function (file) {
@@ -372,8 +371,10 @@ app.service('fileUpload', ['$http', function ($http) {
             headers: {'Content-Type': undefined}
         })
         .success(function(){
+          return 'success';
         })
-        .error(function(){
+        .error(function(err){
+          return 'error:'+err;
         });
     }
 }]);

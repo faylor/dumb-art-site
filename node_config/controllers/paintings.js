@@ -47,6 +47,7 @@ exports.updatePlus = function (req, res){
             }, function (err, path) {
               if (err) {
                 console.error(err);
+                return res.send(401);
               }
             });
           }
@@ -101,7 +102,7 @@ exports.update = function (req, res){
             }
       });
     }else{
-      Painting.insert(painting, {upsert: true}, function(err) {
+      Painting.save(painting, {upsert: true}, function(err) {
             if (!err) {
                 return res.send("inserted");
             } else {
