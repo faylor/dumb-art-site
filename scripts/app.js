@@ -227,11 +227,11 @@ app.controller('adminPaintingsEditorController',['$scope','$uibModalInstance','d
   $scope.painting = painting;
   $scope.editType = editType;
 
-  $scope.uploadFile = function(id,title,size,price,sold){
+  $scope.uploadFile = function(id,title,size,price,sold,rank){
         var file = $scope.myFile;
         var uploadUrl = "/painting/"+id;
 
-        dataFactory.uploadFileAndFormToUrl(id,file,{title:title,size:size,price:price,sold:sold}, uploadUrl)
+        dataFactory.uploadFileAndFormToUrl(id,file,{title:title,size:size,price:price,sold:sold,rank:rank}, uploadUrl)
           .success(function (p) {
               $uibModalInstance.close({_id:id});
           })
@@ -280,7 +280,8 @@ app.factory('dataFactory', ['$http', function($http) {
       fd.append('size',data.size);
       fd.append('price',data.price);
       fd.append('sold',data.sold);
-
+      fd.append('rank',data.rank);
+      
       return $http.post(uploadUrl, fd, {
           transformRequest: angular.identity,
           headers: {'Content-Type': undefined}
