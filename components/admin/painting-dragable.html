@@ -50,7 +50,15 @@
   <div class='listSize'>{{painting.size}}</div>
   <div class='listPrice'>{{painting.price}}</div>
   <div class='listSold'>{{painting.sold}}</div>
-  <div class='listImage'><img src='images/thumbs/{{painting.image}}' height="50px"/></div>
+  <div class='listImage'><img src='images/thumbs/{{painting.image}}' height="50px" onerror="imgError(this)"/></div>
   <button type="button" class="btn btn-default" ng-click="showEditor(painting)">Edit</button>
   <button type="button" class="btn btn-default" ng-click="deletePainting(painting)">Delete</button>
 </div>
+<script type="text/javascript">
+function imgError(image) {
+    image.onerror = null;
+    setTimeout(function (){
+        image.src += '?' + +new Date;
+     }, 1000);
+}
+</script>
