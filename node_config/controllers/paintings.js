@@ -79,7 +79,7 @@ exports.updateDataAndFile = function (req, res){
                                           size:fieldValues.size,
                                           price:fieldValues.price,
                                           sold:fieldValues.sold,
-                                          rank:fieldValue.rank,
+                                          rank:fieldValues.rank,
                                           image:file_name}, {upsert: true}, function(err) {
               if (!err) {
                   return res.json({message:"updated"});
