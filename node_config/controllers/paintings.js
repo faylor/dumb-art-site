@@ -33,9 +33,14 @@ exports.updateDataAndFile = function (req, res){
   })
   .on('end', function(fields, files) {
       var file_name = "";
-      if(files){
+      console.log("here:>>>>>>>>>>@1");
+      if(this.openedFiles[0]){
+
+        console.log("here:>>>>>>>>>>@2");
         var temp_path = this.openedFiles[0].path;
-        var file_name = this.openedFiles[0].name;
+        file_name = this.openedFiles[0].name;
+
+        console.log("here:>>>>>>>>>>@3"+file_name);
         var imagedir = config.imagedir;
         if(process.env.NODE_ENV=="dev")  imagedir = '/Users/jamestaylor/development/ditaylor/devimages/';
         fse.copy(temp_path, imagedir + file_name, function(err) {
