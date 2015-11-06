@@ -281,7 +281,7 @@ app.factory('dataFactory', ['$http', function($http) {
       fd.append('price',data.price);
       fd.append('sold',data.sold);
       fd.append('rank',data.rank);
-      
+
       return $http.post(uploadUrl, fd, {
           transformRequest: angular.identity,
           headers: {'Content-Type': undefined}
@@ -369,3 +369,10 @@ app.directive('fileModel', ['$parse', function ($parse) {
         }
     };
 }]);
+
+function imgError(image) {
+    image.onerror = null;
+    setTimeout(function (){
+        image.src += '?' + +new Date;
+     }, 1000);
+}
