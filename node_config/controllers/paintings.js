@@ -78,7 +78,11 @@ exports.updateDataAndFile = function (req, res){
           });
       }else{
           console.log('updating');
-          Painting.update({ _id: req.params.id }, fieldValues, {upsert: true}, function(err) {
+          Painting.update({ _id: req.params.id }, {title:fieldValues.title,
+                                          size:fieldValues.size,
+                                          price:fieldValues.price,
+                                          sold:fieldValues.sold,
+                                          image:file_name}, {upsert: true}, function(err) {
               if (!err) {
                   return res.json({message:"updated"});
               } else {
