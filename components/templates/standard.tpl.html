@@ -1,7 +1,19 @@
 <div style="padding:10px 25px;">
-  <h2>{{ page.heading }}</h2>
-  <h3>{{ page.subheading }}</h3>
-  <p class="regularTextSmall" ng-bind-html="page.body"></p>
-  <p class="regularTextSmall" ng-bind-html=" page.footer"></p>
-  <p class="regularTextSmall">{{ errormessage }}</p>
+  <div>
+
+</div>
+<div class="row">
+        <div class="col-md-4">
+          <h2>{{ page.heading }}</h2>
+          <h3>{{ page.subheading }}</h3>
+          <p class="regularTextSmall" ng-bind-html="page.body"></p>
+          <p class="regularTextSmall" ng-bind-html=" page.footer"></p>
+          <p class="regularTextSmall">{{ errormessage }}</p>
+        </div>
+        <div class="col-md-1"></div>
+        <div class="col-md-4">
+          <div class="mainimage">
+  						<a href="/gallery/home"><img border="0" alt="click to enter gallery" src="images/{{page.image}}.jpg"></a>
+            </div>
+      </div>
 </div>
