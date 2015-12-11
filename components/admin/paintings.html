@@ -14,18 +14,80 @@
 </style>
 <h2>Di Taylor</h2>
 <p>{{name}}</p>
-<ul>
-  <li><div class='listWrapper'>
-    <div class='listTitle'>Title</div>
-    <div class='listSize'>Size</div>
-    <div class='listPrice'>Price</div>
-    <div class='listSold'>Sold</div>
-    <div class='listImage'>Image</div>
-    <button type="button" class="btn btn-default" ng-click="showAddNew()">Add New</button>
-  </div></li>
-  <li ng-repeat="painting in paintings | orderBy: 'rank' ">
-    <div x-lvl-draggable='true' id='{{ painting._id }}'/>
-  </li>
-  <li><div x-lvl-drop-target='true' x-on-drop='dropped(dragID, dropID)' id='last' class="dropZone"></div></li>
-</ul>
+
+<table class="table table-bordered table-striped">
+  <thead class="thead-inverse">
+    <tr>
+      <th>Title</th>
+      <th>Size</th>
+      <th>Price</th>
+      <th>Sold</th>
+      <th>Image</th>
+      <th><button type="button" class="btn btn-default" ng-click="showAddNew(page)">Add New</button></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat-start="painting in paintings | orderBy: 'rank'" x-lvl-drop-target='true' x-on-drop='dropped(dragID, dropID)' id='{{painting._id}}'>
+      <td colspan="8"></td>
+    </tr>
+    <tr ng-repeat-end="" element-draggable="true" id='{{painting._id}}'>
+        <td>{{painting.title}}</td>
+        <td>{{painting.size}}</td>
+        <td>{{painting.price}}</td>
+        <td>{{painting.sold}}</td>
+        <td><img src='images/thumbs/{{painting.image}}' height="50px" onerror="imgError(this)"/></td>
+        <td><button type="button" class="btn btn-default" ng-click="showEditor(painting)">Edit</button>
+        <button type="button" class="btn btn-default" ng-click="deletePainting(painting)">Delete</button></td>
+    </tr>
+    <tr x-lvl-drop-target='true' x-on-drop='dropped(dragID, dropID)' id='last'>
+      <td colspan="8"></td>
+    </tr>
+  </tbody>
+</table>
 <div class="listWrapper">To move items, drag to the grey areas between paintings.</div>
+<script type="text/ng-template" id="myModalContent.html">
+        <div class="modal-header">
+            <h3 class="modal-title">{{editType}} Painting:</h3>
+        </div>
+        <div class="modal-body">
+            <form class="form-horizontal" role="form">
+                <div class="form-group">
+                    <label for="inputTitle" class="col-sm-4 control-label">Title</label>
+                    <div class="col-sm-4">
+                        <input type="hidden" class="form-control" id="inputId" placeholder="_Id" ng-model="painting._id">
+                        <input type="hidden" class="form-control" id="inputRank" placeholder="Rank" ng-model="painting.rank">
+                        <input type="text" class="form-control" id="inputTitle" placeholder="Title" ng-model="painting.title">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputSize" class="col-sm-4 control-label">Size</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="inputSize" placeholder="Size" ng-model="painting.size">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputPrice" class="col-sm-4 control-label">Price</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="inputPrice" placeholder="Price" ng-model="painting.price">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputSold" class="col-sm-4 control-label">Sold</label>
+                    <div class="col-sm-4">
+                        <input type="checkbox" class="form-control" id="inputSold" placeholder="Sold" ng-model="painting.sold">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputImage" class="col-sm-4 control-label">Image</label>
+                    <div class="col-sm-4">
+                    <input type="text" class="form-control" id="inputImage" readOnly="readOnly" placeholder="Image" ng-model="painting.image">
+                    <input type="file" file-model="myFile"/>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" type="submit" ng-click="uploadFile(painting._id,painting.title,painting.size,painting.price,painting.sold,painting.rank)">Save</button>
+            <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+        </div>
+    </script>

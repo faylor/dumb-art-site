@@ -142,8 +142,10 @@ var SampleApp = function() {
         require('./node_config/routes.js')(self)
         self.app = express();
         self.app.use('/images',express.static(__dirname+ '/images'));
+        self.app.use('/assets',express.static(__dirname+ '/assets'));
         self.app.use('/components',express.static(__dirname+ '/components/',{ maxAge: 86400000 }));
         self.app.use('/scripts',express.static(__dirname+ '/scripts'));
+
         //self.app.use(quickthumb.static(__dirname + '/images'));
         //  Add handlers for the app (from the routes).
         for (var g in self.getroutes) {

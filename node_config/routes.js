@@ -13,7 +13,7 @@ module.exports = function(self) {
     self.getroutes['/painting'] = paintings.index;
     self.getroutes['/painting/:id'] = paintings.getSinglePainting;
     self.getroutes['/page'] = pages.index;
-    self.getroutes['/page/:heading'] = pages.getPageByHeading;
+    self.getroutes['/page/:menulink'] = pages.getPageByMenuLink;
 
     self.deleteroutes = {};
     self.deleteroutes['/painting/:id'] = paintings.deletePainting;

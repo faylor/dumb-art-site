@@ -1,39 +1,34 @@
-var app = angular.module('galleryApp', ['ngRoute','ui.bootstrap','galleryApp.dragdrop'])
+var app = angular.module('galleryApp', ['ngRoute','ui.bootstrap','ngSanitize','galleryApp.dragdrop'])
 
 app.config(['$locationProvider','$routeProvider',
   function($locationProvider,$routeProvider) {
     $routeProvider.
-    when('/home', {
-      templateUrl: 'components/home/home.html',
-      controller:'homeController',
+    when('/:pagelink', {
+      templateUrl: 'components/templates/standard.tpl.html',
+      controller:'standardTemplateController',
       access: { requiredLogin: false }
       }).
-      when('/contact', {
-        templateUrl: 'components/contact/contact.html',
-        controller:'contactController',
-        access: { requiredLogin: true }
-      }).
-      when('/gallery', {
+      when('/gallery/home', {
         templateUrl: 'components/gallery/gallery.html',
         controller:'galleryController',
         access: { requiredLogin: false }
       }).
-      when('/login', {
+      when('/admin/login', {
         templateUrl: 'components/login/login.html',
         controller:'loginController',
         access: { requiredLogin: false }
       }).
-      when('/register', {
+      when('/admin/register', {
         templateUrl: 'components/admin/register.html',
         controller:'loginController',
         access: { requiredLogin: false }
       }).
-      when('/admin-paintings', {
+      when('/admin/paintings', {
         templateUrl: 'components/admin/paintings.html',
         controller:'adminPaintingsController',
         access: { requiredLogin: false }
       }).
-      when('/admin-pages', {
+      when('/admin/pages', {
         templateUrl: 'components/admin/pages.html',
         controller:'adminPagesController',
         access: { requiredLogin: false }
@@ -49,7 +44,15 @@ app.config(function ($httpProvider) {
     $httpProvider.interceptors.push('TokenInterceptor');
 });
 
-app.run(function($rootScope, $location, AuthenticationService) {
+app.run(function($rootScope, $location, AuthenticationService, pageFactory) {
+   pageFactory.getPages()
+          .success(function (p) {
+              $rootScope.pages = p;
+          })
+          .error(function (error) {
+              $rootScope.errorMessage = 'Unable to load Pages data.';
+          });
+
     $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
         if (nextRoute.access.requiredLogin && !AuthenticationService.isLogged) {
             $location.path("/login");
@@ -249,11 +252,20 @@ app.controller('adminPaintingsEditorController',['$scope','$uibModalInstance','p
 }]);
 
 
+app.controller('menuController',['$scope','$rootScope','pageFactory',
+  function ($scope, $rootScope, pageFactory) {
+
+
+
+}]);
+
 app.controller('contactController', function ($scope) {
   $scope.name = 'Contttact';
 });
 
-
+app.factory('_', function() {
+	return window._; // assumes underscore has already been loaded on the page
+});
 /* paintingFactory */
 app.factory('paintingFactory', ['$q','$timeout','$http', function($q,$timeout,$http) {
 
@@ -316,8 +328,8 @@ app.factory('pageFactory', ['$http', function($http) {
     return $http.get(urlBase + id);
   };
 
-  pageFactory.getPageByHeading = function (heading) {
-    return $http.get(urlBase + heading);
+  pageFactory.getPageByMenuLink = function (menulink) {
+    return $http.get(urlBase + menulink);
   };
 
   pageFactory.insertPage = function (page) {

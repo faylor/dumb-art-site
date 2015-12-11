@@ -23,14 +23,16 @@ exports.index = function (req, res){
   });
 };
 
-exports.getPageByHeading = function (req, res){
-  if(req.params.heading){
-    var p = Page.findOne({heading:req.params.heading},function(err, page) {
+exports.getPageByMenuLink = function (req, res){
+  if(req.params.menulink){
+
+    Page.findOne({menulink:req.params.menulink},function(err, page) {
         if(err){
           console.log(err);
           return res.json({error:err});
         }
         if(page){
+          console.log(page);
           return res.json(page);
         }
     });

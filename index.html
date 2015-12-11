@@ -6,32 +6,62 @@
   <title>Di Taylor Art</title>
   <base href="/">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
   <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
   <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-route.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-sanitize.min.js"></script>
   <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.14.3.js"></script>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
   <script src="scripts/drag-drop.js"></script>
   <script src="scripts/app.js"></script>
-  <script src="components/home/home.js"></script>
+  <script src="components/templates/standard.tpl.js"></script>
   <script src="components/admin/pages.js"></script>
+  <style>
+  .utilmenuText {
+    float: right;
+    color: #FFF;
+    font-size: 1.25em;
+    font-style: italic;
+    margin: 3px 10px;
+    padding: 160px 20px 12px;
+    text-decoration: none;
+    letter-spacing: 0.7px;
+}
+.utilmainnav {
+    background-color: #484848;
+    height: 212px;
+    z-index: 10;
+}
+.utilmenuText:hover, .utilmenuTextOn:hover {
+    background-color: #555;
+    color: white;
+}
+.dilogo {
+    float: left;
+    height: 190px;
+    margin-right: 50px;
+    width: 190px;
+}
+  </style>
 </head>
 <body ng-app="galleryApp">
     <!-- HEADER AND NAVBAR -->
     <header>
-        <nav class="navbar navbar-default">
+        <nav class="navbar utilmainnav" ng-controller="menuController">
         <div class="container">
             <div class="navbar-header">
-                <a class="navbar-brand" href="/">Di Taylor</a>
+                <a class="navbar-brand" href="/"><div class="dilogo"><img src="assets/di.png" border="0" alt="Di Taylor"/></div></a>
             </div>
 
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="/home"><i class="fa fa-home"></i> Home</a></li>
-                <li><a href="/gallery"><i class="fa fa-shield"></i> Gallery</a></li>
-                <li><a href="/contact"><i class="fa fa-comment"></i> Contact</a></li>
-                <li><a href="/login"><i class="fa fa-comment"></i> Login</a></li>
-                <li><a href="/register"><i class="fa fa-comment"></i> register</a></li>
-                <li><a href="/admin-paintings"><i class="fa fa-comment"></i> admin paintings</a></li>
-                <li><a href="/admin-pages"><i class="fa fa-comment"></i> admin pages</a></li>
+              <li ng-repeat="p in pages">
+                <a class="utilmenuText" href="/{{p.menulink}}">{{p.menutitle}}</a>
+              </li>
+              <li><a class="utilmenuText" href="/gallery/home">Gallery</a></li>
+              <li><a class="utilmenuText" href="/admin/login">Login</a></li>
+              <li ng-show="isAuthenticated"><a href="/admin/register">Register</a></li>
+              <li ng-show="isAuthenticated"><a href="/admin/paintings">Paintings</a></li>
+              <li ng-show="isAuthenticated"><a href="/admin/pages">Pages</a></li>
             </ul>
         </div>
         </nav>

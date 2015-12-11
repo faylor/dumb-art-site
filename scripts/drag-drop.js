@@ -1,9 +1,8 @@
 var module = angular.module("galleryApp.dragdrop",[]);
 
-module.directive('lvlDraggable', ['$rootScope', function ($rootScope, uuid) {
+module.directive('elementDraggable', ['$rootScope', function ($rootScope) {
     return {
         restrict: 'A',
-        templateUrl:'/components/admin/painting-dragable.html',
         link: function (scope, el, attrs, controller) {
             angular.element(el).attr("draggable", "true");
             var id = attrs.id;

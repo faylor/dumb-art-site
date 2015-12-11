@@ -1,6 +1,6 @@
 
-app.controller('adminPagesController', ['$scope','$http','$window','$uibModal','pageFactory','paintingFactory',
-  function ( $scope, $http, $window, $uibModal, pageFactory, paintingFactory){
+app.controller('adminPagesController', ['$scope','$rootScope','$http','$window','$uibModal','pageFactory','paintingFactory',
+  function ( $scope, $rootScope, $http, $window, $uibModal, pageFactory, paintingFactory){
 
     $scope.name = 'Admin Pages';
     $scope.pages;
@@ -11,6 +11,7 @@ app.controller('adminPagesController', ['$scope','$http','$window','$uibModal','
         pageFactory.getPages()
             .success(function (p) {
                 $scope.pages = p;
+                $rootScope.pages = p;
             })
             .error(function (error) {
                 $scope.status = 'Unable to load Pages data: ' + error.message;
@@ -89,8 +90,8 @@ app.controller('adminPageEditorController',['$scope','$uibModalInstance','pageFa
           });
   }
 
-  $scope.updatePage = function(id,heading,subheading,body,footer,image){
-        pageFactory.updatePage(id,{heading:heading,subheading:subheading,body:body,footer:footer,image:image})
+  $scope.updatePage = function(id,heading,subheading,body,footer,image,menutitle,menulink){
+        pageFactory.updatePage(id,{heading:heading,subheading:subheading,body:body,footer:footer,image:image,menutitle:menutitle,menulink:menulink})
           .success(function (p) {
               $uibModalInstance.close({_id:id});
           })
