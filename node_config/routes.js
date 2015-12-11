@@ -1,5 +1,6 @@
 var paintings = require('./controllers/paintings.js');
 var users = require('./controllers/users.js');
+var pages = require('./controllers/pages.js');
 
 module.exports = function(self) {
     self.getroutes = { };
@@ -10,13 +11,17 @@ module.exports = function(self) {
     };
 
     self.getroutes['/painting'] = paintings.index;
+    self.getroutes['/painting/:id'] = paintings.getSinglePainting;
+    self.getroutes['/page'] = pages.index;
+    self.getroutes['/page/:heading'] = pages.getPageByHeading;
 
     self.deleteroutes = {};
     self.deleteroutes['/painting/:id'] = paintings.deletePainting;
+    self.deleteroutes['/page/:id'] = pages.deletePage;
 
     self.putroutes = { };
     self.putroutes['/updateRanking'] = paintings.updateRanking;
-    //self.putroutes['/painting/:id'] = paintings.update; //??HTML5??
+    self.putroutes['/page/:id'] = pages.update;
 
     self.postroutes = { };
     self.postroutes['/login'] = users.login;

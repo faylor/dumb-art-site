@@ -25,6 +25,22 @@ exports.index = function (req, res){
   });
 };
 
+exports.getSinglePainting = function(req, res){
+  if(req.params.id){
+    var p = Painting.findOne({ _id:req.params.id },function(err, painting) {
+        if(err){
+          console.log(err);
+          return res.json({error:err});
+        }
+        if(painting){
+          return res.json(painting);
+        }
+    });
+  }else{
+    return res.send(404, { error: "Painting was not deleted, missing id." });
+  }
+};
+
 exports.updateDataAndFile = function (req, res){
   var form = new formidable.IncomingForm();
   var fieldValues={};

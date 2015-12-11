@@ -10,6 +10,7 @@ var util = require('util');
 /**
  *  Define the sample application.
  */
+ /* DEBUG:
  (function() {
      var childProcess = require("child_process");
      var oldSpawn = childProcess.spawn;
@@ -21,7 +22,7 @@ var util = require('util');
      }
      childProcess.spawn = mySpawn;
  })();
-
+*/
 var SampleApp = function() {
 
     //  Scope.

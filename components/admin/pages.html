@@ -1,0 +1,79 @@
+<style type='text/css'>
+  .listWrapper{float:left; clear:both;border:1px solid #777777; margin:0px 3px; padding:5px;width:900px;}
+  .listTitle{float:left;padding-right:10px;min-width:250px;}
+  .listSize{float:left;padding-right:10px;min-width:140px;}
+  .listSold{float:left;padding-right:10px;min-width:100px;}
+  .listPrice{float:left;padding-right:10px;min-width:100px;}
+  .listImage{float:left;padding-right:10px;min-width:150px;}
+  .center{margin:0 auto;width:900px;}
+  ul{list-style: none;margin:5px;padding:0px;}
+  li{list-style: none;margin:0px;padding:0px;}
+</style>
+<h2>Di Taylor</h2>
+<ul>
+  <li><div class='listWrapper'>
+    <div class='listTitle'>Heading</div>
+    <div class='listSize'>SubHeading</div>
+    <div class='listPrice'>Body</div>
+    <div class='listSold'>Footer</div>
+    <div class='listImage'>Image</div>
+    <button type="button" class="btn btn-default" ng-click="showAddNew()">Add New</button>
+  </div></li>
+  <li ng-repeat="page in pages" ng-init="getImageFromId(page)">
+    <div class='listWrapper'>
+      <div class='listTitle'>{{page.heading}}</div>
+      <div class='listSize'>{{page.subheading}}</div>
+      <div class='listPrice'>{{page.body}}</div>
+      <div class='listSold'>{{page.footer}}</div>
+      <div class='listImage'>{{page.img}}</div>
+      <button type="button" class="btn btn-default" ng-click="showEditor(page)">Edit</button>
+      <button type="button" class="btn btn-default" ng-click="deletePage(page)">Delete</button>
+    </div>
+  </li>
+</ul>
+<script type="text/ng-template" id="myPageEditor.html">
+        <div class="modal-header">
+            <h3 class="modal-title">{{editType}} Page:</h3>
+        </div>
+        <div class="modal-body">
+            <form class="form-horizontal" role="form">
+                <div class="form-group">
+                    <label for="inputTitle" class="col-sm-4 control-label">Heading</label>
+                    <div class="col-sm-4">
+                        <input type="hidden" class="form-control" id="inputId" placeholder="_Id" ng-model="page._id">
+                        <input type="text" class="form-control" id="inputHeading" placeholder="Heading" ng-model="page.heading">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputSize" class="col-sm-4 control-label">Sub-Heading</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="inputSubHeading" placeholder="SubHeading" ng-model="page.subheading">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputPrice" class="col-sm-4 control-label">Body</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="inputBody" placeholder="Body" ng-model="page.body">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputSold" class="col-sm-4 control-label">Footer</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="inputFooter" placeholder="Footer" ng-model="page.footer">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputImage" class="col-sm-4 control-label">Image</label>
+                    <div class="col-sm-4">
+                    <select class="form-control" id="inputImage" placeholder="Image"
+                        ng-model="page.image"
+                        ng-options="i._id as i.image for i in paintings"></select>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" type="submit" ng-click="updatePage(page._id,page.heading,page.subheading,page.body,page.footer,page.image)">Save</button>
+            <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+        </div>
+    </script>

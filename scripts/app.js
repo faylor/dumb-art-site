@@ -3,7 +3,7 @@ var app = angular.module('galleryApp', ['ngRoute','ui.bootstrap','galleryApp.dra
 app.config(['$locationProvider','$routeProvider',
   function($locationProvider,$routeProvider) {
     $routeProvider.
-    when('/', {
+    when('/home', {
       templateUrl: 'components/home/home.html',
       controller:'homeController',
       access: { requiredLogin: false }
@@ -33,8 +33,13 @@ app.config(['$locationProvider','$routeProvider',
         controller:'adminPaintingsController',
         access: { requiredLogin: false }
       }).
+      when('/admin-pages', {
+        templateUrl: 'components/admin/pages.html',
+        controller:'adminPagesController',
+        access: { requiredLogin: false }
+      }).
       otherwise({
-        redirectTo: '/'
+        redirectTo: '/home'
       });
       // use the HTML5 History API
       $locationProvider.html5Mode(true);
@@ -52,12 +57,8 @@ app.run(function($rootScope, $location, AuthenticationService) {
     });
 });
 
-app.controller('homeController', function ($scope) {
-    $scope.namer = 'Homies';
-    $scope.message = 'Look! I am an about page.';
-});
 
-app.controller('galleryController', ['$scope','$http', 'dataFactory', function ( $scope, $http, dataFactory){
+app.controller('galleryController', ['$scope','$http', 'paintingFactory', function ( $scope, $http, paintingFactory){
   $scope.name = 'Galleries';
   $scope.paintings;
   $scope.filteredPaintings;
@@ -69,7 +70,7 @@ app.controller('galleryController', ['$scope','$http', 'dataFactory', function (
   getPaintings();
 
   function getPaintings() {
-      dataFactory.getPaintings()
+      paintingFactory.getPaintings()
           .success(function (p) {
               $scope.paintings = p;
               $scope.totalItems = p.length;
@@ -148,8 +149,10 @@ app.controller('loginController', ['$scope', '$location', '$window', 'UserServic
 ]);
 
 
-app.controller('adminPaintingsController', ['$scope','$http','$window','$uibModal','dataFactory', function ( $scope, $http,$window, $uibModal, dataFactory){
-//app.controller('adminPaintingsController', ['$scope','$http','dataFactory', function ( $scope, $http, dataFactory){
+
+
+app.controller('adminPaintingsController', ['$scope','$http','$window','$uibModal','paintingFactory',
+  function ( $scope, $http,$window, $uibModal, paintingFactory){
 
   $scope.name = 'Admin Paintings';
   $scope.paintings;
@@ -157,7 +160,7 @@ app.controller('adminPaintingsController', ['$scope','$http','$window','$uibModa
   getPaintings();
 
   function getPaintings() {
-      dataFactory.getPaintings()
+      paintingFactory.getPaintings()
           .success(function (p) {
               $scope.paintings = p;
           })
@@ -168,7 +171,7 @@ app.controller('adminPaintingsController', ['$scope','$http','$window','$uibModa
 
   $scope.dropped = function(dragID, dropID) {
 
-      dataFactory.updateRanking(dragID,dropID)
+      paintingFactory.updateRanking(dragID,dropID)
           .success(function (p) {
               $scope.paintings = p;
           })
@@ -181,7 +184,7 @@ app.controller('adminPaintingsController', ['$scope','$http','$window','$uibModa
     var deleteUser = $window.confirm('Are you absolutely sure you want to delete?');
 
     if (deleteUser) {
-      dataFactory.deletePainting(_painting._id).success(function () {
+      paintingFactory.deletePainting(_painting._id).success(function () {
           getPaintings();
       })
       .error(function (error) {
@@ -214,7 +217,7 @@ app.controller('adminPaintingsController', ['$scope','$http','$window','$uibModa
     });
 
     modalInstance.result.then(function (updatedPainting) {
-      //dataFactory.updatePainting(updatedPainting._id,updatedPainting);
+      //paintingFactory.updatePainting(updatedPainting._id,updatedPainting);
       getPaintings();
     }, function () {
       console.log('Modal dismissed at: ' + new Date());
@@ -222,8 +225,8 @@ app.controller('adminPaintingsController', ['$scope','$http','$window','$uibModa
   }
 }]);
 
-app.controller('adminPaintingsEditorController',['$scope','$uibModalInstance','dataFactory','painting','editType',
-  function ($scope, $uibModalInstance, dataFactory, painting, editType) {
+app.controller('adminPaintingsEditorController',['$scope','$uibModalInstance','paintingFactory','painting','editType',
+  function ($scope, $uibModalInstance, paintingFactory, painting, editType) {
   $scope.painting = painting;
   $scope.editType = editType;
 
@@ -231,7 +234,7 @@ app.controller('adminPaintingsEditorController',['$scope','$uibModalInstance','d
         var file = $scope.myFile;
         var uploadUrl = "/painting/"+id;
 
-        dataFactory.uploadFileAndFormToUrl(id,file,{title:title,size:size,price:price,sold:sold,rank:rank}, uploadUrl)
+        paintingFactory.uploadFileAndFormToUrl(id,file,{title:title,size:size,price:price,sold:sold,rank:rank}, uploadUrl)
           .success(function (p) {
               $uibModalInstance.close({_id:id});
           })
@@ -251,29 +254,31 @@ app.controller('contactController', function ($scope) {
 });
 
 
-/* dataFactory */
-app.factory('dataFactory', ['$http', function($http) {
+/* paintingFactory */
+app.factory('paintingFactory', ['$q','$timeout','$http', function($q,$timeout,$http) {
 
   var urlBase = '/painting/';
-  var dataFactory = {};
+  var paintingFactory = {};
 
-  dataFactory.getPaintings = function () {
+  paintingFactory.getPaintings = function () {
     return $http.get(urlBase);
   };
 
-  dataFactory.getPainting = function (id) {
-    return $http.get(urlBase + id);
+  paintingFactory.getPainting = function (id) {
+    return $http.get(urlBase + id).then(function(response) {
+      return response.data;
+    });
   };
 
-  dataFactory.insertPainting = function (cust) {
+  paintingFactory.insertPainting = function (cust) {
     return $http.post(urlBase, cust);
   };
 
-  dataFactory.updatePainting = function (id,file,painting) {
+  paintingFactory.updatePainting = function (id,file,painting) {
     return $http.put( urlBase + id, JSON.stringify(painting))
   };
 
-  dataFactory.uploadFileAndFormToUrl = function(id, file, data, uploadUrl, callback){
+  paintingFactory.uploadFileAndFormToUrl = function(id, file, data, uploadUrl, callback){
       var fd = new FormData();
       fd.append('file', file);
       fd.append('title',data.title);
@@ -287,15 +292,47 @@ app.factory('dataFactory', ['$http', function($http) {
           headers: {'Content-Type': undefined}
       })
   }
-  dataFactory.updateRanking = function (dragid,dropid) {
+  paintingFactory.updateRanking = function (dragid,dropid) {
     return $http.put('/updateRanking', JSON.stringify({dragid:dragid,dropid:dropid}))
   };
 
-  dataFactory.deletePainting = function (id) {
+  paintingFactory.deletePainting = function (id) {
     return $http.delete(urlBase + id);
   };
 
-  return dataFactory;
+  return paintingFactory;
+}]);
+
+app.factory('pageFactory', ['$http', function($http) {
+
+  var urlBase = '/page/';
+  var pageFactory = {};
+
+  pageFactory.getPages = function () {
+    return $http.get(urlBase);
+  };
+
+  pageFactory.getPage = function (id) {
+    return $http.get(urlBase + id);
+  };
+
+  pageFactory.getPageByHeading = function (heading) {
+    return $http.get(urlBase + heading);
+  };
+
+  pageFactory.insertPage = function (page) {
+    return $http.post(urlBase, page);
+  };
+
+  pageFactory.updatePage = function (id,page) {
+    return $http.put( urlBase + id, JSON.stringify(page))
+  };
+
+  pageFactory.deletePage = function (id) {
+    return $http.delete(urlBase + id);
+  };
+
+  return pageFactory;
 }]);
 
 app.factory('AuthenticationService', function() {

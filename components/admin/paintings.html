@@ -14,22 +14,18 @@
 </style>
 <h2>Di Taylor</h2>
 <p>{{name}}</p>
-    <ul>
-      <li><div class='listWrapper'>
-        <div class='listTitle'>Title</div>
-        <div class='listSize'>Size</div>
-        <div class='listPrice'>Price</div>
-        <div class='listSold'>Sold</div>
-        <div class='listImage'>Image</div>
-        <button type="button" class="btn btn-default" ng-click="showAddNew()">Add New</button>
-      </div></li>
-      <li ng-repeat="painting in paintings | orderBy: 'rank' ">
-        <div x-lvl-draggable='true' id='{{ painting._id }}'/>
-      </li>
-      <li><div x-lvl-drop-target='true' x-on-drop='dropped(dragID, dropID)' id='last' class="dropZone"></div></li>
-    </ul>
-
-
-  </table>
-
-  <!-- include the uuid service as well as the directive -->
+<ul>
+  <li><div class='listWrapper'>
+    <div class='listTitle'>Title</div>
+    <div class='listSize'>Size</div>
+    <div class='listPrice'>Price</div>
+    <div class='listSold'>Sold</div>
+    <div class='listImage'>Image</div>
+    <button type="button" class="btn btn-default" ng-click="showAddNew()">Add New</button>
+  </div></li>
+  <li ng-repeat="painting in paintings | orderBy: 'rank' ">
+    <div x-lvl-draggable='true' id='{{ painting._id }}'/>
+  </li>
+  <li><div x-lvl-drop-target='true' x-on-drop='dropped(dragID, dropID)' id='last' class="dropZone"></div></li>
+</ul>
+<div class="listWrapper">To move items, drag to the grey areas between paintings.</div>
