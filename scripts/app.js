@@ -26,12 +26,12 @@ app.config(['$locationProvider','$routeProvider',
       when('/admin/paintings', {
         templateUrl: 'components/admin/paintings.html',
         controller:'adminPaintingsController',
-        access: { requiredLogin: false }
+        access: { requiredLogin: true }
       }).
       when('/admin/pages', {
         templateUrl: 'components/admin/pages.html',
         controller:'adminPagesController',
-        access: { requiredLogin: false }
+        access: { requiredLogin: true }
       }).
       otherwise({
         redirectTo: '/home'
@@ -228,6 +228,13 @@ app.controller('adminPaintingsController', ['$scope','$http','$window','$uibModa
   }
 }]);
 
+app.controller('MainCtrl',['$scope','AuthenticationService',
+  function ($scope, AuthenticationService) {
+    $scope.isLoggedIn = function() {
+      return AuthenticationService.isLogged;
+    }
+}]);
+
 app.controller('adminPaintingsEditorController',['$scope','$uibModalInstance','paintingFactory','painting','editType',
   function ($scope, $uibModalInstance, paintingFactory, painting, editType) {
   $scope.painting = painting;
@@ -384,17 +391,17 @@ app.factory('TokenInterceptor', function ($q, $window, $location, Authentication
 
         /* Set Authentication.isAuthenticated to true if 200 received */
         response: function (response) {
-            if (response != null && response.status == 200 && $window.sessionStorage.token && !AuthenticationService.isAuthenticated) {
-                AuthenticationService.isAuthenticated = true;
+            if (response != null && response.status == 200 && $window.sessionStorage.token && !AuthenticationService.isLogged) {
+                AuthenticationService.isLogged = true;
             }
             return response || $q.when(response);
         },
 
         /* Revoke client authentication if 401 is received */
         responseError: function(rejection) {
-            if (rejection != null && rejection.status === 401 && ($window.sessionStorage.token || AuthenticationService.isAuthenticated)) {
+            if (rejection != null && rejection.status === 401 && ($window.sessionStorage.token || AuthenticationService.isLogged)) {
                 delete $window.sessionStorage.token;
-                AuthenticationService.isAuthenticated = false;
+                AuthenticationService.isLogged = false;
                 $location.path("/admin/login");
             }
 
