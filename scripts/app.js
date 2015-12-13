@@ -54,8 +54,10 @@ app.run(function($rootScope, $location, AuthenticationService, pageFactory) {
           });
 
     $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
-        if (nextRoute.access.requiredLogin && !AuthenticationService.isLogged) {
-            $location.path("/login");
+        if (nextRoute.access !== undefined) {
+          if (nextRoute.access.requiredLogin && !AuthenticationService.isLogged) {
+              $location.path("/login");
+          }
         }
     });
 });
