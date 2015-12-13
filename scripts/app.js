@@ -62,48 +62,9 @@ app.run(function($rootScope, $location, AuthenticationService, pageFactory) {
     });
 });
 
-
-app.controller('galleryController', ['$scope','$http', 'paintingFactory', function ( $scope, $http, paintingFactory){
-  $scope.name = 'Galleries';
-  $scope.paintings;
-  $scope.filteredPaintings;
-  $scope.totalItems;
-  $scope.currentPage = 1;
-  $scope.maxSize = 5;
-  $scope.itemsPerPage = 2;
-  $scope.filterSold = 0;
-  getPaintings();
-
-  function getPaintings() {
-      paintingFactory.getPaintings()
-          .success(function (p) {
-              $scope.paintings = p;
-              $scope.totalItems = p.length;
-              $scope.pageChanged();
-          })
-          .error(function (error) {
-              $scope.status = 'Unable to load Painting data: ' + error.message;
-          });
-  }
-
-  $scope.pageChanged = function() {
-     var begin = (($scope.currentPage - 1) * $scope.itemsPerPage);
-     var end = begin + $scope.itemsPerPage;
-
-     $scope.filteredPaintings = $scope.paintings.slice(begin, end);
-   };
-
-   $scope.isForSale = function(p) {
-    return ($scope.filterSold===1 &&  p.sold === 0) || $scope.filterSold===0;
-   };
-
-}]);
-
 app.controller('contactController', function ($scope) {
   $scope.name = 'Contttact';
 });
-
-
 
 app.controller('loginController', ['$scope', '$location', '$window', 'UserService', 'AuthenticationService',
     function ($scope, $location, $window, UserService, AuthenticationService) {
