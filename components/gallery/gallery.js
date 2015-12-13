@@ -2,7 +2,7 @@ app.controller('galleryController', ['$scope', '$http','$q','$timeout','$documen
   function($scope, $http, $q, $timeout, $document, paintingFactory) {
   $scope.name = 'Galleries';
   $scope.images;
-  $scope.filteredPaintings;
+  $scope.filteredPaintings = [];
   $scope.totalItems;
   $scope.currentPage = 1;
   $scope.maxSize = 5;
@@ -15,7 +15,7 @@ app.controller('galleryController', ['$scope', '$http','$q','$timeout','$documen
       .success(function(p) {
         $scope.images = p;
         $scope.totalItems = p.length;
-        $scope.pageChanged();
+        $scope.loadMore();
       })
       .error(function(error) {
         $scope.status = 'Unable to load Painting data: ' + error.message;
@@ -33,6 +33,11 @@ app.controller('galleryController', ['$scope', '$http','$q','$timeout','$documen
     return ($scope.filterSold === 1 && p.sold === 0) || $scope.filterSold === 0;
   };
 
+  $scope.loadMore = function() {
+    if($scope.images != undefined){
+      $scope.filteredPaintings = $scope.images.slice(0, $scope.filteredPaintings.length +  $scope.thumbsNum);
+    }
+  };
 
   var defaults = {
 		baseClass   : 'ng-gallery',
@@ -66,6 +71,8 @@ app.controller('galleryController', ['$scope', '$http','$q','$timeout','$documen
 
   $scope.thumb_wrapper_width = 0;
   $scope.thumbs_width = 0;
+
+
 
   var loadImage = function(i) {
     var deferred = $q.defer();
