@@ -242,10 +242,10 @@
   <uib-pagination total-items="totalItems" ng-model="currentPage" items-per-page="itemsPerPage" ng-change="pageChanged()"></uib-pagination>
 </div>
 <div class="row">
-  <a class="col-md-2 nav-left" ng-click="prevImage()"><i class="fa fa-angle-left"></i></a>
-  <div class="col-md-8">
-    <div class="middle"><img ng-src="{{ img }}" ng-click="nextImage()" ng-show="!loading" class="effect" /></div>
-    <div class="middle info-text">{{ index + 1 }}/{{ images.length }} - {{ description }}</div>
+  <a class="col-md-2 col-sm-1 nav-left" ng-click="prevImage()"><i class="fa fa-angle-left"></i></a>
+  <div class="col-md-8 col-sm-10">
+    <div class="row"><img ng-src="{{ img }}" ng-click="nextImage()" ng-show="!loading" class="effect" /></div>
+    <div class="row info-text">{{ index + 1 }}/{{ images.length }} - {{ description }}</div>
   </div>
   <a class="col-md-2 nav-right" ng-click="nextImage()"><i class="fa fa-angle-right"></i></a>
 </div>
