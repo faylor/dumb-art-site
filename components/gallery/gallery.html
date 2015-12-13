@@ -244,7 +244,7 @@
   <a class="col-md-2 col-sm-1 nav-left" ng-click="prevImage()"><i class="fa fa-angle-left"></i></a>
   <div class="col-md-8 col-sm-10">
     <div class="row"><img ng-src="{{ img }}" ng-click="nextImage()" ng-show="!loading" class="effect" /></div>
-    <div class="row info-text">{{ index + 1 }}/{{ images.length }} - {{ description }}</div>
+    <div class="row info-text">{{ title }} {{ price }}</div>
   </div>
   <a class="col-md-2 nav-right" ng-click="nextImage()"><i class="fa fa-angle-right"></i></a>
 </div>
@@ -254,7 +254,7 @@
     <div infinite-scroll='loadMore()' infinite-scroll-distance='2'>
     <div class="row ng-thumbnails-wrapper">
     <div class="col-xs-6 col-sm-3 col-md-2 ng-thumbnails" ng-repeat="painting in images | filter:isForSale | orderBy: 'price' | limitTo:totalDisplayed">
-      <img ng-src="images/thumbs/{{painting.image}}" ng-class="" ng-click="changeImage($index)" />
+      <img ng-src="images/thumbs/{{painting.image}}" ng-class="" ng-click="changeImage(painting)" />
     </div>
     </div>
   </div>

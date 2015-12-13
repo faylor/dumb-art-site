@@ -83,25 +83,27 @@ app.controller('galleryController', ['$scope', '$http','$q','$timeout','$documen
       deferred.reject();
     };
 
-    image.src = 'images/'+$scope.images[i].image;
+    image.src = 'images/'+i;
     $scope.loading = true;
 
     return deferred.promise;
   };
 
   var showImage = function(i) {
-    loadImage($scope.index).then(function(resp) {
+    loadImage($scope.index.image).then(function(resp) {
       $scope.img = resp.src;
-      smartScroll($scope.index);
+      //smartScroll($scope.index);
     });
-    $scope.description = $scope.images[i].description || '';
+    $scope.title = $scope.index.title || '';
+    $scope.price = $scope.index.price || '';
+    $scope.sold = $scope.index.sold || '';
   };
 
   $scope.changeImage = function(i) {
     $scope.index = i;
-    loadImage($scope.index).then(function(resp) {
+    loadImage($scope.index.image).then(function(resp) {
       $scope.img = resp.src;
-      smartScroll($scope.index);
+    //  smartScroll($scope.index.);
     });
   };
 
