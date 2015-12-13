@@ -6,7 +6,7 @@ app.controller('galleryController', ['$scope', '$http','$q','$timeout','$documen
   $scope.totalItems;
   $scope.currentPage = 1;
   $scope.maxSize = 5;
-  $scope.thumbsNum = 20;
+  $scope.thumbsNum = 24;
   $scope.filterSold = 0;
   getPaintings();
 
@@ -21,14 +21,14 @@ app.controller('galleryController', ['$scope', '$http','$q','$timeout','$documen
         $scope.status = 'Unable to load Painting data: ' + error.message;
       });
   }
-
+  /*
   $scope.pageChanged = function() {
     var begin = (($scope.currentPage - 1) * $scope.thumbsNum);
     var end = begin + $scope.thumbsNum;
 
     $scope.filteredPaintings = $scope.images.slice(begin, end);
   };
-
+*/
   $scope.isForSale = function(p) {
     return ($scope.filterSold === 1 && p.sold === 0) || $scope.filterSold === 0;
   };
