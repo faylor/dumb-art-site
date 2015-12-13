@@ -83,7 +83,7 @@ app.controller('galleryController', ['$scope', '$http','$q','$timeout','$documen
       deferred.reject();
     };
 
-    image.src = $scope.images[i].img;
+    image.src = $scope.images[i].image;
     $scope.loading = true;
 
     return deferred.promise;
