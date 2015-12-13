@@ -1,12 +1,12 @@
 app.controller('galleryController', ['$scope', '$http','$q','$timeout','$document', 'paintingFactory',
   function($scope, $http, $q, $timeout, $document, paintingFactory) {
   $scope.name = 'Galleries';
-  $scope.images;
-  $scope.filteredPaintings = [];
+  $scope.images = [];
   $scope.totalItems;
   $scope.currentPage = 1;
   $scope.maxSize = 5;
-  $scope.thumbsNum = 24;
+  $scope.thumbsNum = 2;
+  $scope.totalDisplayed = 2;
   $scope.filterSold = 0;
   getPaintings();
 
@@ -21,21 +21,14 @@ app.controller('galleryController', ['$scope', '$http','$q','$timeout','$documen
         $scope.status = 'Unable to load Painting data: ' + error.message;
       });
   }
-  /*
-  $scope.pageChanged = function() {
-    var begin = (($scope.currentPage - 1) * $scope.thumbsNum);
-    var end = begin + $scope.thumbsNum;
 
-    $scope.filteredPaintings = $scope.images.slice(begin, end);
-  };
-*/
   $scope.isForSale = function(p) {
     return ($scope.filterSold === 1 && p.sold === 0) || $scope.filterSold === 0;
   };
 
   $scope.loadMore = function() {
-    if($scope.images != undefined){
-      $scope.filteredPaintings = $scope.images.slice(0, $scope.filteredPaintings.length +  $scope.thumbsNum);
+    if($scope.totalDisplayed<$scope.images.length){
+      $scope.totalDisplayed = $scope.totalDisplayed + $scope.thumbsNum;
     }
   };
 
