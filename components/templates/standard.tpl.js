@@ -9,7 +9,7 @@ app.controller('standardTemplateController', ['$scope','$rootScope','$http','$ro
 
       if($rootScope.pages.length > 0){
           $scope.page = _.findWhere($rootScope.pages, {menulink: $routeParams.pagelink});
-          $scope.image = getImageFromId($scope.page.image);
+          setImageFromId($scope.page.image);
           if($scope.page == null){
             $scope.errormessage = "Unable to load page.";
           }
@@ -17,9 +17,10 @@ app.controller('standardTemplateController', ['$scope','$rootScope','$http','$ro
         $scope.errormessage = "Unable to load pages.";
       }
 
-       function getImageFromId(id) {
-         paintingFactory.getPainting(id).then(function(data){
-           return data.image;
+       function setImageFromId(id) {
+         $scope.image = '';
+         paintingFactory.getPainting(id).then(function(res){
+           $scope.image = res.data.image;
          });
        }
 

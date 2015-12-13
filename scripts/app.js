@@ -287,7 +287,7 @@ app.factory('paintingFactory', ['$q','$timeout','$http', function($q,$timeout,$h
 
   paintingFactory.getPainting = function (id) {
     return $http.get(urlBase + id).then(function(response) {
-      return response.data;
+      return response;
     });
   };
 
