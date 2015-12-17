@@ -6,7 +6,7 @@ app.controller('galleryController', ['$scope', '$http','$q','$timeout','$documen
   $scope.currentPage = 1;
   $scope.maxSize = 5;
   $scope.thumbsNum = 2;
-  $scope.totalDisplayed = 2;
+  $scope.totalDisplayed = 16;
   $scope.filterSold = 0;
   getPaintings();
 

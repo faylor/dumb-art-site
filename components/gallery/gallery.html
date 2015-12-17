@@ -253,8 +253,13 @@
   <div class="col-md-8 col-sm-10">
     <div infinite-scroll='loadMore()' infinite-scroll-distance='2'>
     <div class="row ng-thumbnails-wrapper">
-    <div class="col-xs-6 col-sm-3 col-md-2 ng-thumbnails" ng-repeat="painting in images | filter:isForSale | orderBy: 'price' | limitTo:totalDisplayed">
-      <img ng-src="images/thumbs/{{painting.image}}" ng-class="" ng-click="changeImage(painting)" />
+    <div ng-repeat="painting in images | filter:isForSale | orderBy: 'price' | limitTo:totalDisplayed">
+      <div class="col-xs-6 col-sm-3 col-md-2 ng-thumbnails">
+        <img ng-src="images/thumbs/{{painting.image}}" ng-class="" ng-click="changeImage(painting)" />
+      </div>
+      <div class="clearfix visible-md" ng-if="($index + 1) % 6== 0"></div>
+      <div class="clearfix visible-sm" ng-if="($index + 1) % 4 == 0"></div>
+      <div class="clearfix visible-xs" ng-if="($index + 1) % 2 == 0"></div>
     </div>
     </div>
   </div>
