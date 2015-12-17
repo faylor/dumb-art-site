@@ -129,7 +129,7 @@ app.controller('galleryController', ['$scope', '$http','$q','$timeout','$documen
       showImage($scope.index);
     }
     $scope.opened = true;
-
+    /*
     $timeout(function() {
       var calculatedWidth = calculateThumbsWidth();
       $scope.thumbs_width = calculatedWidth.width;
@@ -141,6 +141,7 @@ app.controller('galleryController', ['$scope', '$http','$q','$timeout','$documen
       });
       smartScroll($scope.index);
     });
+    */
   };
 
   $scope.closeGallery = function() {
