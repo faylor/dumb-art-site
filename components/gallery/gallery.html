@@ -255,7 +255,7 @@
     <div class="row ng-thumbnails-wrapper">
     <div ng-repeat="painting in images | filter:isForSale | orderBy: 'price' | limitTo:totalDisplayed">
       <div class="col-xs-6 col-sm-3 col-md-2 ng-thumbnails">
-        <img ng-src="images/thumbs/{{painting.image}}" ng-class="" ng-click="changeImage(painting)" />
+        <img ng-src="images/thumbs/{{painting.image}}" ng-class="" ng-click="changeImage(painting)" style="height: auto; width: 100px;"/>
       </div>
       <div class="clearfix visible-md" ng-if="($index + 1) % 6== 0"></div>
       <div class="clearfix visible-sm" ng-if="($index + 1) % 4 == 0"></div>
