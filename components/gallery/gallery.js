@@ -96,6 +96,7 @@ app.controller('galleryController', ['$scope', '$http','$q','$timeout','$documen
     });
     $scope.title = $scope.index.title || '';
     $scope.price = $scope.index.price || '';
+    $scope.size = $scope.index.size || '';
     $scope.sold = $scope.index.sold || '';
   };
 
@@ -105,9 +106,9 @@ app.controller('galleryController', ['$scope', '$http','$q','$timeout','$documen
       $scope.img = resp.src;
     //  smartScroll($scope.index.);
     });
-
     $scope.title = $scope.index.title || '';
     $scope.price = $scope.index.price || '';
+    $scope.size = $scope.index.size || '';
     $scope.sold = $scope.index.sold || '';
   };
 
