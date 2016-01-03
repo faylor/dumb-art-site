@@ -110,12 +110,13 @@
     overflow-x: hidden;
   }
 
-  .ng-gallery-content > .ng-thumbnails-wrapper > .ng-thumbnails {
+  .ng-thumbnails {
     width: 4000px;
     height: 70px;
+    margin: 10px;
   }
 
-  .ng-gallery-content > .ng-thumbnails-wrapper > .ng-thumbnails > div > img {
+  .ng-thumbnails > img {
     width: auto;
     height: 70px;
     float: left;
@@ -124,8 +125,8 @@
     opacity: 0.6;
   }
 
-  .ng-gallery-content > .ng-thumbnails-wrapper > .ng-thumbnails > div > img:hover,
-  .ng-gallery-content > .ng-thumbnails-wrapper > .ng-thumbnails > div > img.active {
+  .ng-thumbnails > img:hover,
+  .ng-thumbnails > img.active {
     transition: opacity 0.25s ease;
     opacity: 1;
   }
