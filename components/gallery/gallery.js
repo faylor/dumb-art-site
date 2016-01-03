@@ -105,6 +105,10 @@ app.controller('galleryController', ['$scope', '$http','$q','$timeout','$documen
       $scope.img = resp.src;
     //  smartScroll($scope.index.);
     });
+
+    $scope.title = $scope.index.title || '';
+    $scope.price = $scope.index.price || '';
+    $scope.sold = $scope.index.sold || '';
   };
 
   $scope.nextImage = function() {
