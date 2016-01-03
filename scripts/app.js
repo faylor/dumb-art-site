@@ -268,6 +268,7 @@ app.factory('paintingFactory', ['$q','$timeout','$http', function($q,$timeout,$h
       fd.append('price',data.price);
       fd.append('sold',data.sold);
       fd.append('rank',data.rank);
+      fd.append('image',data.image);
 
       return $http.post(uploadUrl, fd, {
           transformRequest: angular.identity,
