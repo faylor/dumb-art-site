@@ -105,10 +105,15 @@
   /* Loading - from http://loading.io */
   .fa {
       color: #d3d3d3;
-      font-size: 3em;
+      font-size: 2.1em;
       vertical-align: middle;
   }
-
+  .fa-angle-left{
+      float:left;
+  }
+  .fa-angle-right{
+      float:right;
+  }
   uiload {
     display: inline-block;
     position: relative;
@@ -219,9 +224,9 @@
 </div>
 <div class="row" style="margin-bottom:20px;">
   <div class="text-center col-xs-10 col-xs-offset-1">
-    <div class="fa" ng-click="prevImage()"><i class="fa fa-angle-left"><<</i></div>
+    <div class="fa fa-angle-left" ng-click="prevImage()"><<</div>
     <div><img ng-src="{{ img }}" ng-click="nextImage()" ng-show="!loading" class="effect" style="box-shadow: 0 5px 20px #000000;"/></div>
-    <div class="fa" ng-click="nextImage()"><i class="fa fa-angle-right">>></i></div>
+    <div class="fa fa-angle-right" ng-click="nextImage()">>></div>
   </div>
 </div>
 <div class="row">
