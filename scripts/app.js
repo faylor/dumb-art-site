@@ -203,11 +203,11 @@ app.controller('adminPaintingsEditorController',['$scope','$uibModalInstance','p
   $scope.painting = painting;
   $scope.editType = editType;
 
-  $scope.uploadFile = function(id,title,size,price,sold,rank){
+  $scope.uploadFile = function(id,title,size,price,sold,rank,image){
         var file = $scope.myFile;
         var uploadUrl = "/painting/"+id;
 
-        paintingFactory.uploadFileAndFormToUrl(id,file,{title:title,size:size,price:price,sold:sold,rank:rank}, uploadUrl)
+        paintingFactory.uploadFileAndFormToUrl(id,file,{title:title,size:size,price:price,sold:sold,rank:rank,image:image}, uploadUrl)
           .success(function (p) {
               $uibModalInstance.close({_id:id});
           })
