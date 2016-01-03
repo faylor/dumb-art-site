@@ -221,7 +221,7 @@
   }
 </style>
 <div class="row">
-  <div class="col-xs-4 col-md-offset-6">
+  <div class=" text-right col-xs-4 col-xs-offset-6">
     <button type="button" class="btn btn-primary" ng-model="filterSold" uib-btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0">
       Show For Sale Only
     </button>
@@ -229,7 +229,7 @@
 </div>
 <div class="row">
   <div class="col-xs-1" ng-click="prevImage()"><i class="fa fa-angle-left"><<</i></div>
-  <div class="text-center col-xs-8 ">
+  <div class="text-center col-xs-10">
     <div><img ng-src="{{ img }}" ng-click="nextImage()" ng-show="!loading" class="effect" style="box-shadow: 0 5px 20px #000000;"/></div>
     <div class="info-text">{{ title }} {{ price }}</div>
   </div>
