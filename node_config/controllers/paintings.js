@@ -98,7 +98,7 @@ exports.updateDataAndFile = function (req, res){
                                           rank:fieldValues.rank,
                                           image:fieldValues.image}, {upsert: true}, function(err) {
               if (!err) {
-                  return res.json({message:"updated"});
+                  return res.json({message:"updated:"+fieldValues.image});
               } else {
                   console.log(err);
                   return res.send(404, { error: "Painting was not updated." });
