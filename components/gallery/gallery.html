@@ -228,12 +228,12 @@
   </button>
 </div>
 <div class="row">
-  <div class="col-md-4 col-sm-1 nav-left" ng-click="prevImage()"><i class="fa fa-angle-left"></i></div>
-  <div class="col-md-4 col-sm-10">
+  <div class="col-md-4" ng-click="prevImage()"><i class="fa fa-angle-left"></i></div>
+  <div class="col-md-4">
     <div><img ng-src="{{ img }}" ng-click="nextImage()" ng-show="!loading" class="effect" style="box-shadow: 0 5px 20px #000000;"/></div>
     <div class="info-text">{{ title }} {{ price }}</div>
   </div>
-  <div class="col-md-4 nav-right" ng-click="nextImage()"><i class="fa fa-angle-right"></i></div>
+  <div class="col-md-4" ng-click="nextImage()"><i class="fa fa-angle-right"></i></div>
 </div>
 <div class="row">
   <div class="col-md-2 col-lg-2 col-sm-1"></div>
