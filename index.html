@@ -20,36 +20,46 @@
   <script src="components/gallery/gallery.js"></script>
 
   <style>
+  @media (min-width: 768px) {
+    .utilmenuText {
+      color: #FFF;
+      font-size: 1.25em;
+      font-style: italic;
+      margin: 0px;
+      padding: 0px;
+      text-decoration: none;
+      letter-spacing: 0.7px;
+      clear:both;
+    }
+}
+@media (min-width: 992px) {
   .utilmenuText {
-    float: right;
-    color: #FFF;
-    font-size: 1.25em;
-    font-style: italic;
-    margin: 103px 10px 3px;
-    padding: 160px 20px 12px;
-    text-decoration: none;
+    margin: 0px 10px;
+    padding: 150px 7px 10px;
     letter-spacing: 0.7px;
+    clear:none;
+  }
+}
+@media (min-width: 1200px) {
+  .utilmenuText {
+    margin: 0px 10px;
+    padding: 150px 11px 10px;
+  }
+}
+.utilmenuText:hover, .utilmenuTextOn:hover {
+    background-color: #555;
+    color: white;
 }
 .utilmainnav {
     background-color: #484848;
     height: 212px;
     z-index: 10;
 }
-.utilmenuText:hover, .utilmenuTextOn:hover,.nav > li > a:focus, .nav > li > a:hover{
-    background-color: #555;
-    color: white;
-}
 .navbar {
     margin-bottom: 20px;
     min-height: 212px;
     position: retive;
     border-radius: 0px;
-}
-.dilogo {
-    float: left;
-    height: 190px;
-    margin-right: 50px;
-    width: 190px;
 }
 .regularTextSmall {
     color: #484848;
@@ -68,25 +78,36 @@
 </head>
 <body ng-app="galleryApp">
     <!-- HEADER AND NAVBAR -->
-    <header>
-        <nav class="navbar utilmainnav" ng-controller="MainCtrl">
+    <header ng-controller="MainCtrl">
+        <nav class="navbar navbar-inverse utilmainnav" >
         <div class="container">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="/"><div class="dilogo"><img src="assets/di.png" border="0" alt="Di Taylor"/></div></a>
-            </div>
 
-            <ul class="nav navbar-nav navbar-right">
-              <li ng-repeat="p in pages">
-                <a class="utilmenuText" href="/{{p.menulink}}">{{p.menutitle}}</a>
-              </li>
-              <li><a class="utilmenuText" href="/gallery/home">{{isLoggedIn}}Gallery</a></li>
-              <li><a href="/admin/login">Login</a></li>
-              <li ng-if="isLoggedIn()"><a href="/admin/register">Register</a></li>
-              <li ng-if="isLoggedIn()"><a href="/admin/paintings">Paintings</a></li>
-              <li ng-if="isLoggedIn()"><a href="/admin/pages">Pages</a></li>
-            </ul>
+            <div class="navbar-header col-xs-offset-1 col-xs-8  col-sm-6 col-md-4">
+              <button type="button" class="navbar-toggle collapsed" ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand col-xs-10" href="/"><img src="assets/di.png" border="0" alt="Di Taylor" class="img-responsive"/></a>
+            </div>
+            <div class="collapse navbar-collapse  col-xs-offset-1 col-xs-7  col-sm-offset-1 col-sm-5 col-md-offset-2 col-md-6"  ng-class="!navCollapsed && 'in'" ng-click="navCollapsed=true">
+                      <ul class="nav navbar-nav">
+                        <li ng-repeat="p in pages" ng-class="navCollapsed && 'utilmenuText'">
+                          <a href="/{{p.menulink}}">{{p.menutitle}}</a>
+                        </li>
+                        <li ng-class="navCollapsed && 'utilmenuText'"><a href="/gallery/home">Gallery</a></li>
+                      </ul>
+
+                    </div>
         </div>
         </nav>
+        <ul style="position:absolute; right:100px; top:10px; z-index:999;">
+          <li><a href="/admin/login">Login</a></li>
+          <li ng-if="isLoggedIn()"><a href="/admin/register">Register</a></li>
+          <li ng-if="isLoggedIn()"><a href="/admin/paintings">Paintings</a></li>
+          <li ng-if="isLoggedIn()"><a href="/admin/pages">Pages</a></li>
+        </ul>
     </header>
 
     <!-- MAIN CONTENT AND INJECTED VIEWS -->
