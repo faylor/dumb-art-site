@@ -7,6 +7,11 @@ app.controller('standardTemplateController', ['$scope','$rootScope','$http','$ro
       $scope.footer = '';
       $scope.errormessage = '';
 
+      $scope.$on('pagesloaded', function() {
+        console.log('Pages Loaded broadcast');
+        alert("loaded");
+      });
+
       if($rootScope.pages != undefined){
           $scope.page = _.findWhere($rootScope.pages, {menulink: $routeParams.pagelink});
           setImageFromId($scope.page.image);
