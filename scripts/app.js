@@ -50,7 +50,7 @@ app.run(function($rootScope, $location, AuthenticationService, pageFactory) {
               $rootScope.pages = p;
           })
           .error(function (error) {
-              $rootScope.errorMessage = 'Unable to load Pages data.';
+              $rootScope.errorMessage = 'Unable to load Pages data.'+error;
           });
 
     $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
