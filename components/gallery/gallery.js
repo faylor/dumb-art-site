@@ -16,10 +16,15 @@ app.controller('galleryController', ['$scope', '$http','$q','$timeout','$documen
         $scope.images = p;
         $scope.totalItems = p.length;
         $scope.loadMore();
+        $scope.pics = p;
       })
       .error(function(error) {
         $scope.status = 'Unable to load Painting data: ' + error.message;
       });
+  }
+
+  $scope.refresh = function(){
+    angularGridInstance.gallery.refresh();
   }
 
   $scope.isForSale = function(p) {

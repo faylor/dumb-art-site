@@ -230,17 +230,19 @@
 <div class="row">
   <div class="col-md-2 col-lg-2 col-sm-1 col-xs-1"></div>
   <div class="col-md-8 col-lg-8 col-sm-10 col-xs-10">
+
+
     <div infinite-scroll='loadMore()' infinite-scroll-distance='2'>
+
+
     <div class="row ng-thumbnails-wrapper">
-    <div ng-repeat="painting in images | filter:isForSale | orderBy: 'price' | limitTo:totalDisplayed">
-      <div class="col-xs-5 col-sm-3 col-md-2 col-lg-2 ng-thumbnails">
-        <img ng-src="images/thumbs/{{painting.image}}" ng-class="img-responsive" ng-click="changeImage(painting)" style="height: auto; width: 100px;"/>
+
+      <div masonry>
+        <div class="masonry-brick col-xs-5 col-sm-3 col-md-2 col-lg-2 ng-thumbnails" ng-repeat="painting in images">
+            <img ng-src="images/thumbs/{{painting.image}}" alt="A masonry brick">
+        </div>
       </div>
-      <div class="clearfix visible-md" ng-if="($index + 1) % 6== 0"></div>
-      <div class="clearfix visible-lg" ng-if="($index + 1) % 6== 0"></div>
-      <div class="clearfix visible-sm" ng-if="($index + 1) % 4 == 0"></div>
-      <div class="clearfix visible-xs" ng-if="($index + 1) % 2 == 0"></div>
-    </div>
+
     </div>
   </div>
   </div>
