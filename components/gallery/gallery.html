@@ -139,26 +139,18 @@
 
 </div>
 <div class="row">
-  <div class="col-md-2 col-lg-2 col-sm-1 col-xs-1"></div>
-  <div class="col-md-8 col-lg-8 col-sm-10 col-xs-10">
-
-
     <div infinite-scroll='loadMore()' infinite-scroll-distance='2'>
 
 
     <div class="row ng-thumbnails-wrapper">
 
       <div masonry>
-        <div class="masonry-brick col-xs-10 col-sm-5 col-md-2 col-lg-2 ng-thumbnails" ng-repeat="painting in images">
+        <div class="masonry-brick col-xs-12 col-sm-6 col-md-4 col-lg-3 ng-thumbnails" ng-repeat="painting in images">
             <img ng-src="images/thumbs/{{painting.image}}" alt="{{painting.title}}" class="img-responsive">
-            <div class="clear text-right">
-              {{ title }}<br/>{{ size }}<br/>{{ price }}
-            </div>
+            <div class="clear text-right">{{ painting.title }}<br/>{{ painting.size }}<br/>{{ painting.price }}</div>
         </div>
       </div>
 
     </div>
   </div>
-  </div>
-  <div class="col-md-2 col-lg-2 col-sm-1 col-xs-1"></div>
 </div>
