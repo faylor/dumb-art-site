@@ -1,4 +1,4 @@
-app.controller('galleryController', ['$scope', '$http','$q','$timeout','$document', 'paintingFactory',
+app.controller('galleryController', ['$scope','$rootScope', '$http','$q','$timeout','$document', 'paintingFactory',
   function($scope, $http, $q, $timeout, $document, paintingFactory) {
   $scope.name = 'Galleries';
   $scope.images = [];
