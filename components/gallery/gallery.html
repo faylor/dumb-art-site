@@ -15,8 +15,9 @@
   .ng-thumbnails > img{
     box-shadow: 0 2px 5px #555;
   }
-.thumbCopy h3{
+.thumbCopy .thumbMiddle{
     vertical-align: middle;
+    font-size: 10px;
 }
 
   .thumbCopy{
@@ -162,7 +163,7 @@
         <div class="masonry-brick col-xs-12 col-sm-6 col-md-4 col-lg-3 ng-thumbnails" ng-repeat="painting in images">
             <img ng-src="images/thumbs/{{painting.image}}" alt="{{painting.title}}" class="img-responsive">
             <div class="thumbCopy clear text-right">
-              <h3>{{ painting.title }}<br/>{{ painting.size }}<br/>{{ painting.price }}</h3>
+              <div class="thumbMiddle">{{ painting.title }}<br/>{{ painting.size }}<br/>{{ painting.price }}</div>
             </div>
         </div>
       </div>
