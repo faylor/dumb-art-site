@@ -8,14 +8,22 @@
 .img-responsive{
   width:100%;
 }
-
-  .ng-thumbnails{
-    cursor: pointer;
+.ng-thumbnails{
+  cursor: pointer;
+  margin-bottom:20px;
+}
+  .ng-thumbnails > img{
     box-shadow: 0 2px 5px #555;
   }
 
   .thumbCopy{
     display:none;
+    z-index:999;
+    background-color: #FFF;
+    box-shadow: 0 2px 5px #555;
+    position:relative;
+    margin-top:2px;
+    padding: 2px 4px;
   }
   .ng-thumbnails:hover > .thumbCopy{
     display:block;
