@@ -135,17 +135,8 @@
     </button>
   </div>
 </div>
-<div class="row" style="margin-bottom:20px;">
-  <div class="col-xs-1 col-xs-offset-0 col-md-1 col-md-offset-2 fa fa-angle-left" ng-click="prevImage()"><<</div>
-  <div class="col-xs-10 col-md-6">
-    <img ng-src="{{ img }}" ng-click="nextImage()" ng-show="!loading" class="img-responsive center-block effect" style="box-shadow: 0 5px 20px #000000;"/>
-  </div>
-  <div class="col-xs-1 col-md-1 fa fa-angle-right" ng-click="nextImage()">>></div>
-</div>
 <div class="row">
-  <div class="col-xs-4 col-xs-offset-4 text-right">
-    {{ title }}<br/>{{ size }}<br/>{{ price }}
-  </div>
+
 </div>
 <div class="row">
   <div class="col-md-2 col-lg-2 col-sm-1 col-xs-1"></div>
@@ -160,6 +151,9 @@
       <div masonry>
         <div class="masonry-brick col-xs-10 col-sm-5 col-md-2 col-lg-2 ng-thumbnails" ng-repeat="painting in images">
             <img ng-src="images/thumbs/{{painting.image}}" alt="{{painting.title}}" class="img-responsive">
+            <div class="clear text-right">
+              {{ title }}<br/>{{ size }}<br/>{{ price }}
+            </div>
         </div>
       </div>
 
