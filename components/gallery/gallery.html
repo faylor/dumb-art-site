@@ -161,9 +161,9 @@
     <div style="padding:0px 20px">
 
       <div masonry>
-        <div class="masonry-brick col-xs-12 col-sm-6 col-md-4 col-lg-3 ng-thumbnails" ng-repeat="painting in images">
+        <div class="masonry-brick col-xs-12 col-sm-6 col-md-4 col-lg-3 ng-thumbnails" ng-repeat="painting in images" ng-click="this.removeClass('col-lg-3');this.addClass('col-lg-3');">
             <img ng-src="images/thumbs/{{painting.image}}" alt="{{painting.title}}" class="img-responsive">
-            <div class="thumbCopy clear text-right">
+            <div class="thumbCopy">
               <div class="thumbMiddle">{{ painting.title }}<br/>{{ painting.size }}<br/>{{ painting.price }}</div>
             </div>
         </div>
