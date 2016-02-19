@@ -139,6 +139,7 @@ app.controller('galleryController', ['$scope', '$http','$q','$timeout','$documen
     }else{
       p.enlarged = 'true';
     };
+    $rootScope.$broadcast('masonry.reload');
   };
 
   $scope.openGallery = function(i) {
