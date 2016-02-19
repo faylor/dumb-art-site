@@ -133,6 +133,14 @@ app.controller('galleryController', ['$scope', '$http','$q','$timeout','$documen
     showImage($scope.index);
   };
 
+  $scope.togglePic = function(p) {
+    if(p.enlarged == 'true'){
+      p.enlarged = ''
+    }else{
+      p.enlarged = 'true';
+    };
+  };
+
   $scope.openGallery = function(i) {
     if (typeof i !== undefined) {
       $scope.index = i;
