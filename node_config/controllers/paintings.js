@@ -63,7 +63,7 @@ exports.updateDataAndFile = function (req, res){
               quickthumb.convert({
                 src: imagedir + file_name,
                 dst: imagedir + "thumbs/" + file_name,
-                height: 200
+                width: 450
               }, function (err, path) {
                 if (err) {
                   console.error(err);
