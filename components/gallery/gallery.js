@@ -32,6 +32,9 @@ app.controller('galleryController', ['$scope','$rootScope', '$http','$q','$timeo
   };
 
   $scope.loadMore = function() {
+    alert($scope.totalDisplayed);
+    alert($scope.images.length);
+
     if($scope.totalDisplayed<$scope.images.length){
       $scope.totalDisplayed = $scope.totalDisplayed + $scope.thumbsNum;
     }
