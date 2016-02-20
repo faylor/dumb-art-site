@@ -14,9 +14,8 @@ app.controller('galleryController', ['$scope','$rootScope', '$http','$q','$timeo
     paintingFactory.getPaintings()
       .success(function(p) {
         $scope.images = p;
+        $scope.imagesLimited = p.slice(0,2);
         $scope.totalItems = p.length;
-        $scope.loadMore();
-        $scope.pics = p;
       })
       .error(function(error) {
         $scope.status = 'Unable to load Painting data: ' + error.message;
@@ -34,6 +33,7 @@ app.controller('galleryController', ['$scope','$rootScope', '$http','$q','$timeo
   $scope.loadMore = function() {
     if($scope.totalDisplayed<$scope.images.length){
       $scope.totalDisplayed = $scope.totalDisplayed + $scope.thumbsNum;
+      $scope.imagesLimited = $scope.images.slice(0,$scope.totalDisplayed);
     }
   };
 
