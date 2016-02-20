@@ -12,22 +12,16 @@
   cursor: pointer;
   margin-bottom:20px;
 }
-  .ng-thumbnails > img{
+  .ng-thumbnails > img,.ng-thumbnails-enlarged > img{
     box-shadow: 0 2px 5px #555;
-  }
-  .ng-thumbnails-enlarged{
-    box-shadow: 0 2px 5px #555;
-    padding:0px;
-    margin-bottom:5px;
   }
   .ng-thumbnails-enlarged .thumbCopy{
     display:block;
     font-size:14px;
-    background: rgba(255, 255, 255) none repeat scroll 0% 0%;
     position: relative;
-    height:60px;
-    text-align: center;
-    opacity: 0.8;
+    height:65px;
+    margin-bottom: 10px;
+    text-align: right;
   }
   .ng-thumbnails .thumbCopy{
     display:none;
@@ -35,9 +29,9 @@
     background: rgba(255, 255, 255, 0.6) none repeat scroll 0% 0%;
     position: absolute;
     vertical-align: bottom;
-    height:60px;
+    height:65px;
     left: 20px;
-    bottom: 20px;
+    bottom: 5px;
     right: 20px;
     text-align: center;
     opacity: 0.8;
