@@ -5,8 +5,8 @@ app.controller('galleryController', ['$scope','$rootScope', '$http','$q','$timeo
   $scope.totalItems;
   $scope.currentPage = 1;
   $scope.maxSize = 5;
-  $scope.thumbsNum = 2;
-  $scope.totalDisplayed = 2;
+  $scope.thumbsNum = 6;
+  $scope.totalDisplayed = 12;
   $scope.filterSold = 0;
   getPaintings();
 
@@ -14,7 +14,7 @@ app.controller('galleryController', ['$scope','$rootScope', '$http','$q','$timeo
     paintingFactory.getPaintings()
       .success(function(p) {
         $scope.images = p;
-        $scope.imagesLimited = p.slice(0,2);
+        $scope.imagesLimited = p.slice(0,$scope.totalDisplayed );
         $scope.totalItems = p.length;
       })
       .error(function(error) {
