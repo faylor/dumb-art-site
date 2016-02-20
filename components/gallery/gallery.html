@@ -166,7 +166,7 @@
     <div style="padding:0px 20px">
 
       <div masonry reload-on-resize>
-        <div ng-class="painting.enlarged=='true'?'col-xs-12 col-sm-12 col-md-8 col-lg-6 ng-thumbnails-enlarged':'col-xs-12 col-sm-6 col-md-4 col-lg-3 ng-thumbnails'" class="masonry-brick" ng-repeat="painting in images" ng-click="togglePic(painting);$this.toggleClass('large');$this.animate( size, reMasonry );">
+        <div ng-class="painting.enlarged=='true'?'col-xs-12 col-sm-12 col-md-8 col-lg-6 ng-thumbnails-enlarged':'col-xs-12 col-sm-6 col-md-4 col-lg-3 ng-thumbnails'" class="masonry-brick" ng-repeat="painting in imagesLimited" ng-click="togglePic(painting);$this.toggleClass('large');$this.animate( size, reMasonry );">
             <img ng-src="images/thumbs/{{painting.image}}" alt="{{painting.title}}" class="img-responsive">
             <div class="thumbCopy">
               <div class="thumbMiddle">{{ painting.title }}<br/>{{ painting.size }}<br/>{{ painting.price }}</div>
