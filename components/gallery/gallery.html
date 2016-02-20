@@ -15,19 +15,25 @@
   .ng-thumbnails > img{
     box-shadow: 0 2px 5px #555;
   }
-.thumbMiddle{
-    display: inline-block;
-    vertical-align: middle;
-    font-size: 14px;
-}
-
-  .thumbCopy{
+  .ng-thumbnails-enlarged{
+    box-shadow: 0 2px 5px #555;
+  }
+  .ng-thumbnails-enlarged .thumbCopy{
+    display:block;
+    font-size:14px;
+    background: rgba(255, 255, 255) none repeat scroll 0% 0%;
+    position: relative;
+    height:40px;
+    text-align: center;
+    opacity: 0.8;
+  }
+  .ng-thumbnails .thumbCopy{
     display:none;
+    font-size:14px;
     background: rgba(255, 255, 255, 0.6) none repeat scroll 0% 0%;
     position: absolute;
     vertical-align: bottom;
-    height:auto;
-    top: 20px;
+    height:40px;
     left: 20px;
     bottom: 20px;
     right: 20px;
@@ -162,7 +168,7 @@
     <div style="padding:0px 20px">
 
       <div masonry reload-on-resize>
-        <div ng-class="painting.enlarged=='true'?'col-xs-12 col-sm-12 col-md-8 col-lg-6':'col-xs-12 col-sm-6 col-md-4 col-lg-3'" class="masonry-brick ng-thumbnails" ng-repeat="painting in images" ng-click="togglePic(painting);$this.toggleClass('large');$this.animate( size, reMasonry );">
+        <div ng-class="painting.enlarged=='true'?'col-xs-12 col-sm-12 col-md-8 col-lg-6 ng-thumbnails-enlarged':'col-xs-12 col-sm-6 col-md-4 col-lg-3 ng-thumbnails'" class="masonry-brick" ng-repeat="painting in images" ng-click="togglePic(painting);$this.toggleClass('large');$this.animate( size, reMasonry );">
             <img ng-src="images/thumbs/{{painting.image}}" alt="{{painting.title}}" class="img-responsive">
             <div class="thumbCopy">
               <div class="thumbMiddle">{{ painting.title }}<br/>{{ painting.size }}<br/>{{ painting.price }}</div>
