@@ -6,7 +6,7 @@ app.controller('galleryController', ['$scope','$rootScope', '$http','$q','$timeo
   $scope.currentPage = 1;
   $scope.maxSize = 5;
   $scope.thumbsNum = 2;
-  $scope.totalDisplayed = 16;
+  $scope.totalDisplayed = 2;
   $scope.filterSold = 0;
   getPaintings();
 
@@ -32,9 +32,6 @@ app.controller('galleryController', ['$scope','$rootScope', '$http','$q','$timeo
   };
 
   $scope.loadMore = function() {
-    alert($scope.totalDisplayed);
-    alert($scope.images.length);
-
     if($scope.totalDisplayed<$scope.images.length){
       $scope.totalDisplayed = $scope.totalDisplayed + $scope.thumbsNum;
     }
@@ -60,7 +57,7 @@ app.controller('galleryController', ['$scope','$rootScope', '$http','$q','$timeo
   setScopeValues($scope);
 
   if ($scope.thumbsNum >= 11) {
-    $scope.thumbsNum = 11;
+    $scope.thumbsNum = 2;
   }
 
   var $body = $document.find('body');
