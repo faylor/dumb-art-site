@@ -133,11 +133,17 @@ app.controller('galleryController', ['$scope','$rootScope', '$http','$q','$timeo
     showImage($scope.index);
   };
 
+  var $lastEnlarged = null;
+
   $scope.togglePic = function(p) {
     if(p.enlarged == 'true'){
       p.enlarged = ''
     }else{
       p.enlarged = 'true';
+      if($lastEnlarged){
+        $lastEnlarged.enlarged = '';
+      }
+      $lastEnlarged = p;
     };
     $rootScope.$broadcast('masonry.reload');
   };
