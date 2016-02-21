@@ -90,8 +90,8 @@ app.controller('adminPageEditorController',['$scope','$uibModalInstance','pageFa
           });
   }
 
-  $scope.updatePage = function(id,heading,subheading,body,footer,image,menutitle,menulink){
-        pageFactory.updatePage(id,{heading:heading,subheading:subheading,body:body,footer:footer,image:image,menutitle:menutitle,menulink:menulink})
+  $scope.updatePage = function(id,heading,subheading,body,footer,image,menutitle,menulink,rank){
+        pageFactory.updatePage(id,{heading:heading,subheading:subheading,body:body,footer:footer,image:image,menutitle:menutitle,menulink:menulink,rank:rank})
           .success(function (p) {
               $uibModalInstance.close({_id:id});
           })

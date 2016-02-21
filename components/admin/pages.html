@@ -15,6 +15,7 @@
     <tr>
       <th>Menu Title</th>
       <th>Menu Link</th>
+      <th>Menu Position</th>
       <th>Heading</th>
       <th>SubHeading</th>
       <th>Body</th>
@@ -27,6 +28,7 @@
     <tr ng-repeat="page in pages" ng-init="getImageFromId(page)">
       <td>{{page.menutitle}}</td>
       <td>{{page.menulink}}</td>
+      <td>{{page.rank}}</td>
       <td>{{page.heading}}</td>
       <td>{{page.subheading}}</td>
       <td>{{page.body}}</td>
@@ -54,6 +56,12 @@
                 <label for="inputTitle" class="col-sm-4 control-label">Menu Link</label>
                 <div class="col-sm-4">
                     <input type="text" class="form-control" id="inputMenuLink" placeholder="MenuLink" ng-model="page.menulink">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputTitle" class="col-sm-4 control-label">Menu Position</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" id="inputRank" placeholder="Rank" ng-model="page.rank">
                 </div>
             </div>
             <div class="form-group">
@@ -91,7 +99,7 @@
             </form>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-primary" type="submit" ng-click="updatePage(page._id,page.heading,page.subheading,page.body,page.footer,page.image,page.menutitle,page.menulink)">Save</button>
+            <button class="btn btn-primary" type="submit" ng-click="updatePage(page._id,page.heading,page.subheading,page.body,page.footer,page.image,page.menutitle,page.menulink,page.rank)">Save</button>
             <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
         </div>
     </script>
