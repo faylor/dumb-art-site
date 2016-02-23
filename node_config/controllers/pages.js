@@ -47,7 +47,7 @@ exports.update = function (req, res){
       body += data.toString();
   });
   req.on('end', function () {
-    console.log(body);
+    console.log('Got Body'+body);
     var page = JSON.parse(body);
     delete page._id;
     if(req.params.id=='undefined' || !req.params.id){
@@ -61,6 +61,7 @@ exports.update = function (req, res){
         }
       });
     }else{
+      console.log('>>>>>>>>>>>>'+page.rank);
       Page.update({ _id: req.params.id }, page, {upsert: true}, function(err) {
             if (!err) {
                 return res.send("updated");

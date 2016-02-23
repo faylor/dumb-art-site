@@ -143,6 +143,23 @@
     animation: uil-ring-anim 1s linear infinite;
   }
 </style>
+<script type="text/ng-template" id="myModalContent.html">
+        <div class="modal-header">
+            <h3 class="modal-title">I am modal!</h3>
+        </div>
+        <div class="modal-body">
+            <ul>
+                <li ng-repeat="item in items">
+                    <a href="#" ng-click="$event.preventDefault(); selected.item = item">{{ item }}</a>
+                </li>
+            </ul>
+            Selected: <b>{{ selected.item }}</b>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+            <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+        </div>
+    </script>
 <div class="row" style="margin-bottom:20px;">
   <div class=" text-right col-xs-4 col-xs-offset-6">
     <button type="button" class="btn btn-primary" ng-model="filterSold" uib-btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0">
@@ -156,7 +173,7 @@
 <div class="row">
     <div infinite-scroll='loadMore()' infinite-scroll-distance='2'>
       <div masonry preserve-order>
-        <div ng-class="painting.enlarged=='true'?'col-xs-12 ng-thumbnails-enlarged':'col-xs-12 col-sm-6 col-md-4 col-lg-3 ng-thumbnails'" class="masonry-brick" ng-repeat="painting in imagesLimited" ng-click="togglePic(painting);$this.toggleClass('large');$this.animate( size, reMasonry );">
+        <div ng-class="painting.enlarged=='true'?'col-xs-12 ng-thumbnails-enlarged':'col-xs-12 col-sm-6 col-md-4 col-lg-3 ng-thumbnails'" class="masonry-brick" ng-repeat="painting in imagesLimited" ng-click="open(painting);$this.toggleClass('large');$this.animate( size, reMasonry );">
             <img ng-src="images/thumbs/{{painting.image}}" alt="{{painting.title}}" class="img-responsive" style="width:100%;">
             <div class="thumbCopy">
               <div class="thumbMiddle">{{ painting.title }}<br/>{{ painting.size }}<br/>{{ painting.price }}</div>

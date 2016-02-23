@@ -1,5 +1,5 @@
-app.controller('galleryController', ['$scope','$rootScope', '$http','$q','$timeout','$document', 'paintingFactory',
-  function($scope, $rootScope, $http, $q, $timeout, $document, paintingFactory) {
+app.controller('galleryController', ['$scope','$rootScope', '$http','$timeout','$document','$uibModal', 'paintingFactory',
+  function($scope, $rootScope, $http, $timeout, $document,$uibModal, paintingFactory) {
   $scope.name = 'Galleries';
   $scope.images = [];
   $scope.totalItems;
@@ -71,68 +71,6 @@ app.controller('galleryController', ['$scope','$rootScope', '$http','$q','$timeo
   $scope.thumbs_width = 0;
 
 
-
-  var loadImage = function(i) {
-    var deferred = $q.defer();
-    var image = new Image();
-
-    image.onload = function() {
-      $scope.loading = false;
-      if (typeof this.complete === false || this.naturalWidth === 0) {
-        deferred.reject();
-      }
-      deferred.resolve(image);
-    };
-
-    image.onerror = function() {
-      deferred.reject();
-    };
-
-    image.src = 'images/'+i;
-    $scope.loading = true;
-
-    return deferred.promise;
-  };
-
-  var showImage = function(i) {
-    loadImage($scope.index.image).then(function(resp) {
-      $scope.img = resp.src;
-      //smartScroll($scope.index);
-    });
-    $scope.title = $scope.index.title || '';
-    $scope.price = $scope.index.price || '';
-    $scope.size = $scope.index.size || '';
-    $scope.sold = $scope.index.sold || '';
-  };
-
-  $scope.changeImage = function(i) {
-    $scope.index = i;
-    loadImage($scope.index.image).then(function(resp) {
-      $scope.img = resp.src;
-    //  smartScroll($scope.index.);
-    });
-    $scope.title = $scope.index.title || '';
-    $scope.price = $scope.index.price || '';
-    $scope.size = $scope.index.size || '';
-    $scope.sold = $scope.index.sold || '';
-  };
-
-  $scope.nextImage = function() {
-    $scope.index += 1;
-    if ($scope.index === $scope.images.length) {
-      $scope.index = 0;
-    }
-    showImage($scope.index);
-  };
-
-  $scope.prevImage = function() {
-    $scope.index -= 1;
-    if ($scope.index < 0) {
-      $scope.index = $scope.images.length - 1;
-    }
-    showImage($scope.index);
-  };
-
   var $lastEnlarged = null;
 
   $scope.togglePic = function(p) {
@@ -154,23 +92,33 @@ app.controller('galleryController', ['$scope','$rootScope', '$http','$q','$timeo
       showImage($scope.index);
     }
     $scope.opened = true;
-    /*
-    $timeout(function() {
-      var calculatedWidth = calculateThumbsWidth();
-      $scope.thumbs_width = calculatedWidth.width;
-      $thumbnails.css({
-        width: calculatedWidth.width + 'px'
-      });
-      $thumbwrapper.css({
-        width: calculatedWidth.visible_width + 'px'
-      });
-      smartScroll($scope.index);
-    });
-    */
+
   };
 
   $scope.closeGallery = function() {
     $scope.opened = false;
+  };
+
+
+  $scope.open = function (p) {
+
+    var modalInstance = $uibModal.open({
+      animation: $scope.animationsEnabled,
+      templateUrl: 'myModalContent.html',
+      controller: 'ModalInstanceCtrl',
+      size: 'lg',
+      resolve: {
+        painting: function () {
+          return p;
+        }
+      }
+    });
+
+    modalInstance.result.then(function (selectedItem) {
+      $scope.selected = selectedItem;
+    }, function () {
+      //$log.info('Modal dismissed at: ' + new Date());
+    });
   };
 
   $body.bind('keydown', function(event) {
@@ -216,5 +164,81 @@ app.controller('galleryController', ['$scope','$rootScope', '$http','$q','$timeo
       $thumbwrapper[0].scrollLeft = i * item_scroll - (s * item_scroll);
     }, 100);
   };
+
+}]);
+app.controller('ModalInstanceCtrl', ['$scope', '$uibModalInstance', '$q','painting',
+function ($scope, $uibModalInstance, $q, painting) {
+
+
+  $scope.ok = function () {
+    $uibModalInstance.close(1);
+  };
+
+  $scope.cancel = function () {
+    $uibModalInstance.dismiss('cancel');
+  };
+
+  var loadImage = function(i) {
+    var deferred = $q.defer();
+    var image = new Image();
+
+    image.onload = function() {
+      $scope.loading = false;
+      if (typeof this.complete === false || this.naturalWidth === 0) {
+        deferred.reject();
+      }
+      deferred.resolve(image);
+    };
+
+    image.onerror = function() {
+      deferred.reject();
+    };
+
+    image.src = 'images/'+i;
+    $scope.loading = true;
+
+    return deferred.promise;
+  };
+
+    var showImage = function(i) {
+      loadImage(i).then(function(resp) {
+        $scope.img = resp.src;
+        //smartScroll($scope.index);
+      });
+      $scope.title = painting.title || '';
+      $scope.price = painting.price || '';
+      $scope.size = painting.size || '';
+      $scope.sold = painting.sold || '';
+    };
+
+    $scope.changeImage = function(i) {
+      $scope.index = i;
+      loadImage($scope.index.image).then(function(resp) {
+        $scope.img = resp.src;
+      //  smartScroll($scope.index.);
+      });
+      $scope.title = $scope.index.title || '';
+      $scope.price = $scope.index.price || '';
+      $scope.size = $scope.index.size || '';
+      $scope.sold = $scope.index.sold || '';
+    };
+
+    $scope.nextImage = function() {
+      $scope.index += 1;
+      if ($scope.index === $scope.images.length) {
+        $scope.index = 0;
+      }
+      showImage($scope.index);
+    };
+
+    $scope.prevImage = function() {
+      $scope.index -= 1;
+      if ($scope.index < 0) {
+        $scope.index = $scope.images.length - 1;
+      }
+      showImage($scope.index);
+    };
+
+    showImage(painting.image);
 
 }]);

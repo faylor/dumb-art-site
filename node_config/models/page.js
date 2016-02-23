@@ -8,7 +8,8 @@ var Page = new Schema({
     subheading: { type: String, default: ''},
     body: { type: String, default: '' },
     footer: { type: String, default: '' },
-    image: { type: String, default: '' }
+    image: { type: String, default: '' },
+    rank: {type : Number, default : 999}
 });
 
 Page.methods = {

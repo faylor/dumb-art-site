@@ -25,7 +25,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr ng-repeat="page in pages" ng-init="getImageFromId(page)">
+    <tr ng-repeat="page in pages | orderBy: 'rank'" ng-init="getImageFromId(page)">
       <td>{{page.menutitle}}</td>
       <td>{{page.menulink}}</td>
       <td>{{page.rank}}</td>
