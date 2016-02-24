@@ -200,8 +200,8 @@ function ($scope, $uibModalInstance, $q, painting) {
     return deferred.promise;
   };
 
-    var showImage = function(i) {
-      loadImage(i).then(function(resp) {
+    var showImage = function(painting) {
+      loadImage(painting.image).then(function(resp) {
         $scope.img = resp.src;
         //smartScroll($scope.index);
       });
@@ -239,6 +239,6 @@ function ($scope, $uibModalInstance, $q, painting) {
       showImage($scope.index);
     };
 
-    showImage(painting.image);
+    showImage(painting);
 
 }]);
