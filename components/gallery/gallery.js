@@ -209,6 +209,7 @@ function ($scope, $uibModalInstance, $q, painting) {
       $scope.price = painting.price || '';
       $scope.size = painting.size || '';
       $scope.sold = painting.sold || '';
+      $scope.themes = painting.themes || '';
     };
 
     $scope.changeImage = function(i) {
@@ -221,6 +222,7 @@ function ($scope, $uibModalInstance, $q, painting) {
       $scope.price = $scope.index.price || '';
       $scope.size = $scope.index.size || '';
       $scope.sold = $scope.index.sold || '';
+      $scope.themes = painting.index.themes || '';
     };
 
     $scope.nextImage = function() {
