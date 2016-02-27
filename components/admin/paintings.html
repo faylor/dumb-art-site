@@ -23,6 +23,7 @@
       <th>Price</th>
       <th>Sold</th>
       <th>Image</th>
+      <th>Themes</td>
       <th><button type="button" class="btn btn-default" ng-click="showAddNew(page)">Add New</button></th>
     </tr>
   </thead>
@@ -36,6 +37,7 @@
         <td>{{painting.price}}</td>
         <td>{{painting.sold}}</td>
         <td><img src='images/thumbs/{{painting.image}}' height="50px" onerror="imgError(this)"/></td>
+        <td><div ng-repeat="t in painting.themes">{{t.theme}}</div></td>
         <td><button type="button" class="btn btn-default" ng-click="showEditor(painting)">Edit</button>
         <button type="button" class="btn btn-default" ng-click="deletePainting(painting)">Delete</button></td>
     </tr>
@@ -52,42 +54,50 @@
         <div class="modal-body">
             <form class="form-horizontal" role="form">
                 <div class="form-group">
-                    <label for="inputTitle" class="col-sm-4 control-label">Title</label>
-                    <div class="col-sm-4">
+                    <label for="inputTitle" class="col-sm-3 control-label">Title</label>
+                    <div class="col-sm-8">
                         <input type="hidden" class="form-control" id="inputId" placeholder="_Id" ng-model="painting._id">
                         <input type="hidden" class="form-control" id="inputRank" placeholder="Rank" ng-model="painting.rank">
                         <input type="text" class="form-control" id="inputTitle" placeholder="Title" ng-model="painting.title">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="inputSize" class="col-sm-4 control-label">Size</label>
-                    <div class="col-sm-4">
+                    <label for="inputSize" class="col-sm-3 control-label">Size</label>
+                    <div class="col-sm-8">
                         <input type="text" class="form-control" id="inputSize" placeholder="Size" ng-model="painting.size">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="inputPrice" class="col-sm-4 control-label">Price</label>
-                    <div class="col-sm-4">
+                    <label for="inputPrice" class="col-sm-3 control-label">Price</label>
+                    <div class="col-sm-8">
                         <input type="text" class="form-control" id="inputPrice" placeholder="Price" ng-model="painting.price">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="inputSold" class="col-sm-4 control-label">Sold</label>
-                    <div class="col-sm-4">
+                    <label for="inputSold" class="col-sm-3 control-label">Sold</label>
+                    <div class="col-sm-8">
                         <input type="checkbox" class="form-control" id="inputSold" placeholder="Sold" ng-model="painting.sold">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="inputImage" class="col-sm-4 control-label">Image</label>
-                    <div class="col-sm-4">
+                    <label for="inputImage" class="col-sm-3 control-label">Image</label>
+                    <div class="col-sm-8">
                     <input type="text" class="form-control" id="inputImage" readOnly="readOnly" placeholder="Image" ng-model="painting.image">
                     <input type="file" file-model="myFile"/>
                     </div>
                 </div>
+                <div class="form-group">
+                  <label class="col-sm-3 control-label">Themes</label>
+                  <div class="col-sm-8">
+                    <div class="checkbox" ng-repeat="theme in themes track by theme._id">
+                        <label><input type="checkbox" ng-model="painting.themes[theme._id]" ng-click='onChangeSetID(theme)' ng-checked="isChecked(theme._id)">{{theme.theme}}</label>
+                    </div>
+                  </div>
+                </div>
             </form>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-primary" type="submit" ng-click="uploadFile(painting._id,painting.title,painting.size,painting.price,painting.sold,painting.rank,painting.image)">Save</button>
+            <button class="btn btn-primary" type="submit" ng-click="uploadFile(painting._id,painting.title,painting.size,painting.price,painting.sold,painting.rank,painting.image,painting.themes)">Save</button>
             <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
         </div>
     </script>

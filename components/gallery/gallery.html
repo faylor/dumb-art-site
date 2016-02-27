@@ -148,9 +148,12 @@
             <h3 class="modal-title">{{title}}</h3>
         </div>
         <div class="modal-body">
-          <img ng-src="{{img}}" alt="{{painting.title}}" class="img-responsive" style="width:100%;">
+          <img ng-src="{{img}}" alt="{{title}}" class="img-responsive" style="width:100%;">
           <div class="thumbCopy">
-            <div class="thumbMiddle">{{ painting.title }}<br/>{{ painting.size }}<br/>{{ painting.price }}</div>
+            <div class="thumbMiddle">{{ title }}<br/>{{ size }}<br/>{{ price }}</div>
+          </div>
+          <div class="thumbCopy" ng-if="themes!==undefined">
+            <div class="thumbMiddle"><div ng-repeat="t in themes">{{t.theme}}</div></div>
           </div>
         </div>
         <div class="modal-footer">

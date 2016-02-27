@@ -33,6 +33,11 @@ app.config(['$locationProvider','$routeProvider',
         controller:'adminPagesController',
         access: { requiredLogin: true }
       }).
+      when('/admin/themes', {
+        templateUrl: 'components/admin/themes.html',
+        controller:'adminThemesController',
+        access: { requiredLogin: true }
+      }).
       otherwise({
         redirectTo: '/home'
       });
@@ -118,79 +123,6 @@ app.controller('loginController', ['$scope', '$location', '$window', 'UserServic
 
 
 
-app.controller('adminPaintingsController', ['$scope','$http','$window','$uibModal','paintingFactory',
-  function ( $scope, $http,$window, $uibModal, paintingFactory){
-
-  $scope.name = 'Admin Paintings';
-  $scope.paintings;
-  $scope.editType;
-  getPaintings();
-
-  function getPaintings() {
-      paintingFactory.getPaintings()
-          .success(function (p) {
-              $scope.paintings = p;
-          })
-          .error(function (error) {
-              $scope.status = 'Unable to load Painting data: ' + error.message;
-          });
-  }
-
-  $scope.dropped = function(dragID, dropID) {
-
-      paintingFactory.updateRanking(dragID,dropID)
-          .success(function (p) {
-              $scope.paintings = p;
-          })
-          .error(function (error) {
-              $scope.status = 'Unable to load Painting data: ' + error.message;
-          });
-  };
-
-  $scope.deletePainting = function (_painting) {
-    var deleteUser = $window.confirm('Are you absolutely sure you want to delete?');
-
-    if (deleteUser) {
-      paintingFactory.deletePainting(_painting._id).success(function () {
-          getPaintings();
-      })
-      .error(function (error) {
-          $scope.status = 'Unable to remove Painting: ' + error.message;
-      });
-    }
-  };
-
-  $scope.showEditor = function (_painting) {
-    openModalForm(_painting,"Edit");
-  };
-
-  $scope.showAddNew = function (_painting) {
-    openModalForm(_painting, "Add New");
-  };
-
-  function openModalForm(_painting, editType) {
-    var modalInstance = $uibModal.open({
-      animation: true,
-      templateUrl: 'myModalContent.html',
-      controller: 'adminPaintingsEditorController',
-      resolve: {
-        painting: function () {
-          return _painting;
-        },
-        editType: function () {
-          return editType;
-        }
-      }
-    });
-
-    modalInstance.result.then(function (updatedPainting) {
-      //paintingFactory.updatePainting(updatedPainting._id,updatedPainting);
-      getPaintings();
-    }, function () {
-      console.log('Modal dismissed at: ' + new Date());
-    });
-  }
-}]);
 
 app.controller('MainCtrl',['$scope','AuthenticationService',
   function ($scope, AuthenticationService) {
@@ -198,30 +130,6 @@ app.controller('MainCtrl',['$scope','AuthenticationService',
       return AuthenticationService.isLogged;
     }
 }]);
-
-app.controller('adminPaintingsEditorController',['$scope','$uibModalInstance','paintingFactory','painting','editType',
-  function ($scope, $uibModalInstance, paintingFactory, painting, editType) {
-  $scope.painting = painting;
-  $scope.editType = editType;
-
-  $scope.uploadFile = function(id,title,size,price,sold,rank,image){
-        var file = $scope.myFile;
-        var uploadUrl = "/painting/"+id;
-
-        paintingFactory.uploadFileAndFormToUrl(id,file,{title:title,size:size,price:price,sold:sold,rank:rank,image:image}, uploadUrl)
-          .success(function (p) {
-              $uibModalInstance.close({_id:id});
-          })
-          .error(function (error) {
-              $scope.status = 'Unable to upload Painting data: ' + error.message;
-          });
-    };
-
-  $scope.cancel = function () {
-    $uibModalInstance.dismiss('cancel');
-  };
-}]);
-
 
 app.controller('menuController',['$scope','$rootScope','pageFactory',
   function ($scope, $rootScope, pageFactory) {
@@ -270,7 +178,8 @@ app.factory('paintingFactory', ['$q','$timeout','$http', function($q,$timeout,$h
       fd.append('sold',data.sold);
       fd.append('rank',data.rank);
       fd.append('image',data.image);
-
+      fd.append('themes',data.themes);
+      
       return $http.post(uploadUrl, fd, {
           transformRequest: angular.identity,
           headers: {'Content-Type': undefined}
@@ -317,6 +226,34 @@ app.factory('pageFactory', ['$http', function($http) {
   };
 
   return pageFactory;
+}]);
+
+
+app.factory('themeFactory', ['$http', function($http) {
+
+  var urlBase = '/theme/';
+  var themeFactory = {};
+
+  themeFactory.getThemes = function () {
+    return $http.get(urlBase);
+  };
+
+  themeFactory.getTheme = function (id) {
+    return $http.get(urlBase + id);
+  };
+  themeFactory.insertTheme = function (theme) {
+    return $http.post(urlBase, theme);
+  };
+
+  themeFactory.updateTheme = function (id,theme) {
+    return $http.put( urlBase + id, JSON.stringify(theme))
+  };
+
+  themeFactory.deleteTheme = function (id) {
+    return $http.delete(urlBase + id);
+  };
+
+  return themeFactory;
 }]);
 
 app.factory('AuthenticationService', function() {

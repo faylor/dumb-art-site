@@ -12,7 +12,10 @@ var config = require('../config');
  * List
  */
 exports.index = function (req, res){
-  Painting.find().lean().exec(function(err, docs) {
+  Painting.find()
+      .populate('themes')
+      .lean()
+      .exec(function(err, docs) {
       if(err){
         console.log(err);
         return res.json({error:err});
@@ -48,6 +51,7 @@ exports.updateDataAndFile = function (req, res){
     fieldValues[field]=value;
   })
   .on('end', function(fields, files) {
+
       var file_name = "";
       if(this.openedFiles[0]){
 
@@ -79,7 +83,10 @@ exports.updateDataAndFile = function (req, res){
                                           price:fieldValues.price,
                                           sold:fieldValues.sold,
                                           rank:1,
-                                          image:file_name});
+                                          image:file_name,
+                                          themes:JSON.parse(fieldValues.themes)});
+
+
           newPainting.save(function (err) {
             if (err) {
               console.log(err);
@@ -96,7 +103,8 @@ exports.updateDataAndFile = function (req, res){
                                           price:fieldValues.price,
                                           sold:fieldValues.sold,
                                           rank:fieldValues.rank,
-                                          image:fieldValues.image}, {upsert: true}, function(err) {
+                                          image:fieldValues.image,
+                                          themes:JSON.parse(fieldValues.themes)}, {upsert: true}, function(err) {
               if (!err) {
                   return res.json({message:"updated:"+fieldValues.image});
               } else {

@@ -20,8 +20,11 @@
   <script src="scripts/app.js"></script>
   <script src="components/templates/standard.tpl.js"></script>
   <script src="components/admin/pages.js"></script>
-  <script src='scripts/infinitescroll.min.js'></script>
+  <script src="components/admin/paintings.js"></script>
+  <script src="components/admin/themes.js"></script>
   <script src="components/gallery/gallery.js"></script>
+
+  <script src='scripts/infinitescroll.min.js'></script>
 
   <style>
   @media (min-width: 768px) {
@@ -126,6 +129,7 @@
           <li ng-if="isLoggedIn()"><a href="/admin/register">Register</a></li>
           <li ng-if="isLoggedIn()"><a href="/admin/paintings">Paintings</a></li>
           <li ng-if="isLoggedIn()"><a href="/admin/pages">Pages</a></li>
+          <li ng-if="isLoggedIn()"><a href="/admin/themes">Themes</a></li>
         </ul>
     </header>
 

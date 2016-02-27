@@ -38,7 +38,8 @@ var PaintingSchema = new Schema({
   image: {type : String, default : '', trim : true},
   sold: {type: Boolean, default : false},
   createdAt  : {type : Date, default : Date.now},
-  rank: {type : Number, default : 999}
+  rank: {type : Number, default : 999},
+  themes: [{ "type": Schema.Types.ObjectId, "ref": "Theme" }]
 });
 
 /**
@@ -55,7 +56,7 @@ PaintingSchema.path('size').required(true, 'Painting size cannot be blank');
 PaintingSchema.pre('remove', function (next) {
   var file = this.image;
   // if there are files associated with the item, remove from the cloud too
-  console.log('Deleting >>'+imagedir + file);
+  //console.log('Deleting >>'+imagedir + file);
   fse.remove(imagedir + file, function (err) {
     if (err) {
       return console.error(err);
@@ -110,6 +111,7 @@ PaintingSchema.statics = {
   load: function (id, cb) {
     this.findOne({ _id : id })
       .populate('painting', 'title size price rank')
+      .populate('themes')
       .exec(cb);
   },
 

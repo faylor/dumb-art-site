@@ -1,0 +1,55 @@
+<style type='text/css'>
+.table {
+  table-layout:fixed;
+}
+
+.table td {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+</style>
+<h2>Themes</h2>
+<table class="table table-bordered table-striped">
+  <thead class="thead-inverse">
+    <tr>
+      <th>Name</th>
+      <th>Rank</th>
+      <th><button type="button" class="btn btn-default" ng-click="showAddNew(page)">Add New</button></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="theme in themes | orderBy:'rank'">
+      <td>{{theme.theme}}</td>
+      <td>{{theme.rank}}</td>
+      <td><div><button type="button" class="btn btn-default" ng-click="showEditor(theme)">Edit</button>
+               <button type="button" class="btn btn-default" ng-click="deleteTheme(theme)">Delete</button></div></td>
+    </tr>
+  </tbody>
+</table>
+<script type="text/ng-template" id="myThemeEditor.html">
+        <div class="modal-header">
+            <h3 class="modal-title">{{editType}} Theme:</h3>
+        </div>
+        <div class="modal-body">
+            <form class="form-horizontal" role="form">
+            <div class="form-group">
+                <label for="inputTitle" class="col-sm-4 control-label">Theme</label>
+                <div class="col-sm-4">
+                    <input type="hidden" class="form-control" id="inputId" placeholder="_Id" ng-model="theme._id">
+                    <input type="text" class="form-control" id="inputTheme" placeholder="Theme" ng-model="theme.theme">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputRank" class="col-sm-4 control-label">Rank</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" id="inputRank" placeholder="Rank" ng-model="theme.rank">
+                </div>
+            </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" type="submit" ng-click="updateTheme(theme._id,theme.theme,theme.rank)">Save</button>
+            <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+        </div>
+    </script>
