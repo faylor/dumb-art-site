@@ -16,6 +16,7 @@ app.controller('galleryController', ['$scope','$rootScope', '$http','$timeout','
         $scope.images = p;
         $scope.imagesLimited = p.slice(0,$scope.totalDisplayed );
         $scope.totalItems = p.length;
+        calculateLandscapes();
       })
       .error(function(error) {
         $scope.status = 'Unable to load Painting data: ' + error.message;
@@ -137,18 +138,12 @@ app.controller('galleryController', ['$scope','$rootScope', '$http','$timeout','
     $scope.$apply();
   });
 
-  var calculateThumbsWidth = function() {
+  var calculateLandscapes = function() {
     var width = 0,
     visible_width = 0;
     angular.forEach($thumbnails.find('img'), function(thumb) {
-      width += thumb.clientWidth;
-      width += 10; // margin-right
-      visible_width = thumb.clientWidth + 10;
+      if(thumb.clientWidth>thumb.clientHeight) thumb.addClass('Landscape');
     });
-    return {
-      width: width,
-      visible_width: visible_width * $scope.thumbsNum
-    };
   };
 
   var smartScroll = function(index) {
