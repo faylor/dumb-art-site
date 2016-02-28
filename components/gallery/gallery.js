@@ -63,7 +63,7 @@ app.controller('galleryController', ['$scope','$rootScope', '$http','$timeout','
 
   var $body = $document.find('body');
   var $thumbwrapper = angular.element(document.querySelectorAll('.ng-thumbnails-wrapper'));
-  var $thumbnails = angular.element(document.querySelectorAll('.ng-thumbnails'));
+
 
   $scope.index = 0;
   $scope.opened = false;
@@ -93,7 +93,6 @@ app.controller('galleryController', ['$scope','$rootScope', '$http','$timeout','
       showImage($scope.index);
     }
     $scope.opened = true;
-
   };
 
   $scope.closeGallery = function() {
@@ -141,9 +140,15 @@ app.controller('galleryController', ['$scope','$rootScope', '$http','$timeout','
   var calculateLandscapes = function() {
     var width = 0,
     visible_width = 0;
-    angular.forEach($thumbnails.find('img'), function(thumb) {
-      if(thumb.clientWidth>thumb.clientHeight) thumb.addClass('Landscape');
-    });
+    $timeout(function(){
+      var $thumbnails = angular.element(document.querySelectorAll('.landscapeCheck'));
+      angular.forEach($thumbnails, function(thumb) {
+        if(thumb.clientWidth>thumb.clientHeight) angular.element(thumb).parent().removeClass('col-xs-12 col-sm-6 col-md-4 col-lg-3').addClass('col-xs-12');
+      });
+    },0);
+
+
+
   };
 
   var smartScroll = function(index) {
