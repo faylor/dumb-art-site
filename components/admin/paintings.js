@@ -107,7 +107,7 @@ app.controller('adminPaintingsEditorController',['$scope','$uibModalInstance','p
     }
    };
 
-  $scope.uploadFile = function(id,title,size,price,sold,rank,image,cthemes){
+  $scope.uploadFile = function(id,title,size,price,sold,rank,image,cthemes,landscape){
         var file = $scope.myFile;
         var uploadUrl = "/painting/"+id;
         var themesOut = [];
@@ -116,7 +116,7 @@ app.controller('adminPaintingsEditorController',['$scope','$uibModalInstance','p
             this.push(value);
           }, themesOut);
         }
-        paintingFactory.uploadFileAndFormToUrl(id,file,{title:title,size:size,price:price,sold:sold,rank:rank,image:image,themes:JSON.stringify(themesOut)}, uploadUrl)
+        paintingFactory.uploadFileAndFormToUrl(id,file,{title:title,size:size,price:price,sold:sold,rank:rank,image:image,themes:JSON.stringify(themesOut),landscape:landscape}, uploadUrl)
           .success(function (p) {
               $uibModalInstance.close({_id:id});
           })

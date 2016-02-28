@@ -84,7 +84,8 @@ exports.updateDataAndFile = function (req, res){
                                           sold:fieldValues.sold,
                                           rank:1,
                                           image:file_name,
-                                          themes:JSON.parse(fieldValues.themes)});
+                                          themes:JSON.parse(fieldValues.themes),
+                                          landscape:fieldValues.landscape});
 
 
           newPainting.save(function (err) {
@@ -104,7 +105,8 @@ exports.updateDataAndFile = function (req, res){
                                           sold:fieldValues.sold,
                                           rank:fieldValues.rank,
                                           image:fieldValues.image,
-                                          themes:JSON.parse(fieldValues.themes)}, {upsert: true}, function(err) {
+                                          themes:JSON.parse(fieldValues.themes),
+                                          landscape:fieldValues.landscape}, {upsert: true}, function(err) {
               if (!err) {
                   return res.json({message:"updated:"+fieldValues.image});
               } else {

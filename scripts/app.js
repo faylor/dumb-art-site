@@ -179,7 +179,8 @@ app.factory('paintingFactory', ['$q','$timeout','$http', function($q,$timeout,$h
       fd.append('rank',data.rank);
       fd.append('image',data.image);
       fd.append('themes',data.themes);
-      
+      fd.append('landscape',data.landscape);
+
       return $http.post(uploadUrl, fd, {
           transformRequest: angular.identity,
           headers: {'Content-Type': undefined}

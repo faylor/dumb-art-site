@@ -39,7 +39,8 @@ var PaintingSchema = new Schema({
   sold: {type: Boolean, default : false},
   createdAt  : {type : Date, default : Date.now},
   rank: {type : Number, default : 999},
-  themes: [{ "type": Schema.Types.ObjectId, "ref": "Theme" }]
+  themes: [{ "type": Schema.Types.ObjectId, "ref": "Theme" }],
+  landscape:{type: Boolean, default:false}
 });
 
 /**
