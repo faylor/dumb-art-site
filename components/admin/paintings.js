@@ -57,8 +57,8 @@ app.controller('adminPaintingsController', ['$scope','$http','$window','$uibModa
     openModalForm(_painting,$scope.themes,"Edit");
   };
 
-  $scope.showAddNew = function (_painting) {
-    openModalForm(_painting,$scope.themes, "Add New");
+  $scope.showAddNew = function () {
+    openModalForm({},$scope.themes, "Add New");
   };
 
   function openModalForm(_painting,_themes, editType) {
