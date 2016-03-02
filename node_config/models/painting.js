@@ -37,7 +37,7 @@ var PaintingSchema = new Schema({
   tags: {type: [], get: getTags, set: setTags},
   image: {type : String, default : '', trim : true},
   sold: {type: Boolean, default : false},
-  createdAt  : {type : Date, default : Date.now},
+  createdAt: {type : Date, default : Date.now},
   rank: {type : Number, default : 999},
   themes: [{ "type": Schema.Types.ObjectId, "ref": "Theme" }],
   landscape:{type: Boolean, default:false}

@@ -58,7 +58,14 @@ app.controller('adminPaintingsController', ['$scope','$http','$window','$uibModa
   };
 
   $scope.showAddNew = function () {
-    openModalForm({},$scope.themes, "Add New");
+    openModalForm({title:'',
+                                    size:'',
+                                    price:'',
+                                    sold:false,
+                                    rank:1,
+                                    image:'',
+                                    themes:[],
+                                    landscape:false},$scope.themes, "Add New");
   };
 
   function openModalForm(_painting,_themes, editType) {
@@ -95,6 +102,7 @@ app.controller('adminPaintingsEditorController',['$scope','$uibModalInstance','p
   if($scope.painting.themes==null){
     $scope.painting.themes=[];
   }
+
   $scope.editType = editType;
   $scope.themes = themes;
 

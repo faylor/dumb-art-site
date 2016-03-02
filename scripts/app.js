@@ -3,14 +3,14 @@ var app = angular.module('galleryApp', ['ngRoute','ui.bootstrap','ngSanitize','w
 app.config(['$locationProvider','$routeProvider',
   function($locationProvider,$routeProvider) {
     $routeProvider.
-    when('/:pagelink', {
-      templateUrl: 'components/templates/standard.tpl.html',
-      controller:'standardTemplateController',
-      access: { requiredLogin: false }
-      }).
-      when('/gallery/home', {
+      when('/gallery', {
         templateUrl: 'components/gallery/gallery.html',
         controller:'galleryController',
+        access: { requiredLogin: false }
+      }).
+      when('/:pagelink', {
+        templateUrl: 'components/templates/standard.tpl.html',
+        controller:'standardTemplateController',
         access: { requiredLogin: false }
       }).
       when('/admin/login', {
