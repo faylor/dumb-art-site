@@ -52,14 +52,18 @@
   </div>
   <div class="modal-body">
     <img ng-src="{{img}}" alt="{{title}}" class="img-responsive" style="width:100%;">
-    <div class="thumbCopy">
-      <div class="thumbMiddle">{{ title }}
-        <br/>{{ size }}
-        <br/>{{ price }}</div>
-    </div>
-    <div class="thumbCopy" ng-if="themes!==undefined">
-      <div class="thumbMiddle">
-        <div ng-repeat="t in themes">{{t.theme}}</div>
+    <div class="row">
+      <div class="col-sm-4 thumbCopy">
+        <div class="thumbMiddle">{{ title }}
+          <br/>{{ size }}
+          <br/>{{ price }}</div>
+      </div>
+      <div class="pull-right" ng-if="themes!==undefined">
+        <div class="thumbMiddle" ng-repeat="t in themes" style="margin: 5px 15px">
+          <button type="button" class="btn btn-info" ng-click="setTheme(t._id)">
+            {{t.theme}}
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -71,7 +75,7 @@
   <div class="btn-group" style="margin-top:-10px;margin-bottom:20px;padding:3px 0px 0px 20px;">
     <div class="btn-group" uib-dropdown is-open="status.isopen">
       <button id="single-button" type="button" class="btn btn-default" uib-dropdown-toggle ng-disabled="disabled">
-        Filter:
+        Filter: {{soldFilterName}} {{themeFilterName}}
         <span class="caret"></span>
       </button>
       <ul uib-dropdown-menu role="menu" aria-labelledby="single-button">

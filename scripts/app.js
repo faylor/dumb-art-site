@@ -3,7 +3,12 @@ var app = angular.module('galleryApp', ['ngRoute','ui.bootstrap','ngSanitize','w
 app.config(['$locationProvider','$routeProvider',
   function($locationProvider,$routeProvider) {
     $routeProvider.
-      when('/gallery', {
+    when('/gallery', {
+      templateUrl: 'components/gallery/gallery.html',
+      controller:'galleryController',
+      access: { requiredLogin: false }
+      }).
+      when('/gallery/:themeLink', {
         templateUrl: 'components/gallery/gallery.html',
         controller:'galleryController',
         access: { requiredLogin: false }
@@ -68,10 +73,6 @@ app.run(function($rootScope, $location, AuthenticationService, pageFactory) {
     });
 });
 
-app.controller('contactController', function ($scope) {
-  $scope.name = 'Contttact';
-});
-
 app.controller('loginController', ['$scope', '$location', '$window', 'UserService', 'AuthenticationService',
     function ($scope, $location, $window, UserService, AuthenticationService) {
 
@@ -82,7 +83,7 @@ app.controller('loginController', ['$scope', '$location', '$window', 'UserServic
                 UserService.logIn(username, password).success(function(data) {
                     AuthenticationService.isLogged = true;
                     $window.sessionStorage.token = data.token;
-                    $location.path("/contact");
+                    $location.path("/admin/paintings");
                 }).error(function(status, data) {
                     $scope.message = "Login Failed.";
                     console.log(status);
@@ -138,9 +139,6 @@ app.controller('menuController',['$scope','$rootScope','pageFactory',
 
 }]);
 
-app.controller('contactController', function ($scope) {
-  $scope.name = 'Contttact';
-});
 
 app.factory('_', function() {
 	return window._; // assumes underscore has already been loaded on the page

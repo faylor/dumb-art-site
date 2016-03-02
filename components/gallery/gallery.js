@@ -1,5 +1,5 @@
-app.controller('galleryController', ['$scope', '$rootScope', '$http', '$timeout', '$document', '$uibModal', 'paintingFactory', 'themeFactory',
-  function($scope, $rootScope, $http, $timeout, $document, $uibModal, paintingFactory, themeFactory) {
+app.controller('galleryController', ['$scope', '$rootScope', '$http', '$timeout', '$document', '$uibModal','$routeParams', 'paintingFactory', 'themeFactory',
+  function($scope, $rootScope, $http, $timeout, $document, $uibModal, $routeParams,paintingFactory, themeFactory) {
     $scope.name = 'Galleries';
     $scope.images = [];
     $scope.totalItems;
@@ -8,7 +8,9 @@ app.controller('galleryController', ['$scope', '$rootScope', '$http', '$timeout'
     $scope.thumbsNum = 6;
     $scope.totalDisplayed = 12;
     $scope.soldFilter = null;
+    $scope.soldFilterName = null;
     $scope.themeFilter = null;
+    $scope.themeFilterName = null;
     getPaintings();
     getThemes();
 
@@ -29,6 +31,9 @@ app.controller('galleryController', ['$scope', '$rootScope', '$http', '$timeout'
       themeFactory.getThemes()
         .success(function(t) {
           $scope.themes = t;
+          if($routeParams.themeLink){
+            $scope.themeFilter = $routeParams.themeLink;
+          }
         })
         .error(function(error) {
           $scope.status = 'Unable to load Themes data: ' + error.message;
@@ -37,17 +42,22 @@ app.controller('galleryController', ['$scope', '$rootScope', '$http', '$timeout'
 
     $scope.onChangeSetID = function(id) {
       $scope.themeFilter = id;
+      $scope.themeFilterName = _.findWhere($scope.themes, {_id: id}).theme;
       $scope.$applyAsync();
     };
     $scope.clearFilters = function() {
       $scope.soldFilter = null;
+      $scope.soldFilterName = null;
       $scope.themeFilter = null;
+      $scope.themeFilterName = null;
     };
     $scope.setFilterSold = function() {
       $scope.soldFilter = true;
+      $scope.soldFilterName = "Sold";
     };
     $scope.setFilterUnSold = function() {
       $scope.soldFilter = false;
+      $scope.soldFilterName = "For Sale";
     };
     $scope.filterSold = function(painting) {
       return $scope.soldFilter==null || painting.sold==$scope.soldFilter;
@@ -159,7 +169,7 @@ app.controller('galleryController', ['$scope', '$rootScope', '$http', '$timeout'
       });
 
       modalInstance.result.then(function(selectedItem) {
-        $scope.selected = selectedItem;
+        $scope.onChangeSetID(selectedItem);
       }, function() {
         //$log.info('Modal dismissed at: ' + new Date());
       });
@@ -215,8 +225,8 @@ app.controller('ModalInstanceCtrl', ['$scope', '$uibModalInstance', '$q', 'paint
   function($scope, $uibModalInstance, $q, painting) {
 
 
-    $scope.ok = function() {
-      $uibModalInstance.close(1);
+    $scope.setTheme = function(id) {
+      $uibModalInstance.close(id);
     };
 
     $scope.cancel = function() {
