@@ -43,6 +43,7 @@ app.controller('galleryController', ['$scope', '$rootScope', '$http', '$timeout'
     $scope.onChangeSetID = function(id) {
       $scope.themeFilter = id;
       $scope.themeFilterName = _.findWhere($scope.themes, {_id: id}).theme;
+      $scope.totalDisplayed = 12;
       $scope.loadMore();
       $scope.$applyAsync();
     };
@@ -97,7 +98,7 @@ app.controller('galleryController', ['$scope', '$rootScope', '$http', '$timeout'
               return t._id == $scope.themeFilter
             });
             return !_.isUndefined(a);
-          });
+          }).slice(0, $scope.totalDisplayed);
         }else{
           $scope.imagesLimited = $scope.images.slice(0, $scope.totalDisplayed);
         }
