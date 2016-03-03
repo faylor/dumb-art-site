@@ -5,7 +5,7 @@ app.controller('galleryController', ['$scope', '$rootScope', '$http', '$timeout'
     $scope.totalItems;
     $scope.currentPage = 1;
     $scope.maxSize = 5;
-    $scope.thumbsNum = 6;
+    $scope.thumbsNum = 3;
     $scope.totalDisplayed = 12;
     $scope.soldFilter = null;
     $scope.soldFilterName = null;
