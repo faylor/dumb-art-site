@@ -51,6 +51,8 @@ app.controller('galleryController', ['$scope', '$rootScope', '$http', '$timeout'
       $scope.soldFilterName = null;
       $scope.themeFilter = null;
       $scope.themeFilterName = null;
+      $scope.loadMore();
+      $scope.$applyAsync();
     };
     $scope.setFilterSold = function() {
       $scope.soldFilter = true;
