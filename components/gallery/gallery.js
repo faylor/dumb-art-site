@@ -91,7 +91,10 @@ app.controller('galleryController', ['$scope', '$rootScope', '$http', '$timeout'
         $scope.totalDisplayed = $scope.totalDisplayed + $scope.thumbsNum;
         if ($scope.themeFilter!=null) {
           $scope.imagesLimited = _.filter($scope.images, function(i){
-            return i.theme._id == $scope.themeFilter;
+            var a = _.find(painting.themes, function(t) {
+              return t._id == $scope.themeFilter
+            });
+            return !_.isUndefined(a);
           });
         }else{
           $scope.imagesLimited = $scope.images.slice(0, $scope.totalDisplayed);
