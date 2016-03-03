@@ -43,6 +43,7 @@ app.controller('galleryController', ['$scope', '$rootScope', '$http', '$timeout'
     $scope.onChangeSetID = function(id) {
       $scope.themeFilter = id;
       $scope.themeFilterName = _.findWhere($scope.themes, {_id: id}).theme;
+      $scope.loadMore();
       $scope.$applyAsync();
     };
     $scope.clearFilters = function() {
@@ -88,7 +89,13 @@ app.controller('galleryController', ['$scope', '$rootScope', '$http', '$timeout'
     $scope.loadMore = function() {
       if ($scope.totalDisplayed < $scope.images.length) {
         $scope.totalDisplayed = $scope.totalDisplayed + $scope.thumbsNum;
-        $scope.imagesLimited = $scope.images.slice(0, $scope.totalDisplayed);
+        if ($scope.themeFilter!=null) {
+          $scope.imagesLimited = _.filter($scope.images, function(i){
+            return i.theme._id == $scope.themeFilter;
+          });
+        }else{
+          $scope.imagesLimited = $scope.images.slice(0, $scope.totalDisplayed);
+        }
       }
     };
 
