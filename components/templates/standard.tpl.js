@@ -20,6 +20,7 @@ app.controller('standardTemplateController', ['$scope','$rootScope','$http','$ro
               $scope.errormessage = "Unable to load page.";
             }else{
               setImageFromId($scope.page.image);
+              $scope.errormessage = "";
             }
         }else{
           $scope.errormessage = "Unable to load pages.";
