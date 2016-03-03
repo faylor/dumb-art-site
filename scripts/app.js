@@ -326,7 +326,18 @@ app.directive('fileModel', ['$parse', function ($parse) {
         }
     };
 }]);
-
+app.directive('scroll',['$window', function ($window) {
+    return function(scope, element, attrs) {
+        angular.element($window).bind("scroll", function() {
+             if (this.pageYOffset >= 50) {
+                 scope.boolChangeClass = true;
+             } else {
+                 scope.boolChangeClass = false;
+             }
+            scope.$apply();
+        });
+    };
+}]);
 function imgError(image) {
     image.onerror = null;
     setTimeout(function (){
