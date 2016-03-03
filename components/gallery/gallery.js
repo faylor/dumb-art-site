@@ -51,7 +51,7 @@ app.controller('galleryController', ['$scope', '$rootScope', '$http', '$timeout'
       $scope.soldFilterName = null;
       $scope.themeFilter = null;
       $scope.themeFilterName = null;
-      $scope.imagesLimited = 12;
+      $scope.totalDisplayed = 12;
       $scope.loadMore();
       $scope.$applyAsync();
     };
