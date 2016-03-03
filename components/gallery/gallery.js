@@ -74,7 +74,6 @@ app.controller('galleryController', ['$scope', '$rootScope', '$http', '$timeout'
           return false;
         }
       }
-      console.log('true');
       return true;
     };
 
