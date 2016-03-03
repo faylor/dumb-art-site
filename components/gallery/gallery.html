@@ -107,7 +107,7 @@
   </div>
 </div>
 <div class="row">
-  <div infinite-scroll='loadMore()' infinite-scroll-distance='0'>
+  <div infinite-scroll='loadMore()' infinite-scroll-distance='1'>
     <div masonry preserve-order>
       <div ng-class="painting.landscape?'col-xs-12 col-sm-12 col-md-8 col-lg-6':'col-xs-12 col-sm-6 col-md-4 col-lg-3'" class="ng-thumbnails masonry-brick" ng-repeat="painting in imagesLimited | filter:filterFn | filter:filterSold" ng-click="open(painting);$this.toggleClass('large');$this.animate( size, reMasonry );">
         <img ng-src="images/thumbs/{{painting.image}}" alt="{{painting.title}}" class="img-responsive landscapeCheck" style="width:100%;">
