@@ -1,9 +1,209 @@
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-  <meta name="google-site-verification"
-         content="<meta name="google-site-verification" content="ZiCjoYKewrua45MibnTW0VKyKTNhjBxvY9IzmFL1vO0" />" />
-<title>Di Taylor Art</title>
+  <meta charset="utf-8">
+  <meta name="google-site-verification" content="ZiCjoYKewrua45MibnTW0VKyKTNhjBxvY9IzmFL1vO0" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Di Taylor Art</title>
+  <base href="/">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-route.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-sanitize.min.js"></script>
+  <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.14.3.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+  <script src="scripts/drag-drop.js"></script>
+
+  <script src="scripts/angular-masonry-packed.min.js"></script>
+
+  <script src="scripts/app.js"></script>
+  <script src="components/templates/standard.tpl.js"></script>
+  <script src="components/admin/pages.js"></script>
+  <script src="components/admin/paintings.js"></script>
+  <script src="components/admin/themes.js"></script>
+  <script src="components/gallery/gallery.js"></script>
+
+  <script src='scripts/infinitescroll.min.js'></script>
+
+  <style>
+
+
+  @media (min-width: 500px) {
+    .utilmenuText {
+      color: #FFF;
+      font-size: 1.25em;
+      font-style: italic;
+      margin: 0px;
+      padding: 0px;
+      text-decoration: none;
+      letter-spacing: 0.7px;
+      clear:both;
+    }
+  }
+  @media (min-width: 768px) {
+    .utilmenuText {
+      color: #FFF;
+      font-size: 1.25em;
+      font-style: italic;
+      margin: 0px;
+      padding: 0px;
+      text-decoration: none;
+      letter-spacing: 0.7px;
+      clear:both;
+    }
+    .min .utilmenuText {
+      clear:none;
+    }
+}
+@media (min-width: 992px) {
+  .utilmenuText {
+    margin: 0px 10px;
+    padding: 150px 7px 10px;
+    letter-spacing: 0.7px;
+    clear:none;
+  }
+  .min .utilmenuText {
+    margin: 0px 10px;
+    padding: 5px;
+  }
+}
+@media (min-width: 1200px) {
+  .utilmenuText {
+    margin: 0px 10px;
+    padding: 150px 11px 10px;
+  }
+}
+@media (max-width: 320px) {
+   body { font-size: 2em; }
+}
+.navbar-toggle{
+  margin-top:168px;
+}
+.min .navbar-toggle{
+  margin-top:25px;
+}
+.utilmenuText:hover, .utilmenuTextOn:hover {
+    background-color: #555;
+    color: white;
+}
+.navbar-inverse .in .navbar-nav{
+  background-color: #484848;
+  width:200px;
+  margin-top:-5px;
+  border:1px solid #111;
+  border-bottom-left-radius: 5px;
+}
+.navbar-inverse .in .navbar-nav > li > a{
+  text-align: right;
+  margin-right:10px;
+}
+.navbar-inverse .in .navbar-nav > li > a:hover{
+  color: #222;
+  text-align: right;
+}
+.utilmainnav {
+    background-color: #484848;
+    height: 212px;
+    z-index: 10;
+}
+.navbar {
+    margin-bottom: 20px;
+    height: 212px;
+  position: fixed;
+  right: 0;
+  left: 0;
+  top: 0;
+    border-radius: 0px;
+    -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  -ms-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s ease-out;
+}
+.min .navbar{
+   height: 70px; padding: 0px;
+}
+.img-brand{
+  height:210px;
+  padding:20px 5px;
+  -webkit-transition: all 0.3s;
+-moz-transition: all 0.3s;
+-ms-transition: all 0.3s;
+-o-transition: all 0.3s;
+transition: all 0.3s;
+}
+.min .img-brand{height:60px;padding:5px;}
+.regularTextSmall {
+    color: #484848;
+    float: left;
+    font-size: 0.7em;
+    line-height: 1.15em;
+    padding: 0 10px 10px 0;
+    width: 450px;
+}
+.mainimage {
+    box-shadow: 0 5px 20px #000000;
+    float: left;
+    margin-right: 30px;
+}
+#main{
+  padding:230px 10px 0px;
+}
+  </style>
 </head>
-<body>test
+<body ng-app="galleryApp" scroll id="page" ng-class="{min:boolChangeClass}">
+    <!-- HEADER AND NAVBAR -->
+    <header ng-controller="MainCtrl">
+        <nav class="navbar navbar-inverse utilmainnav" >
+        <div class="container">
+
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="" href="/"><img src="assets/di.png" border="0" alt="Di Taylor" class="img-brand"/></a>
+            </div>
+            <div class="collapse navbar-collapse  pull-right"  ng-class="!navCollapsed && 'in'" ng-click="navCollapsed=true">
+                      <ul class="nav navbar-nav" >
+                        <li ng-repeat="p in pages | orderBy: 'rank'" ng-class="navCollapsed && 'utilmenuText'">
+                          <a href="/{{p.menulink}}">{{p.menutitle}}</a>
+                        </li>
+                      </ul>
+
+                    </div>
+        </div>
+        </nav>
+        <ul style="position:absolute; right:60px; top:10px; z-index:999;">
+          <li ng-if="isLoggedIn()"><a href="/admin/login">Login</a></li>
+          <li ng-if="isLoggedIn()"><a href="/admin/register">Register</a></li>
+          <li ng-if="isLoggedIn()"><a href="/admin/paintings">Paintings</a></li>
+          <li ng-if="isLoggedIn()"><a href="/admin/pages">Pages</a></li>
+          <li ng-if="isLoggedIn()"><a href="/admin/themes">Themes</a></li>
+        </ul>
+    </header>
+
+    <!-- MAIN CONTENT AND INJECTED VIEWS -->
+    <div id="main">
+
+        <!-- angular templating -->
+        <!-- this is where content will be injected -->
+        <div ng-view></div>
+
+    </div>
+    <script type="text/javascript">
+    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+    <script type="text/javascript">
+    try {
+    var pageTracker = _gat._getTracker("UA-9099258-1");
+    pageTracker._trackPageview();
+    } catch(err) {}
+    </script>
 </body>
 </html>

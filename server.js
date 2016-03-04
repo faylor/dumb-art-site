@@ -141,6 +141,7 @@ var SampleApp = function() {
 
         require('./node_config/routes.js')(self)
         self.app = express();
+        self.app.use('googlef0a956483f59ec34.html',express.static('googlef0a956483f59ec34.html'));
         self.app.use('/images',express.static(__dirname+ '/images'));
         self.app.use('/assets',express.static(__dirname+ '/assets'));
         self.app.use('/components',express.static(__dirname+ '/components/',{ maxAge: 86400000 }));
