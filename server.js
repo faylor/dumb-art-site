@@ -160,12 +160,12 @@ var SampleApp = function() {
         for (var p in self.deleteroutes) {
             self.app.delete(p, self.deleteroutes[p]);
         }
-        self.app.get('/googlef0a956483f59ec34.html',function(req, res) {
-         res.sendfile('googlef0a956483f59ec34.html', { root: __dirname+'/' });
-        });
-        //self.app.all('/*', function(req, res) {
-        // res.sendfile('index.html', { root: __dirname+'/' });
+        //self.app.get('googlef0a956483f59ec34.html',function(req, res) {
+        // res.sendfile('googlef0a956483f59ec34.html', { root: __dirname+'/' });
         //});
+        self.app.all('/*', function(req, res) {
+         res.sendfile('index.html', { root: __dirname+'/' });
+        });
 
     };
 
