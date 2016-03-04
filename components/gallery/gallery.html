@@ -101,7 +101,7 @@
         <li role="menuitem" ng-click="setFilterUnSold()"><a href="#">Show For Sale</a></li>
         <li role="menuitem" ng-click="setFilterSold()"><a href="#">Show Sold</a></li>
         <li class="divider"></li>
-        <li role="menuitem" ng-repeat="theme in themes track by theme._id" ng-click="onChangeSetID(theme._id)"><a href="#">{{theme.theme}}</a></li>
+        <li role="menuitem" ng-repeat="theme in themes track by theme._id | orderBy:'rank'" ng-click="onChangeSetID(theme._id)"><a href="#">{{theme.theme}}</a></li>
       </ul>
     </div>
   </div>
@@ -109,7 +109,7 @@
 <div class="row">
   <div infinite-scroll='loadMore()' infinite-scroll-distance='1'>
     <div masonry preserve-order>
-      <div ng-class="painting.landscape?'col-xs-12 col-sm-12 col-md-8 col-lg-6':'col-xs-12 col-sm-6 col-md-4 col-lg-3'" class="ng-thumbnails masonry-brick" ng-repeat="painting in imagesLimited | filter:filterFn | filter:filterSold" ng-click="open(painting);$this.toggleClass('large');$this.animate( size, reMasonry );">
+      <div ng-class="painting.landscape?'col-xs-12 col-sm-12 col-md-8 col-lg-6':'col-xs-12 col-sm-6 col-md-4 col-lg-3'" class="ng-thumbnails masonry-brick" ng-repeat="painting in imagesLimited | filter:filterFn | filter:filterSold | orderBy:'rank'" ng-click="open(painting);$this.toggleClass('large');$this.animate( size, reMasonry );">
         <img ng-src="images/thumbs/{{painting.image}}" alt="{{painting.title}}" class="img-responsive landscapeCheck" style="width:100%;">
         <div class="thumbCopy">
           <div class="thumbMiddle">{{ painting.title }}
