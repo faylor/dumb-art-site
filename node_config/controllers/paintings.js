@@ -13,7 +13,7 @@ var config = require('../config');
  */
 exports.index = function (req, res){
   Painting.find()
-      .sort('rank','-createdAt')
+      .sort('rank')
       .populate('themes')
       .lean()
       .exec(function(err, docs) {
