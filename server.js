@@ -141,7 +141,6 @@ var SampleApp = function() {
 
         require('./node_config/routes.js')(self)
         self.app = express();
-        self.app.use('googlef0a956483f59ec34.html',express.static('googlef0a956483f59ec34.html'));
         self.app.use('/images',express.static(__dirname+ '/images'));
         self.app.use('/assets',express.static(__dirname+ '/assets'));
         self.app.use('/components',express.static(__dirname+ '/components/',{ maxAge: 86400000 }));
@@ -161,9 +160,12 @@ var SampleApp = function() {
         for (var p in self.deleteroutes) {
             self.app.delete(p, self.deleteroutes[p]);
         }
-        self.app.all('/*', function(req, res) {
-         res.sendfile('index.html', { root: __dirname+'/' });
+        self.app.get('/googlef0a956483f59ec34.html',function(req, res) {
+         res.sendfile('googlef0a956483f59ec34.html', { root: __dirname+'/' });
         });
+        //self.app.all('/*', function(req, res) {
+        // res.sendfile('index.html', { root: __dirname+'/' });
+        //});
 
     };
 
