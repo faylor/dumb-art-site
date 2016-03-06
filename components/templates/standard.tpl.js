@@ -31,6 +31,8 @@ app.controller('standardTemplateController', ['$scope','$rootScope','$http','$ro
          $scope.image = '';
          paintingFactory.getPainting(id).then(function(res){
            $scope.image = res.data.image;
+           $scope.title = res.data.title;
+           $scope.size = res.data.size;
          });
        }
        loadPageView();
