@@ -143,6 +143,7 @@ var SampleApp = function() {
         self.app = express();
         self.app.use('/images',express.static(__dirname+ '/images'));
         self.app.use('/assets',express.static(__dirname+ '/assets'));
+        self.app.use('/bower_components',express.static(__dirname+ '/bower_components'));
         self.app.use('/components',express.static(__dirname+ '/components/',{ maxAge: 86400000 }));
         self.app.use('/scripts',express.static(__dirname+ '/scripts'));
 
