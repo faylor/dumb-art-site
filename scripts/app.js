@@ -1,4 +1,4 @@
-var app = angular.module('galleryApp', ['ngRoute','ui.bootstrap','ngSanitize','wu.masonry','infinite-scroll','galleryApp.dragdrop','angulartics', 'angulartics.google.analytics']])
+var app = angular.module('galleryApp', ['ngRoute','ui.bootstrap','ngSanitize','wu.masonry','infinite-scroll','galleryApp.dragdrop','angulartics', 'angulartics.google.analytics'])
 
 app.config(['$locationProvider','$routeProvider',
   function($locationProvider,$routeProvider) {
