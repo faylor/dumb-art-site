@@ -21,8 +21,6 @@
   "dependencies": {
     "angular-masonry": "^0.16.0",
     "angular-masonry-packed": "^0.14.4",
-    "angulartics": "^1.0.3",
-    "angulartics-google-analytics": "^0.1.4",
     "bcrypt": "^0.8.5",
     "body-parser": "^1.14.1",
     "crypto": "0.0.3",
