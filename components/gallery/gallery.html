@@ -77,7 +77,7 @@
       </div>
       <div class="pull-right" ng-if="themes!==undefined">
         <div class="thumbMiddle" ng-repeat="t in themes" style="margin: 5px 15px">
-          <button type="button" class="btn btn-info" ng-click="setTheme(t._id)">
+          <button type="button" class="btn btn-info" ng-click="setTheme(t._id)" analytics-on="click" analytics-category="Filter By Expanded Theme" analytics-event="{{t.theme}}">
             {{t.theme}}
           </button>
         </div>
@@ -98,10 +98,10 @@
       <ul uib-dropdown-menu role="menu" aria-labelledby="single-button">
         <li role="menuitem" ng-click="clearFilters()"><a href="#">Show All</a></li>
         <li class="divider"></li>
-        <li role="menuitem" ng-click="setFilterUnSold()"><a href="#">Show For Sale</a></li>
-        <li role="menuitem" ng-click="setFilterSold()"><a href="#">Show Sold</a></li>
+        <li role="menuitem" ng-click="setFilterUnSold()"><a href="#" analytics-on="click" analytics-category="Filter" analytics-event="For Sale">Show For Sale</a></li>
+        <li role="menuitem" ng-click="setFilterSold()"><a href="#" analytics-on="click" analytics-category="Filter" analytics-event="Sold">Show Sold</a></li>
         <li class="divider"></li>
-        <li role="menuitem" ng-repeat="theme in themes track by theme._id | orderBy:'rank'" ng-click="onChangeSetID(theme._id)"><a href="#">{{theme.theme}}</a></li>
+        <li role="menuitem" ng-repeat="theme in themes track by theme._id | orderBy:'rank'" ng-click="onChangeSetID(theme._id)"><a href="#" analytics-on="click" analytics-category="Filter" analytics-event="{{theme.theme}}">{{theme.theme}}</a></li>
       </ul>
     </div>
   </div>
