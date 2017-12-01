@@ -38,18 +38,7 @@ var SampleApp = function() {
      */
     self.setupVariables = function() {
         //  Set the environment variables we need.
-        self.ipaddress = process.env.OPENSHIFT_NODEJS_IP;
-        self.port      = process.env.OPENSHIFT_NODEJS_PORT || 8080;
-
-        if (typeof self.ipaddress === "undefined") {
-            //  Log errors on OpenShift but continue w/ 127.0.0.1 - this
-            //  allows us to run/test the app locally.
-            console.warn('No OPENSHIFT_NODEJS_IP var, using 0.0.0.0');
-            self.ipaddress = "0.0.0.0";
-        };
-        //var dbName = "/nodejs";
-        //var connection_string = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +  process.env.OPENSHIFT_MONGODB_DB_PASSWORD + "@" + process.env.OPENSHIFT_MONGODB_DB_HOST + dbName;
-        //self.db = mongojs(connection_string, ['Paintings']);
+        self.port      = process.env.PORT || 8080;
         self.url = process.env.MONGODB_URI;
         if(process.env.NODE_ENV=="dev") self.url = 'mongodb://127.0.0.1:27017/nodejs';
     };
@@ -189,9 +178,9 @@ var SampleApp = function() {
      */
     self.start = function() {
         //  Start the app on the specific interface (and port).
-        self.app.listen(self.port, self.ipaddress, function() {
-            console.log('%s: Node server started on %s:%d ...',
-                        Date(Date.now() ), self.ipaddress, self.port);
+        self.app.listen(self.port, function() {
+          var port = server.address().port;
+          console.log('%s: Node server started on %d ...',Date(Date.now()), port);
         });
     };
 
