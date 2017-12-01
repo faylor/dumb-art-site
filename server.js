@@ -179,8 +179,7 @@ var SampleApp = function() {
     self.start = function() {
         //  Start the app on the specific interface (and port).
         self.app.listen(self.port, function() {
-          var port = server.address().port;
-          console.log('%s: Node server started on %d ...',Date(Date.now()), port);
+          console.log('%s: Node server started on %d ...',Date(Date.now()), self.port);
         });
     };
 
