@@ -1,22 +1,21 @@
 {
-  "name": "OpenShift-Sample-App",
+  "name": "Dumb-Art-App",
   "version": "1.0.0",
-  "description": "OpenShift Sample Application",
+  "description": "Dumb Art Application",
   "keywords": [
-    "OpenShift",
     "Node.js",
     "application",
-    "openshift"
+    "heroku"
   ],
   "author": "DiTaylor <di@ditaylor.com.au> (http://www.ditaylor.com.au/)",
   "homepage": "http://www.ditaylor.com.au/",
   "repository": {
     "type": "git",
-    "url": "git://github.com/openshift/origin-server.git"
+    "url": "git://github.com/faylor/dumb-art-site.git"
   },
   "engines": {
-    "node": ">= 0.6.0",
-    "npm": ">= 1.0.0"
+    "node": "4.2.1",
+    "npm": "2.14.7"
   },
   "dependencies": {
     "angular-masonry": "^0.16.0",
