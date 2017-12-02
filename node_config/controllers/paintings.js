@@ -10,8 +10,11 @@ var quickthumb  = require('quickthumb');
 var config = require('../config');
 
 /* AWS S3 */
+console.log('setting s3...');
 const aws = require('aws-sdk');
 const S3_BUCKET = process.env.S3_BUCKET;
+
+
 aws.config.region = config.region;
 
 /**
@@ -23,15 +26,15 @@ exports.index = function (req, res){
       .populate('themes')
       .lean()
       .exec(function(err, docs) {
-      if(err){
-        console.log(err);
-        return res.json({error:err});
-      }
-      if(docs){
-        return res.json(docs);
-      }else{
-        return res.json({});
-      }
+        if(err){
+          console.log('Error getting paintings:' + err);
+          return res.json({error:err});
+        }
+        if(docs){
+          return res.json(docs);
+        }else{
+          return res.json({});
+        }
   });
 };
 
@@ -75,11 +78,23 @@ exports.updateDataAndFile = function (req, res){
             ContentType: file_type,
             ACL: 'public-read'
         };
-
+        console.log(s3Params);
         s3.getSignedUrl('putObject', s3Params, (err, data) => {
           if(err){
             console.log(err);
             return res.end();
+          }else{
+            console.log('quickthumb...'+temp_path+file_name)
+            quickthumb.convert({
+              src: temp_path + file_name,
+              dst: temp_path + "thumbs" + file_name,
+              width: 450
+            }, function (err, path) {
+              if (err) {
+                console.error(err);
+                return res.send(401);
+              }
+            });
           }
           const returnData = {
             signedRequest: data,
@@ -89,7 +104,9 @@ exports.updateDataAndFile = function (req, res){
           res.end();
         });
 
-        if(process.env.NODE_ENV=="dev")  imagedir = '/ditaylor/devimages/';
+
+
+        /*if(process.env.NODE_ENV=="dev")  imagedir = '/ditaylor/devimages/';
         fse.copy(temp_path, imagedir + file_name, function(err) {
             if (err) {
               console.error(err);
@@ -105,7 +122,7 @@ exports.updateDataAndFile = function (req, res){
                 }
               });
             }
-        });
+        });*/
       }
       if(req.params.id=='undefined' || !req.params.id){
           var newPainting = new Painting({title:fieldValues.title,

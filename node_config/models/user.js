@@ -41,10 +41,6 @@ User.methods = {
    * @api public
    */
   authenticate: function (plainText) {
-    console.log('authenticate:'+plainText);
-    console.log('authenticate:'+this.encryptPassword(plainText));
-    console.log(this.hashed_password);
-
     return this.encryptPassword(plainText) === this.hashed_password;
   },
 

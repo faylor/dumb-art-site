@@ -38,7 +38,7 @@
         <td>{{painting.landscape}}</td>
         <td>{{painting.price}}</td>
         <td>{{painting.sold}}</td>
-        <td><img src='images/thumbs/{{painting.image}}' height="50px" onerror="imgError(this)"/></td>
+        <td><img src='https://s3.amazonaws.com/ditaylor-paintings/{{painting.image}}' height="50px" onerror="imgError(this)"/></td>
         <td><div ng-repeat="t in painting.themes">{{t.theme}}</div></td>
         <td><button type="button" class="btn btn-default" ng-click="showEditor(painting)">Edit</button>
         <button type="button" class="btn btn-default" ng-click="deletePainting(painting)">Delete</button></td>

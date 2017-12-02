@@ -6,6 +6,7 @@ var mongodb = require('mongodb');
 var mongoose = require('mongoose');
 var quickthumb  = require('quickthumb');
 var util = require('util');
+var dotenv = require('dotenv');
 
 /**
  *  Define the sample application.
@@ -38,9 +39,13 @@ var SampleApp = function() {
      */
     self.setupVariables = function() {
         //  Set the environment variables we need.
+        dotenv.load();
         self.port      = process.env.PORT || 8080;
-        self.url = process.env.MONGODB_URI;
-        if(process.env.NODE_ENV=="dev") self.url = 'mongodb://127.0.0.1:27017/nodejs';
+        self.url = process.env.MONGODB_URI_DEV;
+        console.log("setup db variable:");
+        console.log(process.env.MONGODB_URI);
+        console.log("done setup db variable:");
+        self.url = 'mongodb://james:97tate47@ds123896.mlab.com:23896/heroku_tp355s6p';
     };
 
     /**

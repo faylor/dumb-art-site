@@ -1,5 +1,4 @@
 module.exports = {
-
-    'secret': '2034thwogjnsdg982io3r:afe@£'
-    ,'imagedir': process.env.OPENSHIFT_DATA_DIR+'images/'
+    secret:'sadjfbqt3r982em9zdqugq23er021mzgrqndi02uji',
+    region:'us-east-1'
 };
