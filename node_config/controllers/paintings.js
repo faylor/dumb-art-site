@@ -8,6 +8,12 @@ var formidable = require('formidable');
 var fse = require('fs-extra');
 var quickthumb  = require('quickthumb');
 var config = require('../config');
+
+/* AWS S3 */
+const aws = require('aws-sdk');
+const S3_BUCKET = process.env.S3_BUCKET;
+aws.config.region = config.region;
+
 /**
  * List
  */
@@ -54,13 +60,36 @@ exports.updateDataAndFile = function (req, res){
   .on('end', function(fields, files) {
 
       var file_name = "";
+      var file_type = "";
       if(this.openedFiles[0]){
 
         var temp_path = this.openedFiles[0].path;
         file_name = this.openedFiles[0].name;
+        file_type = this.openedFiles[0].type;
 
-        var imagedir = config.imagedir;
-        if(process.env.NODE_ENV=="dev")  imagedir = '/Users/jamestaylor/development/ditaylor/devimages/';
+        const s3 = new aws.S3();
+        const s3Params = {
+            Bucket: S3_BUCKET,
+            Key: file_name,
+            Expires: 60,
+            ContentType: file_type,
+            ACL: 'public-read'
+        };
+
+        s3.getSignedUrl('putObject', s3Params, (err, data) => {
+          if(err){
+            console.log(err);
+            return res.end();
+          }
+          const returnData = {
+            signedRequest: data,
+            url: `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`
+          };
+          res.write(JSON.stringify(returnData));
+          res.end();
+        });
+
+        if(process.env.NODE_ENV=="dev")  imagedir = '/ditaylor/devimages/';
         fse.copy(temp_path, imagedir + file_name, function(err) {
             if (err) {
               console.error(err);

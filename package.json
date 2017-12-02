@@ -30,7 +30,9 @@
     "mongodb": "^2.0.46",
     "mongoose": "^4.2.2",
     "quickthumb": "0.0.11",
-    "util": "~0.10.3"
+    "util": "~0.10.3",
+    "aws-sdk": "2.x",
+    "ejs": "2.x"
   },
   "devDependencies": {},
   "bundleDependencies": [],
