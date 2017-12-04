@@ -39,9 +39,8 @@ var SampleApp = function() {
      */
     self.setupVariables = function() {
         //  Set the environment variables we need.
-
         self.port      = process.env.PORT || 8080;
-        self.url = process.env.MONGODB_URI_DEV;
+        self.url = process.env.MONGODB_URI;
     };
 
     /**
