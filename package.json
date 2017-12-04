@@ -30,7 +30,7 @@
     "fs-extra": "^0.24.0",
     "jsonwebtoken": "^5.4.0",
     "mongodb": "^2.2.23",
-    "mongoose": "^4.3.0",
+    "mongoose": "^4.7.3",
     "quickthumb": "0.0.11",
     "util": "~0.10.3"
   },
