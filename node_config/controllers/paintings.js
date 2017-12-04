@@ -92,7 +92,6 @@ exports.updateDataAndFile = function (req, res){
             }, function (err, path) {
               if (err) {
                 console.error(err);
-                return res.send(401);
               }
             });
           }
