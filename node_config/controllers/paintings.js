@@ -8,14 +8,16 @@ var formidable = require('formidable');
 var fse = require('fs-extra');
 var quickthumb  = require('quickthumb');
 var config = require('../config');
+var async = require('async');
+var path = require('path');
+const Transform = require('stream').Transform
 
 /* AWS S3 */
-console.log('setting s3...');
 const aws = require('aws-sdk');
 const S3_BUCKET = process.env.S3_BUCKET;
 
-
 aws.config.region = config.region;
+const s3 = new aws.S3();
 
 /**
  * List
@@ -57,9 +59,73 @@ exports.getSinglePainting = function(req, res){
 exports.updateDataAndFile = function (req, res){
   var form = new formidable.IncomingForm();
   var fieldValues={};
+  form.uploadDir = path.join(__dirname, '/uploads');
   form.on('field', function(field, value) {
     fieldValues[field]=value;
+  });
+  form.on('file', function(field, file) {
+
+  });
+  form.on('fileBegin', (name, file) => {
+    file.on('error', e => this._error(e))
+
+    file.open = function () {
+      this._writeStream =  new Transform({
+        transform (chunk, encoding, callback) {callback(null, chunk)}
+      })
+
+      this._writeStream.on('error', e => this.emit('error', e))
+
+      s3.upload({
+        Bucket: S3_BUCKET,
+        Key: file.name,
+        Body: this._writeStream,        
+        ACL: 'public-read'
+      }, onUpload)
+/*
+          async.waterfall([
+                function convert(next){
+                  console.log("convert thumb");
+                  quickthumb.convert({
+                        src: path.join(form.uploadDir, file.name),
+                        dst: path.join(form.uploadDir, "thumb" + file.name),
+                        width: 450
+                      },next)
+                  console.log("converted");
+                },
+                function uploadThumb(next){
+                  console.log("upload thumb");
+                  var fileStream = fs.createReadStream(path.join(form.uploadDir, "thumb" + file.name));
+                  fileStream.on('open', function () {
+                    s3.upload({
+                      Bucket: S3_BUCKET,
+                      Key: "thumb-" + file_name,
+                      Body: fileStream
+                    }, next);
+                  });
+                }]
+                ,function (err) {
+                  if (err) {
+                      console.error(
+                          'Unable to resize and upload to  due to an error: ' + err
+                      );
+                  } else {
+                      console.log(
+                          'Successfully resized and uploaded'
+                      );
+                  }
+                }
+          );*/
+    }
+    file.end = function (cb) {
+      this._writeStream.on('finish', () => {
+          this.emit('end');
+          cb();
+      });
+      this._writeStream.end();
+    }
   })
+
   .on('end', function(fields, files) {
 
       var file_name = "";
@@ -70,60 +136,10 @@ exports.updateDataAndFile = function (req, res){
         file_name = this.openedFiles[0].name;
         file_type = this.openedFiles[0].type;
 
-        const s3 = new aws.S3();
-        const s3Params = {
-            Bucket: S3_BUCKET,
-            Key: file_name,
-            Expires: 60,
-            ContentType: file_type,
-            ACL: 'public-read'
-        };
-        console.log(s3Params);
-        s3.getSignedUrl('putObject', s3Params, (err, data) => {
-          if(err){
-            console.log(err);
-            return res.end();
-          }else{
-            console.log('quickthumb...'+temp_path+file_name)
-            quickthumb.convert({
-              src: temp_path + file_name,
-              dst: temp_path + "thumbs" + file_name,
-              width: 450
-            }, function (err, path) {
-              if (err) {
-                console.error(err);
-              }
-            });
-          }
-          const returnData = {
-            signedRequest: data,
-            url: `https://${S3_BUCKET}.s3.amazonaws.com/${file_name}`
-          };
-          res.write(JSON.stringify(returnData));
-          res.end();
-        });
 
-
-
-        /*if(process.env.NODE_ENV=="dev")  imagedir = '/ditaylor/devimages/';
-        fse.copy(temp_path, imagedir + file_name, function(err) {
-            if (err) {
-              console.error(err);
-            } else {
-              quickthumb.convert({
-                src: imagedir + file_name,
-                dst: imagedir + "thumbs/" + file_name,
-                width: 450
-              }, function (err, path) {
-                if (err) {
-                  console.error(err);
-                  return res.send(401);
-                }
-              });
-            }
-        });*/
       }
       if(req.params.id=='undefined' || !req.params.id){
+
           var newPainting = new Painting({title:fieldValues.title,
                                           size:fieldValues.size,
                                           price:fieldValues.price,
@@ -150,20 +166,29 @@ exports.updateDataAndFile = function (req, res){
                                           price:fieldValues.price,
                                           sold:fieldValues.sold,
                                           rank:fieldValues.rank,
-                                          image:fieldValues.image,
+                                          image:file_name,
                                           themes:JSON.parse(fieldValues.themes),
-                                          landscape:fieldValues.landscape}, {upsert: true}, function(err) {
-              if (!err) {
-                  return res.json({message:"updated:"+fieldValues.image});
-              } else {
-                  console.log(err);
-                  return res.send(404, { error: "Painting was not updated." });
-              }
-        });
+                                          landscape:fieldValues.landscape}, {upsert: true},
+              function(err) {
+                if (!err) {
+                    return res.json({message:"updated:"+fieldValues.image});
+                } else {
+                    console.log(err);
+                    return res.send(404, { error: "Painting was not updated." });
+                }
+            });
       }
   });
   form.parse(req, function(err, fields, files) {});
 };
+
+// continue execution in here
+function onUpload (err, res) {
+  err ? console.log('error:\n', err) : console.log('response:\n', res);
+
+
+
+}
 
 exports.update = function (req, res){
   var body = "";

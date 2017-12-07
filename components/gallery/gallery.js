@@ -262,7 +262,7 @@ app.controller('ModalInstanceCtrl', ['$scope', '$uibModalInstance', '$q', 'paint
         deferred.reject();
       };
 
-      image.src = 'images/' + i;
+      image.src = 'https://s3.amazonaws.com/ditaylor-paintings/' + i;
       $scope.loading = true;
 
       return deferred.promise;
