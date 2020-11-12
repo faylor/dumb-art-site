@@ -47,7 +47,7 @@ var SampleApp = function() {
      *  Set up server IP address and port # using env variables/defaults.
      */
     self.connectDatabase = function () {
-       var options = { server: { socketOptions: { keepAlive: 1 } } };
+       var options = { useMongoClient: true, server: { socketOptions: { keepAlive: 1 } } };
        mongoose.connect(self.url, options);
     };
 
