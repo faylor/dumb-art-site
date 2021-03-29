@@ -6,7 +6,6 @@ var mongoose = require('mongoose');
 var Painting = mongoose.model('Painting');
 var formidable = require('formidable');
 var fse = require('fs-extra');
-var quickthumb  = require('quickthumb');
 var config = require('../config');
 var async = require('async');
 var path = require('path');
@@ -82,40 +81,7 @@ exports.updateDataAndFile = function (req, res){
         Body: this._writeStream,        
         ACL: 'public-read'
       }, onUpload)
-/*
-          async.waterfall([
-                function convert(next){
-                  console.log("convert thumb");
-                  quickthumb.convert({
-                        src: path.join(form.uploadDir, file.name),
-                        dst: path.join(form.uploadDir, "thumb" + file.name),
-                        width: 450
-                      },next)
-                  console.log("converted");
-                },
-                function uploadThumb(next){
-                  console.log("upload thumb");
-                  var fileStream = fs.createReadStream(path.join(form.uploadDir, "thumb" + file.name));
-                  fileStream.on('open', function () {
-                    s3.upload({
-                      Bucket: S3_BUCKET,
-                      Key: "thumb-" + file_name,
-                      Body: fileStream
-                    }, next);
-                  });
-                }]
-                ,function (err) {
-                  if (err) {
-                      console.error(
-                          'Unable to resize and upload to  due to an error: ' + err
-                      );
-                  } else {
-                      console.log(
-                          'Successfully resized and uploaded'
-                      );
-                  }
-                }
-          );*/
+
     }
     file.end = function (cb) {
       this._writeStream.on('finish', () => {

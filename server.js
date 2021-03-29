@@ -4,7 +4,6 @@ var express = require('express');
 var fse      = require('fs-extra');
 var mongodb = require('mongodb');
 var mongoose = require('mongoose');
-var quickthumb  = require('quickthumb');
 var util = require('util');
 var dotenv = require('dotenv');
 dotenv.load();
@@ -136,7 +135,6 @@ var SampleApp = function() {
         self.app.use('/components',express.static(__dirname+ '/components/',{ maxAge: 86400000 }));
         self.app.use('/scripts',express.static(__dirname+ '/scripts'));
 
-        //self.app.use(quickthumb.static(__dirname + '/images'));
         //  Add handlers for the app (from the routes).
         for (var g in self.getroutes) {
             self.app.get(g, self.getroutes[g]);

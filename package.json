@@ -14,7 +14,7 @@
     "url": "git://github.com/faylor/dumb-art-site.git"
   },
   "engines": {
-    "node": "4.9.1"
+    "node": "10.24.0"
   },
   "dependencies": {
     "angular-masonry": "^0.16.0",
@@ -32,7 +32,6 @@
     "jsonwebtoken": "^5.4.0",
     "mongodb": "^3.1.13",
     "mongoose": "^5.10.0",
-    "quickthumb": "0.0.11",
     "saslprep": "^1.0.3",
     "util": "~0.10.3"
   },
