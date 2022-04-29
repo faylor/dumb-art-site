@@ -19,7 +19,7 @@
   "dependencies": {
     "angular-masonry": "^0.16.0",
     "angular-masonry-packed": "^0.14.4",
-    "async": "^2.6.0",
+    "async": "^2.6.4",
     "aws-sdk": "2.x",
     "bcrypt": "^5.0.1",
     "body-parser": "^1.14.1",
